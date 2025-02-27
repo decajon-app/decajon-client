@@ -14,9 +14,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { RootStackParamList } from '../navigation/StackNavigator';
+import { Alert } from 'react-native';
+import { loginUser } from '../api/loginApi';
 
-// Definimos los tipos de navegación y rutas
+
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'LoginScreen'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'LoginScreen'>;
 
@@ -29,14 +31,17 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  // Referencia para el campo de contraseña
   const passwordRef = useRef<TextInputType | null>(null);
-
-  const handleLogin = () => {
-    console.log('Email:', email);
-    console.log('Password:', password);
-    navigation.navigate('HomeScreen');
-  };
+  
+  const handleLogin = async (): Promise<void> => {
+    try {
+      const userData = await loginUser({email, password});
+      console.log('Usuario autenticado:', userData);
+      navigation.navigate('HomeScreen');
+    } catch (error) {
+      Alert.alert('Error', 'Correo o contraseña incorrectos.');
+    }
+  }
 
   const resetPassword = () => {
     console.log('ResetPassword:');

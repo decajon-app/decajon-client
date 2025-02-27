@@ -1,14 +1,21 @@
 export const loginUser = async (credentials: { email: string; password: string }) => {
     try {
-      const response = await fetch("http://10.0.2.2:8080/api/auth/login", {
+      const response = await fetch("http://10.0.2.2:8080/api/auth/login", { //////TOBEDONE
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
       });
   
       const serverResponse = await response.text();
-      const data = JSON.parse(serverResponse);
-  
+      console.log("DEBUG: serverResponse", serverResponse);
+
+      let data;
+      try {
+        data = JSON.parse(serverResponse);
+      } catch (error) {
+        console.error("Error parsing JSON server response:", error);
+        throw new Error(`Error not valid response from server: ${response.status} - ${serverResponse}`);
+      }
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${data.message || "Unknown error"}`);
       }

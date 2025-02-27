@@ -30,9 +30,6 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
   const [password, setPassword] = useState<string>('');
 
   const createAccount = async (): Promise<void> => {
-    console.log('Email:', email);
-    console.log('Password:', password);
-  
     try {
       await registerUser({ 
         name: nombre, 
