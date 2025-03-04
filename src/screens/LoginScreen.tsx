@@ -34,18 +34,31 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
   const passwordRef = useRef<TextInputType | null>(null);
   
   const handleLogin = async (): Promise<void> => {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Error", "Por favor, ingresa tu correo y contraseña.");
+      return;
+    }
     try {
-      const userData = await loginUser({email, password});
-      console.log('Usuario autenticado:', userData);
+      const result = await loginUser({ email, password });
+      console.log("Login exitoso:", result);
+      // TBD TOKEN que devuelve
       navigation.navigate('HomeScreen');
     } catch (error) {
-      Alert.alert('Error', 'Correo o contraseña incorrectos.');
+      if (error instanceof Error) {
+        console.error("Error en login:", error.message);
+        Alert.alert("Error", "Credenciales incorrectas o problema en el servidor.");
+      } else {
+        console.error("Error desconocido:", error);
+        Alert.alert("Error", "Ocurrió un error inesperado.");
+      }
     }
+    
+    
   }
 
   const resetPassword = () => {
-    console.log('ResetPassword:');
     console.log('ForgotPassword');
+    navigation.navigate('ForgotPassword');
   };
 
   const createAccount = () => {
