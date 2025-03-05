@@ -1,12 +1,17 @@
-export const loginUser = async (credentials: { email: string; password: string }) => {
+export const loginUser = async (email: string, password: string) => {
     try {
       const response = await fetch("http://10.0.2.2:8080/auth/login", { //////TOBEDONE
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify({
+          email,
+          password
+        }),
       });
-  
-      const serverResponse = await response.text();
+      
+      console.log("DEBUG Enviando request con:", JSON.stringify({ email, password }));
+      const serverResponse = await response.text()
+      console.log("DEBUG: SERVER STATUS", response.status);
       console.log("DEBUG: serverResponse", serverResponse);
 
       let data;

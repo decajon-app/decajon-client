@@ -39,7 +39,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       return;
     }
     try {
-      const result = await loginUser({ email, password });
+      const result = await loginUser( email, password);
       console.log("Login exitoso:", result);
       // TBD TOKEN que devuelve
       navigation.navigate('HomeScreen');
