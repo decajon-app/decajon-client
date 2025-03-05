@@ -11,7 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/StackNavigator';
 import { Alert } from 'react-native';
-import { registerUser } from '../api/usersApi';
+import { registerUser } from '../api/registerUsersApi.ts';
 
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateAccount'>;
@@ -30,6 +30,10 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
   const [password, setPassword] = useState<string>('');
 
   const createAccount = async (): Promise<void> => {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Los campos no pueden estar vacíos.");
+      return;
+    }
     try {
       await registerUser({ 
         name: nombre, 
