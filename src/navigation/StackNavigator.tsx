@@ -10,10 +10,11 @@ import CreateAccount from '../screens/CreateAccount.tsx';
 import WelcomeScreen from '../screens/WelcomeScreen.tsx';
 import ForgotPassword from '../screens/ForgotPassword.tsx';
 import ResetPassword from '../screens/ResetPassword.tsx';
+import CreateGroup from '../screens/CreateGroup.tsx';
 
 //import CreateEvent from '../screens/CreateEvent.tsx';
 
-//import CreateGroup from '../screens/CreateGroup.tsx';
+
 //import GroupInformation from '../screens/GroupInformation.tsx';
 //import JoinGroup from '../screens/JoinGroup.tsx';
 
@@ -29,9 +30,10 @@ export type RootStackParamList = {
   WelcomeScreen: undefined;
   ForgotPassword: undefined;
   ResetPassword: undefined;
+  CreateGroup: {owner: string};
   // CreateEvent: undefined;
   
-  // CreateGroup: undefined;
+ 
   // GroupInformation: undefined;
   // JoinGroup: undefined;
 };
@@ -51,11 +53,11 @@ const StackNavigator = () => {
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
+        <Stack.Screen name="CreateGroup" component={CreateGroup} />
         {/*  
         
         
         <Stack.Screen name="CreateEvent" component={CreateEvent} />
-        <Stack.Screen name="CreateGroup" component={CreateGroup} />
         <Stack.Screen name="GroupInformation" component={GroupInformation} />
         <Stack.Screen name="JoinGroup" component={JoinGroup} /> */}
       </Stack.Navigator>

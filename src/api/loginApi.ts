@@ -10,7 +10,7 @@ export const loginUser = async (email: string, password: string) => {
       });
       
       console.log("DEBUG Enviando request con:", JSON.stringify({ email, password }));
-      const serverResponse = await response.text()
+      const serverResponse = await response.text();
       console.log("DEBUG: SERVER STATUS", response.status);
       console.log("DEBUG: serverResponse", serverResponse);
 

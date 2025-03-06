@@ -11,9 +11,9 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { RootStackParamList } from '../navigation/StackNavigator'; 
+import { newGroup } from '../api/newGroupApi.ts';
 
-// Definimos los tipos de navegación y rutas
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateGroup'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'CreateGroup'>;
 
@@ -27,7 +27,7 @@ const CreateGroup: React.FC<LoginProps> = ({ navigation }) => {
 
   const createGroup = (): void => {
     console.log('nameGroup:', nameGroup);
-    navigation.navigate('GroupInformation');
+    //navigation.navigate('GroupInformation');
   };
 
   const returnPage = (): void => {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#200707',
-    borderRadius: 50, // Corregido, React Native no acepta '%' en borderRadius
+    borderRadius: 50,
     paddingVertical: 10,
     paddingHorizontal: 10,
     marginLeft: 20,
