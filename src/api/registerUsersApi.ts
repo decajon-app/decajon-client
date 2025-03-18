@@ -13,7 +13,7 @@ export const registerUser = async (userData: {
   };
 
   try {
-    const response = await fetch('http://10.0.2.2:8080/api/users', {
+    const response = await fetch('http://10.0.2.2:8080/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formattedUserData),
