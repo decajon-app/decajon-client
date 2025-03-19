@@ -11,7 +11,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/StackNavigator';
 import { Alert } from 'react-native';
-import { registerUser } from '../api/registerUsersApi.ts';
+import { registerUser } from '../api/AuthApi.ts';
+import { UserRequestDto, UserDto } from '../models/index.ts';
 
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateAccount'>;
@@ -34,14 +35,17 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
       Alert.alert("Los campos no pueden estar vacíos.");
       return;
     }
+
+    const userRequestData: UserRequestDto = {
+      firstName: nombre,
+      lastName: `${apellido1} ${apellido2}`,
+      email: email,
+      password: password
+    }
+
     try {
-      await registerUser({ 
-        name: nombre, 
-        lastName1: apellido1, 
-        lastName2: apellido2, 
-        email, 
-        password 
-      });
+      const newUserData: UserDto = await registerUser(userRequestData);
+      console.log(newUserData);
       navigation.navigate('WelcomeScreen'); 
     } catch (error) {
       Alert.alert('Error', 'No se pudo registrar el usuario.');
