@@ -4,9 +4,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { RootStackParamList } from '../navigation/StackNavigator'; 
 
-// Definimos los tipos de navegación y rutas
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'WelcomeScreen'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'WelcomeScreen'>;
 
@@ -23,10 +22,10 @@ const Welcome: React.FC<LoginProps> = ({ navigation }) => {
 
     if (card === 'create') {
       console.log('Option Create');
-      navigation.navigate('CreateGroup');
+      console.log('CreateGroup');
     } else if (card === 'join') {
       console.log('Option Join');
-      navigation.navigate('JoinGroup');
+      console.log('JoinGroup');
     } else {
       console.log('Error...');
     }
@@ -34,7 +33,7 @@ const Welcome: React.FC<LoginProps> = ({ navigation }) => {
 
   const returnPage = (): void => {
     console.log('Return page button');
-    navigation.goBack();
+    console.log('CreateAccount');
   };
 
   return (
@@ -118,7 +117,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#200707',
-    borderRadius: 50, // Corregido, React Native no acepta '%' en borderRadius
+    borderRadius: 50, 
     paddingVertical: 10,
     paddingHorizontal: 10,
     marginLeft: 20,

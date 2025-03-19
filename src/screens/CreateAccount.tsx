@@ -9,9 +9,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { RootStackParamList } from '../navigation/StackNavigator';
+import { Alert } from 'react-native';
+import { registerUser } from '../api/registerUsersApi.ts';
 
-// Definimos los tipos de navegación y rutas
+
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateAccount'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'CreateAccount'>;
 
@@ -27,10 +29,23 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const createAccount = (): void => {
-    console.log('Email:', email);
-    console.log('Password:', password);
-    navigation.navigate('WelcomeScreen');
+  const createAccount = async (): Promise<void> => {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Los campos no pueden estar vacíos.");
+      return;
+    }
+    try {
+      await registerUser({ 
+        name: nombre, 
+        lastName1: apellido1, 
+        lastName2: apellido2, 
+        email, 
+        password 
+      });
+      navigation.navigate('WelcomeScreen'); 
+    } catch (error) {
+      Alert.alert('Error', 'No se pudo registrar el usuario.');
+    }
   };
 
   const returnPage = (): void => {
@@ -127,12 +142,13 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fbf2e2',
+    padding:20,
   },
   header: {
-    padding: 20,
-    marginTop: 20,
+    padding: 10,
+    marginTop: 10,
     alignItems: 'center',
   },
   title: {
@@ -160,10 +176,10 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#200707',
-    padding: 10,
+    padding: 5,
     borderRadius: 50,
     alignItems: 'center',
-    marginTop: 80,
+    marginTop: 30,
     width: '80%',
     shadowColor: '#200606',
     shadowOffset: {
@@ -188,6 +204,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loginText: {
+    backgroundColor:'#ffffff',
     fontSize: 22,
     color: '#763F0F',
     fontWeight: 'bold',
@@ -203,7 +220,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'flex-start',
     paddingRight: 1,
-    marginTop: 50,
+    marginTop: 10,
   },
   btn: {
     backgroundColor: '#200707',

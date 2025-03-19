@@ -1,3 +1,8 @@
+## 01/02/25
+- Todas las pantallas listas sin informacion real
+- Consultar pantallas a agregar y diseños
+- Sugerir y aplicar animaciones entre pantallas y botones
+
 # DeCajonApp
 
 DeCajonApp es una aplicación móvil desarrollada con **React Native**. Esta aplicación está diseñada para gestionar eventos, ensayos y grupos musicales. A continuación, se describen las características principales del proyecto.

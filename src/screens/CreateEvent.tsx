@@ -53,7 +53,7 @@ const CreateEvent: React.FC<LoginProps> = ({ navigation }) => {
 
   const returnPage = () => {
     console.log('Return page button');
-    navigation.goBack();
+    navigation.navigate('HomeScreen');
   };
 
   return (

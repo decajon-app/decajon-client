@@ -14,9 +14,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { RootStackParamList } from '../navigation/StackNavigator';
+import { Alert } from 'react-native';
+import { loginUser } from '../api/loginApi';
 
-// Definimos los tipos de navegación y rutas
+
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'LoginScreen'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'LoginScreen'>;
 
@@ -29,17 +31,33 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  // Referencia para el campo de contraseña
   const passwordRef = useRef<TextInputType | null>(null);
-
-  const handleLogin = () => {
-    console.log('Email:', email);
-    console.log('Password:', password);
-    navigation.navigate('HomeScreen');
-  };
+  
+  const handleLogin = async (): Promise<void> => {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Error", "Por favor, ingresa tu correo y contraseña.");
+      return;
+    }
+    try {
+      const result = await loginUser( email, password);
+      console.log("Login exitoso:", result);
+      // TBD TOKEN que devuelve
+      navigation.navigate('HomeScreen');
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error en login:", error.message);
+        Alert.alert("Error", "Credenciales incorrectas o problema en el servidor.");
+      } else {
+        console.error("Error desconocido:", error);
+        Alert.alert("Error", "Ocurrió un error inesperado.");
+      }
+    }
+    
+    
+  }
 
   const resetPassword = () => {
-    console.log('ResetPassword:');
+    console.log('ForgotPassword');
     navigation.navigate('ForgotPassword');
   };
 
@@ -67,13 +85,12 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
               <Icon name="email" color="#200606" size={30} />
               <TextInput
                 style={styles.input}
-                placeholder="*************@gmail.com"
+                placeholder="Correo"
                 placeholderTextColor="black"
                 onChangeText={setEmail}
                 value={email}
                 returnKeyType="next" // Cambia el botón a "Next"
                 onSubmitEditing={() => passwordRef.current?.focus()} // Pasa al siguiente campo
-                blurOnSubmit={false} // Evita que se cierre el teclado
               />
             </View>
 
@@ -82,7 +99,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
               <Icon name="lock" color="#200606" size={30} />
               <TextInput
                 style={styles.input}
-                placeholder="********"
+                placeholder="Contraseña"
                 placeholderTextColor="black"
                 onChangeText={setPassword}
                 value={password}
@@ -131,7 +148,7 @@ const styles = StyleSheet.create({
       marginTop: 50,
     },
     image: {
-      marginTop: 200,
+      marginTop: 20,
       width: '70%',
       height: 100,
     },
