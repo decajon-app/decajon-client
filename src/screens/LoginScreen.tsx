@@ -16,7 +16,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/StackNavigator';
 import { Alert } from 'react-native';
-import { loginUser } from '../api/loginApi';
+import { login } from '../api/AuthApi';
+import { LoginRequestDto, LoginResponseDto, UserDto } from '../models';
+import { saveToken } from '../storage/AuthStorage';
+import { saveUserData } from '../storage/UserStorage';
+import { getLaunchData } from '../storage/LaunchStorage';
 
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'LoginScreen'>;
@@ -38,11 +42,37 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       Alert.alert("Error", "Por favor, ingresa tu correo y contraseña.");
       return;
     }
+
+    // Construir el UserRequestDto
+    const loginRequest: LoginRequestDto = {
+      email: email,
+      password: password
+    }
+
     try {
-      const result = await loginUser( email, password);
-      console.log("Login exitoso:", result);
-      // TBD TOKEN que devuelve
-      navigation.navigate('HomeScreen');
+      const response: LoginResponseDto = await login(loginRequest);
+
+      if(response.token) {
+        const token: string = response.token;
+        const user: UserDto = {
+          id: response.id,
+          email: response.email,
+          firstName: response.firstName,
+          lastName: response.lastName
+        }
+
+        await saveToken(token);
+        await saveUserData(user);
+      }
+
+      getLaunchData().then(isFirstTime => {
+        if(isFirstTime) {
+          navigation.navigate('WelcomeScreen');
+        } else {
+          navigation.navigate('HomeScreen');
+        }
+      });
+      
     } catch (error) {
       if (error instanceof Error) {
         console.error("Error en login:", error.message);
@@ -52,8 +82,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         Alert.alert("Error", "Ocurrió un error inesperado.");
       }
     }
-    
-    
+
   }
 
   const resetPassword = () => {

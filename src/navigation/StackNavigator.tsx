@@ -1,3 +1,9 @@
+/**
+ * 1. Importar la screen
+ * 2. Agregar al export
+ *    Las pantallas pueden recibir parametros
+ * 3. Agregarla al NavigationContainer
+ */
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,16 +17,12 @@ import WelcomeScreen from '../screens/WelcomeScreen.tsx';
 import ForgotPassword from '../screens/ForgotPassword.tsx';
 import ResetPassword from '../screens/ResetPassword.tsx';
 import CreateGroup from '../screens/CreateGroup.tsx';
-
 //import CreateEvent from '../screens/CreateEvent.tsx';
-
-
 //import GroupInformation from '../screens/GroupInformation.tsx';
 //import JoinGroup from '../screens/JoinGroup.tsx';
 
 
 //Agregar pantallas faltantes al stack navigator :)
-
 export type RootStackParamList = {
   LoadScreen: undefined;
   PreviewScreen: undefined;
@@ -30,10 +32,9 @@ export type RootStackParamList = {
   WelcomeScreen: undefined;
   ForgotPassword: undefined;
   ResetPassword: undefined;
-  CreateGroup: {owner: string};
+  CreateGroup: undefined;
   // CreateEvent: undefined;
-  
- 
+
   // GroupInformation: undefined;
   // JoinGroup: undefined;
 };
@@ -48,18 +49,16 @@ const StackNavigator = () => {
         <Stack.Screen name="PreviewScreen" component={PreviewScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        
         <Stack.Screen name="CreateAccount" component={CreateAccount}/>
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="CreateGroup" component={CreateGroup} />
-        {/*  
-        
-        
+        {/*
         <Stack.Screen name="CreateEvent" component={CreateEvent} />
         <Stack.Screen name="GroupInformation" component={GroupInformation} />
-        <Stack.Screen name="JoinGroup" component={JoinGroup} /> */}
+        <Stack.Screen name="JoinGroup" component={JoinGroup} />
+        */}
       </Stack.Navigator>
     </NavigationContainer>
   );

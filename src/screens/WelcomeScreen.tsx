@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/StackNavigator'; 
+import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
+
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'WelcomeScreen'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'WelcomeScreen'>;
@@ -15,12 +17,15 @@ interface LoginProps {
 }
 
 const Welcome: React.FC<LoginProps> = ({ navigation }) => {
-  const [activeCard, setActiveCard] = useState<'create' | 'join' | null>(null);
+  const [activeCard, setActiveCard] = useState<'create' | 'join' | 'skip' | null>(null);
 
-  const handlePress = (card: 'create' | 'join'): void => {
+  const handlePress = (card: 'create' | 'join' | 'skip'): void => {
     setActiveCard(card);
 
-    if (card === 'create') {
+    if (card === 'skip') {
+      navigation.navigate('HomeScreen');
+    }
+    else if (card === 'create') {
       console.log('Option Create');
       console.log('CreateGroup');
     } else if (card === 'join') {
@@ -35,6 +40,16 @@ const Welcome: React.FC<LoginProps> = ({ navigation }) => {
     console.log('Return page button');
     console.log('CreateAccount');
   };
+
+  useEffect(() => {
+    const changeLaunchData = async () => {
+      await saveLaunchData(false);
+    };
+    changeLaunchData();
+    getLaunchData().then(value => {
+      console.log("Se ha cambiado el valor!!!!: ", value);
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -76,6 +91,10 @@ const Welcome: React.FC<LoginProps> = ({ navigation }) => {
           <Text style={styles.txt}>Unirme a un grupo</Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity>
+        <Text onPress={() => handlePress('skip')}>Omitir</Text>
+      </TouchableOpacity>
 
       <View style={styles.footer}>
         <Image style={styles.image} source={require('../assets/logo.png')} />

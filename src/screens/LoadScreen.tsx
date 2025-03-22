@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
 
 type RootStackParamList = {
   LoadScreen: undefined;
   PreviewScreen: undefined;
+  LoginScreen: undefined;
 };
 
 type LoadScreenNavigationProp = StackNavigationProp<RootStackParamList, 'LoadScreen'>;
@@ -14,12 +16,30 @@ interface LoadProps {
 }
 
 const Load: React.FC<LoadProps> = ({ navigation }) => {
+  const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const fetchLaunchData = async () => {
+      const launchData = await getLaunchData();
+      setIsFirstLaunch(launchData);
+      if(isFirstLaunch === null) {
+        saveLaunchData(true);
+      };
+    }
+    fetchLaunchData();
+  }, []); // Solo ejecutar una vez para obtener el firstLaunch
+
+  useEffect(() => {
+    // No hacer nada hasta que isFirstLaunch tenga un valor
+    if(isFirstLaunch === null) return;
+
+    if(isFirstLaunch) {
       navigation.navigate('PreviewScreen');
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [navigation]);
+    }
+    else {
+      navigation.navigate('LoginScreen');
+    }
+  }, [navigation, isFirstLaunch]);
 
   return (
     <View style={styles.body}>
