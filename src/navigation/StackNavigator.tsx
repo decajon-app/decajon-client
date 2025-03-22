@@ -34,6 +34,7 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   CreateGroup: undefined;
   // CreateEvent: undefined;
+
   // GroupInformation: undefined;
   // JoinGroup: undefined;
 };

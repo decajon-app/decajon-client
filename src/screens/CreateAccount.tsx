@@ -35,7 +35,6 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
       Alert.alert("Los campos no pueden estar vacíos.");
       return;
     }
-
     const userRequestData: UserRequestDto = {
       firstName: nombre,
       lastName: `${apellido1} ${apellido2}`,
@@ -48,6 +47,7 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
       console.log(newUserData);
       Alert.alert("", "Tu cuenta ha sido creada, por favor, inicia sesión para continuar");
       returnPage();
+
     } catch (error) {
       Alert.alert('Error', 'No se pudo registrar el usuario.');
     }

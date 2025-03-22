@@ -22,6 +22,7 @@ import { saveToken } from '../storage/AuthStorage';
 import { saveUserData } from '../storage/UserStorage';
 import { getLaunchData } from '../storage/LaunchStorage';
 
+
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'LoginScreen'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'LoginScreen'>;
 
@@ -81,6 +82,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         Alert.alert("Error", "Ocurrió un error inesperado.");
       }
     }
+
   }
 
   const resetPassword = () => {

@@ -7,6 +7,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/StackNavigator'; 
 import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
 
+
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'WelcomeScreen'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'WelcomeScreen'>;
 
