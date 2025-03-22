@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/StackNavigator'; 
+import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
 
 type PreviewScreenNavigationProp = StackNavigationProp<RootStackParamList, 'PreviewScreen'>;
 
@@ -14,6 +15,8 @@ const Preview: React.FC = () => {
   const [currentImage, setCurrentImage] = useState<ImageSourcePropType>(require('../assets/micro.png')); 
   const [fadeAnim] = useState(new Animated.Value(1));
   const [isButtonPressed, setIsButtonPressed] = useState<boolean>(false);
+  
+
 
   const handleNext = () => {
     Animated.timing(fadeAnim, {

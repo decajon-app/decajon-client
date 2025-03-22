@@ -7,7 +7,22 @@ export const ENDPOINTS = {
         LOGIN_USER: `${BASE_URL}/auth/login`
     },
 
+    USERS: {
+        GET_USER: `TBD`,
+    },
+
     GROUPS: {
         CREATE_GROUP: `${BASE_URL}/groups`,
+        GET_GROUP: `TBD`
+    },
+
+    REPERTOIRES: {
+        CREATE_REPERTOIRE: `TBD`,
+        GET_REPERTOIRE: `TBD`,
+    },
+
+    SONGS: {
+        CREATE_SONG: `TBD`,
+        GET_SONG: `TBD`,
     }
 }

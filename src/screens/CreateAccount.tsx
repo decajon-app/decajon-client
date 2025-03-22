@@ -46,14 +46,14 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
     try {
       const newUserData: UserDto = await registerUser(userRequestData);
       console.log(newUserData);
-      navigation.navigate('WelcomeScreen'); 
+      Alert.alert("", "Tu cuenta ha sido creada, por favor, inicia sesión para continuar");
+      returnPage();
     } catch (error) {
       Alert.alert('Error', 'No se pudo registrar el usuario.');
     }
   };
 
   const returnPage = (): void => {
-    console.log('Return page button');
     navigation.navigate('LoginScreen');
   };
 

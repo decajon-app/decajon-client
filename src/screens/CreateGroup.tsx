@@ -11,8 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; 
-import { newGroup } from '../api/newGroupApi.ts';
+import { RootStackParamList } from '../navigation/StackNavigator';
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateGroup'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'CreateGroup'>;

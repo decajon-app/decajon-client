@@ -1,8 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/StackNavigator';
+import { getUserData } from '../storage/UserStorage';
+import { getToken } from '../storage/AuthStorage';
+import { getLaunchData } from '../storage/LaunchStorage';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'HomeScreen'>;
 
@@ -14,7 +17,9 @@ const Home: React.FC<Props> = ({ navigation }) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false); // Estado de visibilidad del menú
   const slideAnim = useRef(new Animated.Value(300)).current; // Animación del menú
 
-  const userName = 'Nombre de usuario';
+  const [userName, setUserName] = useState<string>('Nombre de usuario');
+
+
   const groupName = 'Nombre del grupo';
   const songName = 'Nombre de la canción';
   const songDetails = 'Compositor/Cantante';
@@ -31,6 +36,8 @@ const Home: React.FC<Props> = ({ navigation }) => {
 
   const goHome = () => {
     console.log('Going to home');
+    console.log("EL VERDADERO USER: ", getUserData());
+    console.log("EL VERDADERO TOKEN: ", getToken());
   };
 
   const goProfile = () => {
@@ -42,8 +49,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
   };
 
   const goNewGroup = () => {
-    console.log('Going to new group');
-    console.log('CreateGroup');
+    navigation.navigate('WelcomeScreen');
   };
 
   const logOut = () => {
@@ -69,6 +75,14 @@ const Home: React.FC<Props> = ({ navigation }) => {
       }).start();
     }
   };
+
+  useEffect(() => {
+    const getUserName = async () => {
+      const userData = await getUserData();
+      setUserName(userData.firstName);
+    }
+    getUserName();
+  }, []);
 
   return (
     <View style={styles.container}>
