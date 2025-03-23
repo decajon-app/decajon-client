@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,33 +6,61 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Alert
 } from 'react-native';
+
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/StackNavigator';
+import { GroupDto } from '../models';
+import { getUserData } from '../storage/UserStorage';
+import { createGroup } from '../api/GroupsApi';
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateGroup'>;
 type LoginScreenRouteProp = RouteProp<RootStackParamList, 'CreateGroup'>;
 
-interface LoginProps {
+
+
+interface Props {
   navigation: LoginScreenNavigationProp;
   route: LoginScreenRouteProp;
 }
 
-const CreateGroup: React.FC<LoginProps> = ({ navigation }) => {
+const CreateGroup: React.FC<Props> = ({ navigation }) => {
   const [nameGroup, setNameGroup] = useState<string>('');
+  const [creatorId, setCreatorId] = useState<number>(-1);
 
-  const createGroup = (): void => {
-    console.log('nameGroup:', nameGroup);
-    //navigation.navigate('GroupInformation');
+  const handleCreateGroup = async (): Promise<void> => {
+    const newGroupRequest: GroupDto = {
+      name: nameGroup,
+      ownerId: creatorId
+    };
+
+    try {
+      const newGroupData: GroupDto = await createGroup(newGroupRequest);
+      console.log(newGroupData);
+      navigation.navigate('GroupInformation', { groupData: newGroupData });
+    } catch (error) {
+      Alert.alert('Error', 'No se pudo registrar el usuario.');
+      return;
+    }
   };
 
   const returnPage = (): void => {
     console.log('Return page button');
-    navigation.navigate('WelcomeScreen');
+    navigation.navigate('HomeScreen');
   };
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      getUserData().then(userData => {
+        setCreatorId(userData.id);
+      });
+    };
+    fetchUserId();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -58,8 +86,8 @@ const CreateGroup: React.FC<LoginProps> = ({ navigation }) => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={createGroup}>
-        <Text style={styles.buttonText}>Siguiente</Text>
+      <TouchableOpacity style={styles.button} onPress={handleCreateGroup}>
+        <Text style={styles.buttonText}>Crear</Text>
       </TouchableOpacity>
 
       <View style={styles.footer}>

@@ -18,7 +18,8 @@ import ForgotPassword from '../screens/ForgotPassword.tsx';
 import ResetPassword from '../screens/ResetPassword.tsx';
 import CreateGroup from '../screens/CreateGroup.tsx';
 //import CreateEvent from '../screens/CreateEvent.tsx';
-//import GroupInformation from '../screens/GroupInformation.tsx';
+import GroupInformation from '../screens/GroupInformation.tsx';
+import { GroupDto } from '../models/GroupDto.ts';
 //import JoinGroup from '../screens/JoinGroup.tsx';
 
 
@@ -34,6 +35,8 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   CreateGroup: undefined;
   // CreateEvent: undefined;
+  GroupInformation: {groupData: GroupDto};
+
 
   // GroupInformation: undefined;
   // JoinGroup: undefined;
@@ -54,9 +57,9 @@ const StackNavigator = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="CreateGroup" component={CreateGroup} />
+        <Stack.Screen name="GroupInformation" component={GroupInformation} />
         {/*
         <Stack.Screen name="CreateEvent" component={CreateEvent} />
-        <Stack.Screen name="GroupInformation" component={GroupInformation} />
         <Stack.Screen name="JoinGroup" component={JoinGroup} />
         */}
       </Stack.Navigator>

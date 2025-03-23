@@ -33,10 +33,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
   };
 
   const goHome = () => {
-    console.log('Going to home');
-    console.log("EL VERDADERO USER: ", getUserData());
-    console.log("EL VERDADERO TOKEN: ", getToken());
-
+    navigation.navigate('HomeScreen');
   };
 
   const goProfile = () => {
@@ -48,7 +45,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
   };
 
   const goNewGroup = () => {
-    navigation.navigate('WelcomeScreen');
+    navigation.navigate('CreateGroup');
   };
 
   const logOut = () => {

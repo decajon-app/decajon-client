@@ -21,10 +21,8 @@ interface LoginProps {
   route: LoginScreenRouteProp;
 }
 
-const GroupInformation: React.FC<LoginProps> = ({ navigation }) => {
-  const [nameGroup, setNameGroup] = useState<string>('Nombre del \ngrupo');
-  const [idGroup, setIdGroup] = useState<string>('ID del grupo');
-  const [passwordGroup, setPasswordGroup] = useState<string>('Contraseña');
+const GroupInformation: React.FC<LoginProps> = ({ navigation, route }) => {
+  const { groupData } = route.params;
 
   const returnPage = (): void => {
     console.log('Return page button');
@@ -45,13 +43,13 @@ const GroupInformation: React.FC<LoginProps> = ({ navigation }) => {
       </View>
 
       <View style={styles.header}>
-        <Text style={styles.title}>{nameGroup}</Text>
+        <Text style={styles.title}>{groupData.name}</Text>
         <Text style={styles.subtitle}>Tu ID del grupo es:</Text>
       </View>
 
       <View style={styles.container1}>
         <Icon name="groups" color="#200606" size={50} />
-        <Text style={styles.idGroup}>{idGroup}</Text>
+        <Text style={styles.idGroup}>{ groupData.id }</Text>
       </View>
 
       <View style={styles.header2}>
@@ -60,7 +58,7 @@ const GroupInformation: React.FC<LoginProps> = ({ navigation }) => {
 
       <View style={styles.container1}>
         <Icon name="key" color="#200606" size={50} />
-        <Text style={styles.idGroup}>{passwordGroup}</Text>
+        <Text style={styles.idGroup}>{ groupData.password }</Text>
       </View>
 
       <Text style={styles.subtitle3}>
