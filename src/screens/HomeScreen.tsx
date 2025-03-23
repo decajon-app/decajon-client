@@ -16,9 +16,7 @@ type Props = {
 const Home: React.FC<Props> = ({ navigation }) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false); // Estado de visibilidad del menú
   const slideAnim = useRef(new Animated.Value(300)).current; // Animación del menú
-
   const [userName, setUserName] = useState<string>('Nombre de usuario');
-
 
   const groupName = 'Nombre del grupo';
   const songName = 'Nombre de la canción';

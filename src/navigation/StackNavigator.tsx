@@ -36,6 +36,8 @@ export type RootStackParamList = {
   CreateGroup: undefined;
   // CreateEvent: undefined;
   GroupInformation: {groupData: GroupDto};
+
+  // GroupInformation: undefined;
   // JoinGroup: undefined;
 };
 
