@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,23 +7,14 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { GroupsStackParamsList } from '../types/navigation';
 
-// Definimos los tipos de navegación y rutas
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'GroupInformation'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'GroupInformation'>;
+type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'GroupInformation'>;
 
-interface LoginProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const GroupInformation: React.FC<LoginProps> = ({ navigation, route }) => {
-  const { groupData } = route.params;
+const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, route }) => {
+  // Extraer los datos del grupo que acaba de ser creado
+  const { name, id, password } = route.params;
 
   const returnPage = (): void => {
     console.log('Return page button');
@@ -31,7 +23,7 @@ const GroupInformation: React.FC<LoginProps> = ({ navigation, route }) => {
 
   const goHome = (): void => {
     console.log('Go home button');
-    navigation.navigate('HomeScreen');
+    // navigation.navigate('HomeScreen');
   }
 
   return (
@@ -43,13 +35,13 @@ const GroupInformation: React.FC<LoginProps> = ({ navigation, route }) => {
       </View>
 
       <View style={styles.header}>
-        <Text style={styles.title}>{groupData.name}</Text>
+        <Text style={styles.title}>{name}</Text>
         <Text style={styles.subtitle}>Tu ID del grupo es:</Text>
       </View>
 
       <View style={styles.container1}>
         <Icon name="groups" color="#200606" size={50} />
-        <Text style={styles.idGroup}>{ groupData.id }</Text>
+        <Text style={styles.idGroup}>{ id }</Text>
       </View>
 
       <View style={styles.header2}>
@@ -58,7 +50,7 @@ const GroupInformation: React.FC<LoginProps> = ({ navigation, route }) => {
 
       <View style={styles.container1}>
         <Icon name="key" color="#200606" size={50} />
-        <Text style={styles.idGroup}>{ groupData.password }</Text>
+        <Text style={styles.idGroup}>{ password }</Text>
       </View>
 
       <Text style={styles.subtitle3}>

@@ -8,23 +8,14 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { StackScreenProps } from '@react-navigation/stack';
+import { AppStackParamList } from '../types/navigation';
 
-// Definimos los tipos de navegación y rutas
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateEvent'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'CreateEvent'>;
+type CreateEventScreenProps = StackScreenProps<AppStackParamList, 'CreateEvent'>;
 
-interface LoginProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const CreateEvent: React.FC<LoginProps> = ({ navigation }) => {
+const CreateEventScreen: React.FC<CreateEventScreenProps> = ({ navigation, route }) => {
   const [date, setDate] = useState<Date>(new Date());
   const [show, setShow] = useState<boolean>(false);
   const [formattedDate, setFormattedDate] = useState<string>('Fecha');
@@ -48,12 +39,12 @@ const CreateEvent: React.FC<LoginProps> = ({ navigation }) => {
   const CreateEvent = () => {
     console.log(formattedDate);
     console.log(eventType);
-    navigation.navigate('HomeScreen');
+    // navigation.navigate('HomeScreen');
   };
 
   const returnPage = () => {
     console.log('Return page button');
-    navigation.navigate('HomeScreen');
+    // navigation.navigate('HomeScreen');
   };
 
   return (
@@ -228,4 +219,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateEvent;
+export default CreateEventScreen;

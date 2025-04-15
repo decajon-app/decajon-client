@@ -1,6 +1,4 @@
-// CORREGIR --------------------------------------------------------------
-
-
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -9,30 +7,19 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-
-import ForgotPassword from './ForgotPassword';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { AuthStackParamList } from '../../../types/navigation';
 
-// Definimos los tipos de navegación y rutas
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ResetPassword'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'ResetPassword'>;
+type ResetPasswordScreenProps = StackScreenProps<AuthStackParamList, 'ResetPassword'>;
 
-interface LoginProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const ResetPassword: React.FC<LoginProps> = ({ navigation }) => {
+const ResetPasswordScreen: React.FC<ResetPasswordScreenProps> = ({ navigation }) => {
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const resetPassword = (): void => {
     console.log('newPassword:', newPassword);
     console.log('confirmPassword:', confirmPassword);
-    navigation.navigate('LoginScreen');
+    // TODO navigation.navigate('LoginScreen');
   };
   
   const returnPage = (): void => {
@@ -178,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResetPassword;
+export default ResetPasswordScreen;

@@ -1,3 +1,4 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -7,30 +8,21 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { AuthStackParamList } from '../../../types/navigation';
 
-// Definimos los tipos de navegación y rutas
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ForgotPassword'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'ForgotPassword'>;
+type ForgotPasswordScreenProps = StackScreenProps<AuthStackParamList, 'ForgotPassword'>;
 
-interface LoginProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const ForgotPassword: React.FC<LoginProps> = ({ navigation }) => {
+const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navigation, route }) => {
   const [email, setEmail] = useState<string>('');
 
   const resetPassword = (): void => {
     console.log('Email:', email);
-    navigation.navigate('ResetPassword');
+    // navigation.navigate('ResetPassword');
   };
 
   const returnPage = (): void => {
     console.log('Return page button');
-    navigation.navigate('LoginScreen');
+    navigation.navigate('Login');
   };
 
   return (
@@ -159,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgotPassword;
+export default ForgotPasswordScreen;

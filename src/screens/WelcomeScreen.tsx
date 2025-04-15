@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; 
 import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
+import { StackScreenProps } from '@react-navigation/stack';
+import { AppStackParamList } from '../types/navigation';
 
+type WelcomeScreenProps = StackScreenProps<AppStackParamList, 'Welcome'>;
 
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'WelcomeScreen'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'WelcomeScreen'>;
-
-interface LoginProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const Welcome: React.FC<LoginProps> = ({ navigation }) => {
+const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, route }) => {
   const [activeCard, setActiveCard] = useState<'create' | 'join' | 'skip' | null>(null);
 
   const handlePress = (card: 'create' | 'join' | 'skip'): void => {
     setActiveCard(card);
 
     if (card === 'skip') {
-      navigation.navigate('HomeScreen');
+      /**
+       * Mismo caso que en el login,
+       * utilizamos replace en lugar de 
+       * navigate para no darle oportunidad al usuario
+       * de regresar a la pantalla anterior.
+       */
+      // TODO navigation.???
     }
     else if (card === 'create') {
       console.log('Option Create');
@@ -190,4 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Welcome;
+export default WelcomeScreen;

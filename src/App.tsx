@@ -1,8 +1,13 @@
 import React from 'react';
-import StackNavigator from './navigation/StackNavigator';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AppNavigator from './navigation';
 
 const App = () => {
-  return <StackNavigator />;
+  return (
+    <SafeAreaProvider>
+      <AppNavigator />
+    </SafeAreaProvider>
+  );
 };
 
 export default App;

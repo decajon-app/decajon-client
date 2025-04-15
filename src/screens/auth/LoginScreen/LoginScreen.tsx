@@ -12,26 +12,19 @@ import {
   TextInput as TextInputType,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator';
 import { Alert } from 'react-native';
-import { login } from '../api/AuthApi';
-import { LoginRequestDto, LoginResponseDto, UserDto } from '../models';
-import { saveToken } from '../storage/AuthStorage';
-import { saveUserData } from '../storage/UserStorage';
-import { getLaunchData } from '../storage/LaunchStorage';
+import { AuthStackParamList } from '../../../types/navigation';
+import { StackScreenProps } from '@react-navigation/stack';
+import { LoginRequestDto, LoginResponseDto, UserDto } from '../../../models';
+import { login } from '../../../api/AuthApi';
+import { saveToken } from '../../../storage/AuthStorage';
+import { saveUserData } from '../../../storage/UserStorage';
 
+type LoginScreenProps = StackScreenProps<AuthStackParamList, 'Login'> & {
+  onLoginSuccess: () => void;
+};
 
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'LoginScreen'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'LoginScreen'>;
-
-interface LoginProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const Login: React.FC<LoginProps> = ({ navigation }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, route }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -65,13 +58,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         await saveUserData(user);
       }
 
-      getLaunchData().then(isFirstTime => {
-        if(isFirstTime) {
-          navigation.navigate('WelcomeScreen');
-        } else {
-          navigation.navigate('HomeScreen');
-        }
-      });
+      onLoginSuccess();
       
     } catch (error) {
       if (error instanceof Error) {
@@ -102,7 +89,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.header}>
-          <Image style={styles.image} source={require('../assets/logo.png')} />
+          <Image style={styles.image} source={require('../../../assets/logo.png')} />
         </View>
 
         <View style={styles.body}>
@@ -253,5 +240,5 @@ const styles = StyleSheet.create({
     },
   });
   
-  export default Login;
+  export default LoginScreen;
   

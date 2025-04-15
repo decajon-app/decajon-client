@@ -8,27 +8,16 @@ import {
   TouchableOpacity,
   Alert
 } from 'react-native';
-
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator';
 import { GroupDto } from '../models';
 import { getUserData } from '../storage/UserStorage';
 import { createGroup } from '../api/GroupsApi';
+import { StackScreenProps } from '@react-navigation/stack';
+import { GroupsStackParamsList } from '../types/navigation';
 
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateGroup'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'CreateGroup'>;
+type CreateGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'CreateGroup'>;
 
-
-
-interface Props {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const CreateGroup: React.FC<Props> = ({ navigation }) => {
+const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation, route }) => {
   const [nameGroup, setNameGroup] = useState<string>('');
   const [creatorId, setCreatorId] = useState<number>(-1);
 
@@ -41,7 +30,7 @@ const CreateGroup: React.FC<Props> = ({ navigation }) => {
     try {
       const newGroupData: GroupDto = await createGroup(newGroupRequest);
       console.log(newGroupData);
-      navigation.navigate('GroupInformation', { groupData: newGroupData });
+      navigation.navigate('GroupInformation', {...newGroupData});
     } catch (error) {
       Alert.alert('Error', 'No se pudo registrar el usuario.');
       return;
@@ -50,7 +39,7 @@ const CreateGroup: React.FC<Props> = ({ navigation }) => {
 
   const returnPage = (): void => {
     console.log('Return page button');
-    navigation.navigate('HomeScreen');
+    // navigation.navigate('');
   };
 
   useEffect(() => {

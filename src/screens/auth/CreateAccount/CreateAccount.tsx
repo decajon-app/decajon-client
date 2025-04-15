@@ -7,23 +7,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator';
 import { Alert } from 'react-native';
-import { registerUser } from '../api/AuthApi.ts';
-import { UserRequestDto, UserDto } from '../models/index.ts';
+import { registerUser } from '../../../api/AuthApi.ts';
+import { UserRequestDto, UserDto } from '../../../models/index.ts';
+import { AuthStackParamList } from '../../../types/navigation.ts';
+import { StackScreenProps } from '@react-navigation/stack';
 
+type CreateAccountScreenProps = StackScreenProps<AuthStackParamList, 'CreateAccount'>;
 
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateAccount'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'CreateAccount'>;
-
-interface LoginProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
+const CreateAccountScreen: React.FC<CreateAccountScreenProps> = ({ navigation, route }) => {
   const [nombre, setNombre] = useState<string>('');
   const [apellido1, setApellido1] = useState<string>('');
   const [apellido2, setApellido2] = useState<string>('');
@@ -54,7 +46,7 @@ const CreateAccount: React.FC<LoginProps> = ({ navigation }) => {
   };
 
   const returnPage = (): void => {
-    navigation.navigate('LoginScreen');
+    navigation.navigate('Login');
   };
 
   return (
@@ -236,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateAccount;
+export default CreateAccountScreen;

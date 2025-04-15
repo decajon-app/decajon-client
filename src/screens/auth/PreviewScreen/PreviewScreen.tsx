@@ -3,37 +3,34 @@ import { StyleSheet, Text, View, ImageSourcePropType, TouchableOpacity, Animated
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; 
-import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
+import { AuthStackParamList } from '../../../types/navigation';
 
-type PreviewScreenNavigationProp = StackNavigationProp<RootStackParamList, 'PreviewScreen'>;
+type PreviewScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Preview'>;
 
-const Preview: React.FC = () => {
+const PreviewScreen: React.FC = () => {
   const navigation = useNavigation<PreviewScreenNavigationProp>(); 
 
   // Tipar el estado
-  const [currentImage, setCurrentImage] = useState<ImageSourcePropType>(require('../assets/micro.png')); 
+  const [currentImage, setCurrentImage] = useState<ImageSourcePropType>(require('../../../assets/micro.png')); 
   const [fadeAnim] = useState(new Animated.Value(1));
   const [isButtonPressed, setIsButtonPressed] = useState<boolean>(false);
   
-
-
   const handleNext = () => {
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start(() => {
-      if (currentImage === require('../assets/micro.png')) {
-        setCurrentImage(require('../assets/violin.png')); 
+      if (currentImage === require('../../../assets/micro.png')) {
+        setCurrentImage(require('../../../assets/violin.png')); 
       } else {
-        navigation.navigate('LoginScreen'); 
+        navigation.navigate('Login'); 
       }
     });
   };
 
   useEffect(() => {
-    if (currentImage !== require('../assets/micro.png')) {
+    if (currentImage !== require('../../../assets/micro.png')) {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 300,
@@ -111,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Preview;
+export default PreviewScreen;

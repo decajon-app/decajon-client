@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
+import { StackScreenProps } from '@react-navigation/stack';
+import { AppStackParamList } from '../types/navigation';
 
-type RootStackParamList = {
-  LoadScreen: undefined;
-  PreviewScreen: undefined;
-  LoginScreen: undefined;
-};
+type LoadScreenProps = StackScreenProps<AppStackParamList, 'Load'>;
 
-type LoadScreenNavigationProp = StackNavigationProp<RootStackParamList, 'LoadScreen'>;
-
-interface LoadProps {
-  navigation: LoadScreenNavigationProp;
-}
-
-const Load: React.FC<LoadProps> = ({ navigation }) => {
+const LoadScreen: React.FC<LoadScreenProps> = ({ navigation, route }) => {
   const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -27,17 +18,19 @@ const Load: React.FC<LoadProps> = ({ navigation }) => {
       };
     }
     fetchLaunchData();
-  }, []); // Solo ejecutar una vez para obtener el firstLaunch
+  }, [isFirstLaunch]); // Solo ejecutar una vez para obtener el firstLaunch
 
   useEffect(() => {
     // No hacer nada hasta que isFirstLaunch tenga un valor
     if(isFirstLaunch === null) return;
 
+    console.log('Holaaaa!');
+
     if(isFirstLaunch) {
-      navigation.navigate('PreviewScreen');
+      //TODO navigation.navigate('PreviewScreen');
     }
     else {
-      navigation.navigate('LoginScreen');
+      //TODO navigation.navigate('LoginScreen');
     }
   }, [navigation, isFirstLaunch]);
 
@@ -71,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Load;
+export default LoadScreen;

@@ -1,3 +1,4 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -7,23 +8,12 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/StackNavigator'; // Ajusta la ruta según tu proyecto
+import { GroupsStackParamsList } from '../types/navigation';
 
-// Definimos los tipos de navegación y rutas
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'JoinGroup'>;
-type LoginScreenRouteProp = RouteProp<RootStackParamList, 'JoinGroup'>;
+type JoinGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'JoinGroup'>;
 
-interface LoginProps {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
-
-const JoinGroup: React.FC<LoginProps> = ({ navigation }) => {
+const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation, route }) => {
   const [idGroup, setIdGroup] = useState<string>('');
   const [passwordGroup, setPasswordGroup] = useState<string>('');
 
@@ -33,7 +23,7 @@ const JoinGroup: React.FC<LoginProps> = ({ navigation }) => {
 
   const handleJoinGroup = () => {
     console.log('Joining group with:', { idGroup, passwordGroup });
-    navigation.navigate('HomeScreen');
+    // navigation. ??? TODO
   };
 
   return (
@@ -199,4 +189,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default JoinGroup;
+export default JoinGroupScreen;
