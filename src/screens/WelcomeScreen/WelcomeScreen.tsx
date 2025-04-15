@@ -94,7 +94,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, route }) => {
       </TouchableOpacity>
 
       <View style={styles.footer}>
-        <Image style={styles.image} source={require('../assets/logo.png')} />
+        <Image style={styles.image} source={require('../../assets/logo.png')} />
       </View>
     </View>
   );

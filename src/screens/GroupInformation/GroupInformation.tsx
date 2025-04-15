@@ -63,7 +63,7 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
       </TouchableOpacity>
 
       <View style={styles.footer}>
-        <Image style={styles.image} source={require('../assets/logo.png')} />
+        <Image style={styles.image} source={require('../../assets/logo.png')} />
       </View>
     </View>
   );

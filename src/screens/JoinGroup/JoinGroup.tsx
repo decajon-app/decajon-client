@@ -73,7 +73,7 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation, route }) 
       </TouchableOpacity>
 
       <View style={styles.footer}>
-        <Image style={styles.image} source={require('../assets/logo.png')} />
+        <Image style={styles.image} source={require('../../assets/logo.png')} />
       </View>
     </View>
   );
