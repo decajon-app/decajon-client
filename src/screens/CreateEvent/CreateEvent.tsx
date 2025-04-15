@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { StackScreenProps } from '@react-navigation/stack';
-import { AppStackParamList } from '../types/navigation';
+import { AppStackParamList } from '../../types/navigation';
 
 type CreateEventScreenProps = StackScreenProps<AppStackParamList, 'CreateEvent'>;
 

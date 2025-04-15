@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
+import { getLaunchData, saveLaunchData } from '../../storage/LaunchStorage';
 import { StackScreenProps } from '@react-navigation/stack';
-import { AppStackParamList } from '../types/navigation';
+import { AppStackParamList } from '../../types/navigation';
 
 type LoadScreenProps = StackScreenProps<AppStackParamList, 'Load'>;
 
