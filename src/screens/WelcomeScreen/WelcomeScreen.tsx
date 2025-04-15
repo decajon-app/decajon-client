@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { getLaunchData, saveLaunchData } from '../storage/LaunchStorage';
+import { getLaunchData, saveLaunchData } from '../../storage/LaunchStorage';
 import { StackScreenProps } from '@react-navigation/stack';
-import { AppStackParamList } from '../types/navigation';
+import { AppStackParamList } from '../../types/navigation';
 
 type WelcomeScreenProps = StackScreenProps<AppStackParamList, 'Welcome'>;
 

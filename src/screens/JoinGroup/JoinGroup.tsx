@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,77 +7,69 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { GroupDto } from '../models';
-import { getUserData } from '../storage/UserStorage';
-import { createGroup } from '../api/GroupsApi';
-import { StackScreenProps } from '@react-navigation/stack';
-import { GroupsStackParamsList } from '../types/navigation';
+import { GroupsStackParamsList } from '../../types/navigation';
 
-type CreateGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'CreateGroup'>;
+type JoinGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'JoinGroup'>;
 
-const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation, route }) => {
-  const [nameGroup, setNameGroup] = useState<string>('');
-  const [creatorId, setCreatorId] = useState<number>(-1);
+const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation, route }) => {
+  const [idGroup, setIdGroup] = useState<string>('');
+  const [passwordGroup, setPasswordGroup] = useState<string>('');
 
-  const handleCreateGroup = async (): Promise<void> => {
-    const newGroupRequest: GroupDto = {
-      name: nameGroup,
-      ownerId: creatorId
-    };
-
-    try {
-      const newGroupData: GroupDto = await createGroup(newGroupRequest);
-      console.log(newGroupData);
-      navigation.navigate('GroupInformation', {...newGroupData});
-    } catch (error) {
-      Alert.alert('Error', 'No se pudo registrar el usuario.');
-      return;
-    }
-  };
-
-  const returnPage = (): void => {
+  const handleBackPress = () => {
     console.log('Return page button');
-    // navigation.navigate('');
   };
 
-  useEffect(() => {
-    const fetchUserId = async () => {
-      getUserData().then(userData => {
-        setCreatorId(userData.id);
-      });
-    };
-    fetchUserId();
-  }, []);
+  const handleJoinGroup = () => {
+    console.log('Joining group with:', { idGroup, passwordGroup });
+    // navigation. ??? TODO
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.btn} onPress={returnPage}>
+        <TouchableOpacity style={styles.btn} onPress={handleBackPress}>
           <Icon name="navigate-before" color="white" size={30} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.header}>
-        <Text style={styles.title}>Crear nuevo grupo</Text>
-        <Text style={styles.subtitle}>¿Cuál es el nombre del grupo?</Text>
+        <Text style={styles.title}>Unirme a un grupo</Text>
+        <Text style={styles.subtitle}>Ingresa el ID del grupo</Text>
       </View>
 
       <View style={styles.nameGroupInput}>
         <Icon name="groups" color="#200606" size={30} />
         <TextInput
           style={styles.input}
-          placeholder="Nombre del grupo"
+          placeholder="ID del grupo"
           placeholderTextColor={'black'}
-          onChangeText={setNameGroup}
-          value={nameGroup}
+          onChangeText={(text) => setIdGroup(text)}
+          value={idGroup}
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleCreateGroup}>
-        <Text style={styles.buttonText}>Crear</Text>
+      <View style={styles.header2}>
+        <Text style={styles.subtitle2}>Contraseña del grupo</Text>
+      </View>
+
+      <View style={styles.nameGroupInput}>
+        <Icon name="key" color="#200606" size={30} />
+        <TextInput
+          style={styles.input}
+          placeholder="Contraseña"
+          placeholderTextColor={'black'}
+          secureTextEntry
+          onChangeText={(text) => setPasswordGroup(text)}
+          value={passwordGroup}
+        />
+      </View>
+
+      <Text style={styles.subtitle3}>Solicita el ID y contraseña al administrador del grupo</Text>
+
+      <TouchableOpacity style={styles.button} onPress={handleJoinGroup}>
+        <Text style={styles.buttonText}>Siguiente</Text>
       </TouchableOpacity>
 
       <View style={styles.footer}>
@@ -89,7 +82,7 @@ const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation, route }) =>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F6EDE1',
+    backgroundColor: '#fbf2e2',
   },
   header: {
     padding: 20,
@@ -97,19 +90,36 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     alignItems: 'flex-start',
   },
+  header2: {
+    padding: 20,
+    marginLeft: 20,
+    alignItems: 'flex-start',
+  },
   title: {
     fontSize: 38,
     fontWeight: 'bold',
-    textShadowColor: 'gray',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
   subtitle: {
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20,
-    paddingTop: 100,
+    paddingTop: 80,
+  },
+  subtitle2: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20,
+    paddingTop: 20,
+  },
+  subtitle3: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingHorizontal: 10,
+    paddingTop: 30,
+    color: '#763F0E',
   },
   btnContainer: {
     width: '100%',
@@ -132,7 +142,6 @@ const styles = StyleSheet.create({
   footer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 130,
   },
   nameGroupInput: {
     flexDirection: 'row',
@@ -163,9 +172,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '80%',
-    marginVertical: 80,
+    marginVertical: 40,
     shadowColor: '#200606',
-    shadowOffset: { width: 0, height: 10 },
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
     shadowOpacity: 0.2,
     shadowRadius: 10,
     elevation: 16,
@@ -177,4 +189,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateGroup;
+export default JoinGroupScreen;

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { GroupsStackParamsList } from '../types/navigation';
+import { GroupsStackParamsList } from '../../types/navigation';
 
 type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'GroupInformation'>;
 
