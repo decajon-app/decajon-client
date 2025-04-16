@@ -13,6 +13,7 @@ export { default as WelcomeScreen } from '../screens/WelcomeScreen/WelcomeScreen
 export { default as HomeScreen } from './HomeScreen/HomeScreen.tsx';
 
 // Screens del botón Grupos
+export { default as GroupsScreen } from '../screens/GroupsScreen/GroupsScreen.tsx';
 export { default as CreateGroup } from '../screens/CreateGroup/CreateGroup.tsx';
 export { default as CreateEvent } from '../screens/CreateEvent/CreateEvent.tsx';
 export { default as GroupInformation } from '../screens/GroupInformation/GroupInformation.tsx';

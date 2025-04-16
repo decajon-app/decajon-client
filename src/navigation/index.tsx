@@ -48,7 +48,7 @@ function AuthStackNavigator({ onLoginSuccess }: { onLoginSuccess: () => void}) {
 function HomeStackNavigator() {
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="Home" component={Screens.HomeScreen} />
+            <HomeStack.Screen name="Home" component={Screens.HomeScreen} options={{ headerShown: false }} />
         </HomeStack.Navigator>
     );
 }
@@ -58,9 +58,9 @@ function HomeStackNavigator() {
 function GroupsStackNavigator() {
     return (
         <GroupsStack.Navigator>
-            {/* TODO <GroupsStack.Screen name="Groups" component={Screens.GroupsScreen} /> */}
-            <GroupsStack.Screen name="CreateGroup" component={Screens.CreateGroup} />
-            <GroupsStack.Screen name="GroupInformation" component={Screens.GroupInformation} />
+            <GroupsStack.Screen name="Groups" component={Screens.GroupsScreen} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="CreateGroup" component={Screens.CreateGroup} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="GroupInformation" component={Screens.GroupInformation} options={{ headerShown: false }} />
         </GroupsStack.Navigator>
     );
 }
@@ -70,7 +70,7 @@ function GroupsStackNavigator() {
 function ChatbotStackNavigator() {
     return (
         <ChatbotStack.Navigator>
-            <ChatbotStack.Screen name="Chatbot" component={Screens.ChatbotScreen} />
+            <ChatbotStack.Screen name="Chatbot" component={Screens.ChatbotScreen} options={{ headerShown: false }} />
         </ChatbotStack.Navigator>
     );
 }
@@ -83,12 +83,12 @@ function BottomTabNavigator() {
             screenOptions={() => ({
                 tabBarActiveTintColor: 'tomato',
                 tabBarInactiveTintColor: 'gray',
-                headerShown: false, // Oculta el header por defecto de las tabs
+                headerShown: false,
               })}
         >
             <Tab.Screen name="HomeTab" component={HomeStackNavigator} options={{ title: 'Inicio' }} />
-            <Tab.Screen name="GroupsTab" component={GroupsStackNavigator} options={{ title: 'Grupos' }} />
-            <Tab.Screen name="ChatbotTab" component={ChatbotStackNavigator} options={{ title: 'Chatbot' }} />
+            <Tab.Screen name="GroupsTab" component={GroupsStackNavigator} options={{ title: 'Grupos', }} />
+            <Tab.Screen name="ChatbotTab" component={ChatbotStackNavigator} options={{ title: 'Chatbot', }} />
         </Tab.Navigator>     
     );
 }
