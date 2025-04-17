@@ -164,9 +164,9 @@ const styles = StyleSheet.create({
       marginTop: 50,
     },
     image: {
-      marginTop: 20,
-      width: '70%',
-      height: 100,
+      marginTop: '30%',
+      width: '90%',
+      height: 130,
     },
     form: {
       paddingTop: 20,

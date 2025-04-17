@@ -44,6 +44,7 @@ const PreviewScreen: React.FC = () => {
       <View style={styles.container}>
         <Animated.Image
           style={[styles.image, { opacity: fadeAnim }]} // Animación de opacidad aplicada a la imagen
+          resizeMode="contain"
           source={currentImage}
         />
       </View>
@@ -80,10 +81,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    height: '90%',
-    width: 290,
-    marginTop: '10%',
-    borderRadius: 25,
+    height: '95%',
+    width: 350, 
+    borderRadius: 20,
+    backgroundColor: 'black',
   },
   btnContainer: {
     width: '100%',
