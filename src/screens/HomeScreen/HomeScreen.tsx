@@ -71,15 +71,18 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
       <View style={styles.header}>
         <Image style={styles.logo} source={require('../../assets/logo.png')} />
         <View style={styles.iconContainer}>
-          <Icon style={styles.iconTop} name="account-circle" size={50} color="black" />
-          <Icon style={styles.iconTop} name="calendar-today" size={40} color="black" />
+          <TouchableOpacity onPress={toggleMenu}>
+            <Icon style={styles.iconTop} name="calendar-month" size={50} color="#4A1900" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={toggleMenu}>
+            <Icon style={styles.iconTop} name="account-circle" size={50} color="#4A1900" />
+          </TouchableOpacity>
         </View>
       </View>
-
+      <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.greeting}>¡Hola, {userName}!</Text>
 
         <TouchableOpacity style={styles.newEventButton} onPress={newEvent}>
@@ -87,21 +90,55 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
         </TouchableOpacity>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Tus eventos próximos</Text>
-          <View style={styles.cardEvent}>
-            <Icon style={styles.iconCard} name="thumb-up" size={40} color="black" />
-            <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
+          <Text style={styles.sectionTitle}>Ensayos sugeridos</Text>
+          <View style={styles.card}>
+            <View style={styles.cardIcon}>
+              <Icon style={styles.iconCard} name="music-note" size={80} color="#F6EDE1" />
+            </View>
+            <View style={styles.cardContainer}>
+              <Text style={styles.groupName}>{groupName}</Text>
+              <Text style={styles.songTitle}>{songName}</Text>
+              <Text style={styles.songDetails}>{songDetails}</Text>
+            </View>
+          </View>
+          <View style={styles.card}>
+            <View style={styles.cardIcon}>
+              <Icon style={styles.iconCard} name="music-note" size={80} color="#F6EDE1" />
+            </View>
+            <View style={styles.cardContainer}>
+              <Text style={styles.groupName}>{groupName}</Text>
+              <Text style={styles.songTitle}>{songName}</Text>
+              <Text style={styles.songDetails}>{songDetails}</Text>
+            </View>
+          </View>
+          <View style={styles.card}>
+            <View style={styles.cardIcon}>
+              <Icon style={styles.iconCard} name="music-note" size={80} color="#F6EDE1" />
+            </View>
+            <View style={styles.cardContainer}>
+              <Text style={styles.groupName}>{groupName}</Text>
+              <Text style={styles.songTitle}>{songName}</Text>
+              <Text style={styles.songDetails}>{songDetails}</Text>
+            </View>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Ensayos sugeridos</Text>
-          <View style={styles.card}>
-            <Text style={styles.groupName}>{groupName}</Text>
-            <Text style={styles.songTitle}>{songName}</Text>
-            <Text style={styles.songDetails}>{songDetails}</Text>
+          <Text style={styles.sectionTitle}>Tus eventos próximos</Text>
+          <View style={styles.cardEvent}>
+            <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />
+            <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
+          </View>
+          <View style={styles.cardEvent}>
+            <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />
+            <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
+          </View>
+          <View style={styles.cardEvent}>
+            <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />
+            <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
           </View>
         </View>
+
       </ScrollView>
 
       {/*<View style={styles.footer}>
