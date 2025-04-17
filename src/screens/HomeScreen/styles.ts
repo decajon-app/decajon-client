@@ -1,13 +1,29 @@
 import { StyleSheet } from 'react-native';
+import { Image } from 'react-native-reanimated/lib/typescript/Animated';
 
 export const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#F6EDE1',
-      padding: 20,
     },
     content: {
       padding: 20,
+    },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    logo: {
+      width: 150,
+      height: 50,
+    },
+    iconTop: {
+      marginLeft: 10,
+    },
+    iconContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     greeting: {
       fontSize: 24,

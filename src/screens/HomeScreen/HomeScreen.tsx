@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { styles } from './styles';
-import { Text, View, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getUserData } from '../../storage/UserStorage';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -72,6 +72,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
+      <View style={styles.header}>
+        <Image style={styles.logo} source={require('../../assets/logo.png')} />
+        <View style={styles.iconContainer}>
+          <Icon style={styles.iconTop} name="account-circle" size={50} color="black" />
+          <Icon style={styles.iconTop} name="calendar-today" size={40} color="black" />
+        </View>
+      </View>
+
         <Text style={styles.greeting}>¡Hola, {userName}!</Text>
 
         <TouchableOpacity style={styles.newEventButton} onPress={newEvent}>
