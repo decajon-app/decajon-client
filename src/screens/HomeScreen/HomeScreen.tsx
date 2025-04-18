@@ -203,7 +203,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
           <TouchableOpacity style={styles.closeButton} onPress={toggleCalendar}>
             <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
           </TouchableOpacity>
-
           <Text style={styles.calendarTitle}>Mi calendario</Text>
           <View style={styles.calendarDays}>
             <Text style={styles.calendarDay}>L</Text>
@@ -213,9 +212,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
             <Text style={styles.calendarDay}>V</Text>
             <Text style={styles.calendarDay}>S</Text>
             <Text style={styles.calendarDay}>D</Text>
-
           </View>
-          
         </Animated.View>
       )}
     </View>
