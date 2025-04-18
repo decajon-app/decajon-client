@@ -8,7 +8,7 @@ import { HomeStackParamList } from '../../types/navigation';
 
 type HomeScreenProps = StackScreenProps<HomeStackParamList, 'Home'>;
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreenProps) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false); // Estado de visibilidad del menú
   const [calendarVisible, setCalendarVisible] = useState<boolean>(false); // Estado de visibilidad del calendario
   const slideAnim = useRef(new Animated.Value(300)).current; // Animación del menú
@@ -19,10 +19,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
   const songDetails = 'Compositor/Cantante';
 
   const newEvent = () => {
-    console.log('New Event Functions');
-    console.log('New Event');
-    console.log('CreateEvent');
-    // navigation.navigate('CreateGroup');
+    console.log('Going to create event')
   };
 
   const goProfile = () => {
@@ -33,14 +30,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
     console.log('Going to edit information');
   };
 
-  const goNewGroup = () => {
-    console.log('logout');
-    // navigation.navigate('CreateGroup');
-  };
-
   const logOut = () => {
     console.log('logout');
-    // navigation.navigate('LoginScreen');
   };
 
   const toggleMenu = () => {
@@ -159,21 +150,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
 
       </ScrollView>
 
-      {/*<View style={styles.footer}>
-        <TouchableOpacity style={styles.footerItem} onPress={goHome}>
-          <Icon name="home-filled" size={30} color="black" />
-          <Text style={styles.footerText}>Inicio</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.footerItem} onPress={openCalendar}>
-          <Icon name="calendar-month" size={30} color="black" />
-          <Text style={styles.footerText}>Calendario</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.footerItem} onPress={toggleMenu}>
-          <Icon name="menu" size={30} color="black" />
-          <Text style={styles.footerText}>Menú</Text>
-        </TouchableOpacity>
-      </View>*/}
-
       {menuVisible && (
         <Animated.View style={[styles.menu, { right: slideAnim }]}>
           <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
@@ -185,18 +161,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
           <TouchableOpacity style={styles.menuItem} onPress={goEditInformation}>
             <Text style={styles.menuText}>Editar Información</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={goNewGroup}>
-            <Text style={styles.menuText}>Nuevo Grupo</Text>
-          </TouchableOpacity>
           <View style={styles.divider} />
           <TouchableOpacity style={styles.menuItem} onPress={logOut}>
             <Text style={styles.menuText}>Cerrar Sesión</Text>
           </TouchableOpacity>
         </Animated.View>
       )}
-
-
-
 
       {calendarVisible && (
         <Animated.View style={[styles.calendar, { left: slideAnim }]}>
@@ -218,6 +188,5 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
     </View>
   );
 };
-
 
 export default HomeScreen;

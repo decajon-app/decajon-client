@@ -30,14 +30,7 @@ const ChatbotStack = createStackNavigator<ChatbotStackParamsList>();
 function AuthStackNavigator({ onLoginSuccess }: { onLoginSuccess: () => void}) {
     return (
         <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-
-
-            {/* Linea a cambiar para ver pantalla inicial */}
-
-            {/* <AuthStack.Screen name="Preview" component={Screens.PreviewScreen} /> */}
-            <AuthStack.Screen name="Home" component={Screens.HomeScreen} />
-
-
+            <AuthStack.Screen name="Preview" component={Screens.PreviewScreen} />
             <AuthStack.Screen 
                 name="Login" 
                 component={(props: LoginScreenProps) => (
@@ -107,6 +100,7 @@ export default function AppNavigator() {
 
     useEffect(() => {
         // Checar si existe un token para logearlo automaticamente
+        setIsLoggedIn(true);
     }, []);
 
     const handleLoginSuccess = useCallback(() => {
@@ -125,33 +119,3 @@ export default function AppNavigator() {
         </NavigationContainer>
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
