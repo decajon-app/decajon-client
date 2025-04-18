@@ -10,6 +10,7 @@ type HomeScreenProps = StackScreenProps<HomeStackParamList, 'Home'>;
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreenProps) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false); // Estado de visibilidad del menú
+  const [calendarVisible, setCalendarVisible] = useState<boolean>(false); // Estado de visibilidad del calendario
   const slideAnim = useRef(new Animated.Value(300)).current; // Animación del menú
   const [userName, setUserName] = useState<string>('Nombre de usuario');
 
@@ -61,6 +62,25 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
     }
   };
 
+  const toggleCalendar = () => {
+    if (calendarVisible) {
+      console.log('closing calendar');
+      Animated.timing(slideAnim, {
+        toValue: 300, // Fuera de la pantalla
+        duration: 300,
+        useNativeDriver: false,
+      }).start(() => setCalendarVisible(false));
+    } else {
+      console.log('opening calendar');
+      setCalendarVisible(true);
+      Animated.timing(slideAnim, {
+        toValue: 0, // Visible en pantalla
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    }
+  };
+
   useEffect(() => {
     const getUserName = async () => {
       const userData = await getUserData();
@@ -72,15 +92,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={toggleMenu}>
+          <Icon style={styles.iconTop} name="account-circle" size={50} color="#4A1900" />
+        </TouchableOpacity>
         <Image style={styles.logo} source={require('../../assets/logo.png')} />
-        <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={toggleMenu}>
-            <Icon style={styles.iconTop} name="calendar-month" size={50} color="#4A1900" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={toggleMenu}>
-            <Icon style={styles.iconTop} name="account-circle" size={50} color="#4A1900" />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={toggleCalendar}>
+          <Icon style={styles.iconTop} name="calendar-month" size={50} color="#4A1900" />
+        </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.greeting}>¡Hola, {userName}!</Text>
@@ -157,7 +175,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
       </View>*/}
 
       {menuVisible && (
-        <Animated.View style={[styles.menu, { left: slideAnim }]}>
+        <Animated.View style={[styles.menu, { right: slideAnim }]}>
           <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
             <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
           </TouchableOpacity>
@@ -174,6 +192,30 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
           <TouchableOpacity style={styles.menuItem} onPress={logOut}>
             <Text style={styles.menuText}>Cerrar Sesión</Text>
           </TouchableOpacity>
+        </Animated.View>
+      )}
+
+
+
+
+      {calendarVisible && (
+        <Animated.View style={[styles.calendar, { left: slideAnim }]}>
+          <TouchableOpacity style={styles.closeButton} onPress={toggleCalendar}>
+            <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
+          </TouchableOpacity>
+
+          <Text style={styles.calendarTitle}>Mi calendario</Text>
+          <View style={styles.calendarDays}>
+            <Text style={styles.calendarDay}>L</Text>
+            <Text style={styles.calendarDay}>M</Text>
+            <Text style={styles.calendarDay}>I</Text>
+            <Text style={styles.calendarDay}>J</Text>
+            <Text style={styles.calendarDay}>V</Text>
+            <Text style={styles.calendarDay}>S</Text>
+            <Text style={styles.calendarDay}>D</Text>
+
+          </View>
+          
         </Animated.View>
       )}
     </View>
