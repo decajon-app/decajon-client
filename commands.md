@@ -75,7 +75,7 @@ git commit -m "mensaje_descriptivo"
 
 Para sincronizar cambios con el repositorio remoto:
 ```terminal
-git pull origin <nombre_branch_remota>
+git push origin <nombre_branch_remota>
 ```
 Si la branch no existe remotamente, este comando la creará en automático.
 
