@@ -100,7 +100,6 @@ export default function AppNavigator() {
 
     useEffect(() => {
         // Checar si existe un token para logearlo automaticamente
-        setIsLoggedIn(true);
     }, []);
 
     const handleLoginSuccess = useCallback(() => {
