@@ -16,6 +16,7 @@ import {
 } from '../types/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { getToken } from '../storage/AuthStorage';
 
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
@@ -99,7 +100,13 @@ export default function AppNavigator() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // Checar si existe un token para logearlo automaticamente
+        const getAccessToken = async () => {
+            const token = await getToken();
+            if (token !== null) {
+                setIsLoggedIn(true);
+            }
+        }
+        getAccessToken();
     }, []);
 
     const handleLoginSuccess = useCallback(() => {
