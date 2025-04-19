@@ -17,7 +17,7 @@ import { GroupsStackParamsList } from '../../types/navigation';
 
 type CreateGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'CreateGroup'>;
 
-const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation, route }) => {
+const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation }) => {
   const [nameGroup, setNameGroup] = useState<string>('');
   const [creatorId, setCreatorId] = useState<number>(-1);
 
@@ -29,17 +29,15 @@ const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation, route }) =>
 
     try {
       const newGroupData: GroupDto = await createGroup(newGroupRequest);
-      console.log(newGroupData);
       navigation.navigate('GroupInformation', {...newGroupData});
     } catch (error) {
-      Alert.alert('Error', 'No se pudo registrar el usuario.');
+      Alert.alert('Error', 'No se pudo crear el grupo.');
       return;
     }
   };
 
   const returnPage = (): void => {
-    console.log('Return page button');
-    // navigation.navigate('');
+    navigation.navigate('Groups');
   };
 
   useEffect(() => {

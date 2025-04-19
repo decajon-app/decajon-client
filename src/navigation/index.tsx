@@ -16,6 +16,7 @@ import {
 } from '../types/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { getToken } from '../storage/AuthStorage';
 
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
@@ -30,14 +31,7 @@ const ChatbotStack = createStackNavigator<ChatbotStackParamsList>();
 function AuthStackNavigator({ onLoginSuccess }: { onLoginSuccess: () => void}) {
     return (
         <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-
-
-            {/* Linea a cambiar para ver pantalla inicial */}
-
-            {/* <AuthStack.Screen name="Preview" component={Screens.PreviewScreen} /> */}
-            <AuthStack.Screen name="Home" component={Screens.HomeScreen} />
-
-
+            <AuthStack.Screen name="Preview" component={Screens.PreviewScreen} />
             <AuthStack.Screen 
                 name="Login" 
                 component={(props: LoginScreenProps) => (
@@ -106,7 +100,13 @@ export default function AppNavigator() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // Checar si existe un token para logearlo automaticamente
+        const getAccessToken = async () => {
+            const token = await getToken();
+            if (token !== null) {
+                setIsLoggedIn(true);
+            }
+        }
+        getAccessToken();
     }, []);
 
     const handleLoginSuccess = useCallback(() => {
@@ -125,33 +125,3 @@ export default function AppNavigator() {
         </NavigationContainer>
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
