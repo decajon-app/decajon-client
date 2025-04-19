@@ -28,9 +28,6 @@ export const styles = StyleSheet.create({
       height: 60,
       borderRadius: 10,
     },
-    iconTop: {
-      
-    },
     iconContainer: {
       flexDirection: 'row',
       alignItems: 'center',

@@ -84,11 +84,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={toggleMenu}>
-          <Icon style={styles.iconTop} name="account-circle" size={50} color="#4A1900" />
+          <Icon name="account-circle" size={50} color="#4A1900" />
         </TouchableOpacity>
         <Image style={styles.logo} source={require('../../assets/logo.png')} />
         <TouchableOpacity onPress={toggleCalendar}>
-          <Icon style={styles.iconTop} name="calendar-month" size={50} color="#4A1900" />
+          <Icon name="calendar-month" size={50} color="#4A1900" />
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.content}>

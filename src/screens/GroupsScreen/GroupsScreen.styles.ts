@@ -3,8 +3,26 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
-    padding: 15,
+    padding: 16,
+    backgroundColor: '#F6EDE1',
+  },
+  headerLogo: {
+    backgroundColor: '#FFF7EE',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    paddingTop: 10,
+    paddingBottom: 5, 
+  },
+  logo: {
+    width: 160,
+    height: 60,
+    borderRadius: 10,
   },
   header: {
     flexDirection: 'row',
@@ -12,10 +30,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  buttonsTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#4A1900',
+    padding: 20,
+    borderRadius: 15,
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  titleTop: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    marginTop: 70,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: 'black',
   },
   list: {
     flex: 1,
@@ -40,21 +83,6 @@ const styles = StyleSheet.create({
   groupDescription: {
     fontSize: 14,
     color: '#666',
-  },
-  newGroupButton: {
-    backgroundColor: '#007bff',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  newGroupButtonText: {
-    color: 'white',
-    marginLeft: 8,
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 });
 
