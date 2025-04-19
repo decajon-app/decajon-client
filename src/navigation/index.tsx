@@ -89,8 +89,8 @@ function BottomTabNavigator() {
             paddingBottom: 10,
             backgroundColor: '#FFF7EE', // Color de fondo del tabBar
           },
-          tabBarActiveTintColor: '#4A1900', // Color del ícono activo
-          tabBarInactiveTintColor: '#795548', // Color del ícono inactivo
+          tabBarActiveTintColor: '#795548', // Color del ícono activo
+          tabBarInactiveTintColor: '#4A1900', // Color del ícono inactivo
         }}
       >
         <Tab.Screen
