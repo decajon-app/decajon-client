@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     width: '100%',
     alignItems: 'flex-end',
-    paddingRight: 50,
+    paddingRight: 20,
   },
   btn: {
     backgroundColor: '#200606',
