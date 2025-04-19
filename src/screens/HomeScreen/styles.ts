@@ -7,10 +7,11 @@ export const styles = StyleSheet.create({
       backgroundColor: '#F6EDE1',
     },
     content: {
-      marginTop: 50,
-      padding: 20,
+      marginTop: 60,
+      padding: 10,
     },
     header: {
+      backgroundColor: '#FFF7EE',
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
@@ -19,12 +20,13 @@ export const styles = StyleSheet.create({
       left: 0,
       right: 0,
       zIndex: 1,
-      backgroundColor: '#F6EDE1',
-      padding: 10, 
+      paddingTop: 10,
+      paddingBottom: 5, 
     },
     logo: {
       width: 160,
       height: 60,
+      borderRadius: 10,
     },
     iconTop: {
       
@@ -41,7 +43,7 @@ export const styles = StyleSheet.create({
     newEventButton: {
       backgroundColor: '#4A1900',
       padding: 25,
-      borderRadius: 25,
+      borderRadius: 15,
       alignItems: 'center',
       marginBottom: 30,
       elevation: 10,
@@ -62,10 +64,11 @@ export const styles = StyleSheet.create({
     },
     card: {
       padding: 20,
+      backgroundColor: '#FFF7EE',
       borderColor: '#4A1900',
       borderWidth: 0.2,
-      marginBottom: 20,
-      borderRadius: 25,
+      marginBottom: 10,
+      borderRadius: 10,
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
@@ -81,11 +84,12 @@ export const styles = StyleSheet.create({
     },
     cardEvent: {
       paddingVertical: 60,
+      backgroundColor: '#FFF7EE',
       borderColor: '#4A1900',
       borderWidth: 0.2,
       alignItems: 'center', 
-      marginBottom: 20,
-      borderRadius: 25,
+      marginBottom: 10,
+      borderRadius: 10,
     },
     cardText: {
       marginTop: 10,

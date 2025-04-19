@@ -21,30 +21,6 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
         navigation.navigate('CreateGroup');
     }
 
-    const openRepertory = () => {
-        navigation.navigate('Repertory');
-    }
-
-    const openGroupInformation = () => {
-        navigation.navigate('GroupInformation');
-    }
-
-    const [selectedGroup, setSelectedGroup] = useState<{ id: string; name: string; members: string[] } | null>(null);
-
-    const renderGroup = ({ item }: { item: { id: string; name: string; members: string[] } }) => (
-        <TouchableOpacity style={styles.item} onPress={() => setSelectedGroup(item)}>
-            <Icon name="group" size={24} color="white" style={styles.icon} />
-            <Text style={styles.title}>{item.name}</Text> 
-        </TouchableOpacity>        
-    );
-
-    const renderMember = ({ item }: { item: string }) => (
-        <View style={styles.item}>
-            <Icon name="person" size={24} color="white" style={styles.icon} />
-            <Text style={styles.title}>{item}</Text>
-        </View>
-    );
-
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.newGroupButton} onPress={handleCreateGroup}>
@@ -66,8 +42,6 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             />
         </View>
     );
-
-    
 };
 
 export default GroupsScreen;

@@ -87,7 +87,7 @@ function BottomTabNavigator() {
           tabBarStyle: {
             height: 60, // Ajusta la altura para que sea suficientemente grande
             paddingBottom: 10,
-            backgroundColor: '#F6EDE1', // Color de fondo del tabBar
+            backgroundColor: '#FFF7EE', // Color de fondo del tabBar
           },
           tabBarActiveTintColor: '#4A1900', // Color del ícono activo
           tabBarInactiveTintColor: '#795548', // Color del ícono inactivo
