@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
   inputLabel: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#FFF7EE',
   },
   btnContainer: {
     width: '100%',

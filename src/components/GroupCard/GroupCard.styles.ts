@@ -1,18 +1,31 @@
-import { StackScreenProps } from "@react-navigation/stack";
-import { GroupDto } from "../../models";
-import { GroupsStackParamsList } from "../../types/navigation";
-import { TouchableOpacity } from "react-native";
-import { View } from "react-native-reanimated/lib/typescript/Animated";
+import { StyleSheet } from 'react-native';
 
-interface GroupItemProps { 
-    item: GroupDto, 
-    navigation: StackScreenProps<GroupsStackParamsList, 'Groups'>['navigation']; 
-}
+const styles = StyleSheet.create({
+    groupContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: '#FFF7EE',
+        padding: 20,
+        borderRadius: 15,
+        marginBottom: 10,
+    },
+    groupInformation: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginLeft: 10,
+        alignContent: 'center',
+        justifyContent: 'center',
+    },
+    name: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    description: {
+        fontSize: 12,
+    },
+    miembros: {
+        fontSize: 12,
+    },
+});
 
-const GroupCard: React.FC<GroupItemProps> = ({ item, navigation }) => {
-    return (
-            
-    );
-};
-
-export default GroupCard;
+export default styles;
