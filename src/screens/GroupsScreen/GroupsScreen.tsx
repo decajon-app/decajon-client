@@ -21,13 +21,17 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
         navigation.navigate('CreateGroup');
     }
 
+    const handleJoinGroup = () => {
+        navigation.navigate('JoinGroup');
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.newGroupButton} onPress={handleCreateGroup}>
                 <Text style={styles.newGroupButtonText}>Crear</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.newGroupButton} onPress={handleCreateGroup}>
+            <TouchableOpacity style={styles.newGroupButton} onPress={handleJoinGroup}>
                 <Text style={styles.newGroupButtonText}>Unirme</Text>
             </TouchableOpacity>
 

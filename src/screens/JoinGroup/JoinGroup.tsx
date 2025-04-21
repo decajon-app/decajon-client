@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,23 +7,54 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupsStackParamsList } from '../../types/navigation';
+import { GroupDto, JoinGroupDto } from '../../models';
+import { getUserData } from '../../storage/UserStorage';
+import { joinGroup } from '../../api/GroupsApi';
 
 type JoinGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'JoinGroup'>;
 
-const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation, route }) => {
-  const [idGroup, setIdGroup] = useState<string>('');
+const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
+  const [userId, setUserId] = useState<number>(-1);
+  const [groupId, setGroupId] = useState<number>(-1);
   const [passwordGroup, setPasswordGroup] = useState<string>('');
 
+  useEffect(() => {
+    const getUserId = async () => {
+      const userData = await getUserData();
+      setUserId(userData.id);
+    }
+    getUserId();
+  }, []);
+
   const handleBackPress = () => {
-    console.log('Return page button');
+    navigation.navigate('Groups');
   };
 
-  const handleJoinGroup = () => {
-    console.log('Joining group with:', { idGroup, passwordGroup });
-    // navigation. ??? TODO
+  const handleGroupIdChange = (text: string) => {
+    const numericGroupId = Number(text);
+    setGroupId(numericGroupId);
+  };
+
+  const handleJoinGroup = async () => {
+    const joinGroupData: JoinGroupDto = {
+      userId: userId,
+      groupId: groupId,
+      password: passwordGroup
+    }
+
+    
+    try {
+      const newJoinGroupData: GroupDto = await joinGroup(joinGroupData);
+      console.log(newJoinGroupData);
+      navigation.navigate('GroupInformation', {...newJoinGroupData});
+    } catch (error) {
+      Alert.alert('Error', 'No fue posible unirse al grupo.');
+      return;
+    }
   };
 
   return (
@@ -45,8 +76,8 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation, route }) 
           style={styles.input}
           placeholder="ID del grupo"
           placeholderTextColor={'black'}
-          onChangeText={(text) => setIdGroup(text)}
-          value={idGroup}
+          onChangeText={handleGroupIdChange}
+          keyboardType='numeric'
         />
       </View>
 
