@@ -1,5 +1,5 @@
 // const BASE_URL = 'http://localhost:8080/api';
-const BASE_URL = 'http://10.0.2.2:8080/api';
+const BASE_URL = 'http://192.168.1.83:8080/api'; //IP manuel localhost
 
 export const ENDPOINTS = {
     AUTH: {
