@@ -49,9 +49,6 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-
-
-
             <View style={styles.header}>
                 <Text style={styles.title}>Mis grupos</Text>
             </View>

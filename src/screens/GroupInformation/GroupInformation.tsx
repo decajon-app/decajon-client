@@ -17,22 +17,11 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
   const { name, id, password } = route.params;
 
   const returnPage = (): void => {
-    console.log('Return page button');
-    navigation.navigate('CreateGroup');
+    navigation.goBack();
   };
-
-  const goHome = (): void => {
-    console.log('Go home button');
-    // navigation.navigate('HomeScreen');
-  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.btn} onPress={returnPage}>
-          <Icon name="navigate-before" color="white" size={30} />
-        </TouchableOpacity>
-      </View>
 
       <View style={styles.header}>
         <Text style={styles.title}>{name}</Text>
@@ -58,7 +47,7 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
         Solo tú tienes acceso a esta información.
       </Text>
 
-      <TouchableOpacity style={styles.button} onPress={goHome}>
+      <TouchableOpacity style={styles.button} onPress={returnPage}>
         <Text style={styles.buttonText}>Aceptar</Text>
       </TouchableOpacity>
 

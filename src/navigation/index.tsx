@@ -85,12 +85,12 @@ function BottomTabNavigator() {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            height: 60, // Ajusta la altura para que sea suficientemente grande
+            height: 60, 
             paddingBottom: 10,
-            backgroundColor: '#FFF7EE', // Color de fondo del tabBar
+            backgroundColor: '#FFF7EE', 
           },
-          tabBarActiveTintColor: '#795548', // Color del ícono activo
-          tabBarInactiveTintColor: '#4A1900', // Color del ícono inactivo
+          tabBarActiveTintColor: '#4A1900',
+          tabBarInactiveTintColor: '#795548', 
         }}
       >
         <Tab.Screen
@@ -99,13 +99,13 @@ function BottomTabNavigator() {
           options={{
             title: 'Inicio',
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="home" color={color} size={40} /> // Tamaño del ícono 40
+              <MaterialIcons name="home" color={color} size={40} />
             ),
             tabBarIconStyle: {
-              width: 40, // Ancho para que el contenedor se expanda
-              height: 40, // Altura para que el contenedor se expanda
-              justifyContent: 'center', // Asegura que el ícono esté centrado verticalmente
-              alignItems: 'center', // Asegura que el ícono esté centrado horizontalmente
+              width: 40, 
+              height: 40, 
+              justifyContent: 'center', 
+              alignItems: 'center',
             },
           }}
         />
@@ -115,7 +115,7 @@ function BottomTabNavigator() {
           options={{
             title: 'Grupos',
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="group" color={color} size={40} /> // Tamaño del ícono 40
+              <MaterialIcons name="group" color={color} size={40} /> 
             ),
             tabBarIconStyle: {
               width: 40,
@@ -131,7 +131,7 @@ function BottomTabNavigator() {
           options={{
             title: 'Chatbot',
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="smart-toy" color={color} size={40} /> // Tamaño del ícono 40
+              <MaterialIcons name="smart-toy" color={color} size={40} /> 
             ),
             tabBarIconStyle: {
               width: 40,
