@@ -7,16 +7,17 @@
  * 
  * 
  */
-
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Clave para guardar el token en el AsyncStorage
+const ACCESS_TOKEN = "accessToken";
 
 /**
  * Guarda el token en AsyncStorage, bajo la clave "userToken"
  */
 export const saveToken = async (token: string) => {
   try {
-    await AsyncStorage.setItem("accessToken", token);
+    await AsyncStorage.setItem(ACCESS_TOKEN, token);
   } catch (error) {
     console.error("Error al guardar el token:", error);
   }
@@ -28,7 +29,7 @@ export const saveToken = async (token: string) => {
  */
 export const getToken = async () => {
   try {
-    return await AsyncStorage.getItem("accessToken");
+    return await AsyncStorage.getItem(ACCESS_TOKEN);
   } catch (error) {
     console.error("Error al obtener el token:", error);
     return null;
@@ -41,7 +42,7 @@ export const getToken = async () => {
  */
 export const removeToken = async () => {
   try {
-    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem(ACCESS_TOKEN);
   } catch (error) {
     console.error("Error al eliminar el token:", error);
   }
