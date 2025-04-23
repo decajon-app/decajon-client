@@ -54,6 +54,7 @@ export type MainTabParamList = {
 // Crear tipo de Home
 export type HomeStackParamList = {
     Home: undefined;
+    Login: undefined;
     // Configuration?????
 };
 
@@ -64,6 +65,7 @@ export type GroupsStackParamsList = {
     CreateGroup: undefined;
     JoinGroup: undefined;
     GroupInformation: GroupDto;
+    ViewGroup: GroupDto;
 };
 
 

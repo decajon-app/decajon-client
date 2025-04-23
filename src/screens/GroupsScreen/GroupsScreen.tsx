@@ -6,6 +6,7 @@ import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupDto } from "../../models";
 import GroupCard from "../../components/GroupCard/GroupCard";
+import { ScrollView } from "react-native-gesture-handler";
 
 type GroupsScreenProps = StackScreenProps<GroupsStackParamsList, 'Groups'>;
 
@@ -27,6 +28,9 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
     }
 
     return (
+        <ScrollView>
+        
+
         <View style={styles.container}>
             <View style={styles.headerLogo}>
                 <TouchableOpacity /* onPress={toggleMenu} */>
@@ -59,6 +63,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                 renderItem={({ item }) => <GroupCard item={item} navigation={navigation} />}
             />
         </View>
+        </ScrollView>
     );
 };
 

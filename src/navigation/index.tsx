@@ -63,6 +63,7 @@ function GroupsStackNavigator() {
             <GroupsStack.Screen name="Groups" component={Screens.GroupsScreen} options={{ headerShown: false }} />
             <GroupsStack.Screen name="CreateGroup" component={Screens.CreateGroup} options={{ headerShown: false }} />
             <GroupsStack.Screen name="GroupInformation" component={Screens.GroupInformation} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="ViewGroup" component={Screens.ViewGroup} options={{ headerShown: false }} />
         </GroupsStack.Navigator>
     );
 }

@@ -14,7 +14,7 @@ type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'Grou
 
 const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, route }) => {
   // Extraer los datos del grupo que acaba de ser creado
-  const { name, id, password } = route.params;
+  const { name, ownerId, id, password } = route.params;
 
   const returnPage = (): void => {
     navigation.goBack();
@@ -25,7 +25,7 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
 
       <View style={styles.header}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.subtitle}>Tu ID del grupo es:</Text>
+        <Text style={styles.subtitle}>Tu ID del grupo es: {ownerId}</Text>
       </View>
 
       <View style={styles.container1}>
