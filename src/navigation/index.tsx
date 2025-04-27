@@ -63,11 +63,12 @@ function GroupsStackNavigator() {
             <GroupsStack.Screen name="Groups" component={Screens.GroupsScreen} options={{ headerShown: false }} />
             <GroupsStack.Screen name="CreateGroup" component={Screens.CreateGroup} options={{ headerShown: false }} />
             <GroupsStack.Screen name="GroupInformation" component={Screens.GroupInformation} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="JoinGroup" component={Screens.JoinGroup} options={{ headerShown: false}} />
             <GroupsStack.Screen name="ViewGroup" component={Screens.ViewGroup} options={{ headerShown: false }} />
             <GroupsStack.Screen name="RepertoryScreen" component={Screens.RepertoryScreen} options={{ headerShown: false }} />
             <GroupsStack.Screen name="AddSong" component={Screens.AddSong} options={{ headerShown: false }} />
             <GroupsStack.Screen name="EditSong" component={Screens.EditSong} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="JoinGroup" component={Screens.JoinGroup} options={{ headerShown: false}} />
+            <GroupsStack.Screen name="ViewSong" component={Screens.ViewSong} options={{ headerShown: false }} />
         </GroupsStack.Navigator>
     );
 }

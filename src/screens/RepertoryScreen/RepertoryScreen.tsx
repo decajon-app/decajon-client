@@ -38,6 +38,11 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
         navigation.navigate('EditSong'); // Navegar a la pantalla de edición de canción
     };
 
+    const handleViewSong = () => {
+        navigation.navigate('ViewSong'); // Navegar a la pantalla de vista de canción
+    }
+
+
     return (
         <View style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.body}>
@@ -60,7 +65,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
                     </View>
 
                     <View style={styles.songList}>
-                        <TouchableOpacity style={styles.songItem}>
+                        <TouchableOpacity style={styles.songItem} onPress={handleViewSong}>
                             <View style={styles.songImageContainer}>
                                 <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
                             </View>

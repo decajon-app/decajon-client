@@ -56,14 +56,13 @@ export const styles = StyleSheet.create({
     sectionTitle: {
       fontSize: 24,
       fontWeight: 'bold',
-      marginBottom: 10,
+      marginBottom: 25,
       color: '#4A1900',
     },
     card: {
       padding: 20,
       backgroundColor: '#FFF7EE',
       borderColor: '#4A1900',
-      borderWidth: 0.2,
       marginBottom: 10,
       borderRadius: 10,
       display: 'flex',
@@ -83,7 +82,6 @@ export const styles = StyleSheet.create({
       paddingVertical: 60,
       backgroundColor: '#FFF7EE',
       borderColor: '#4A1900',
-      borderWidth: 0.2,
       alignItems: 'center', 
       marginBottom: 10,
       borderRadius: 10,

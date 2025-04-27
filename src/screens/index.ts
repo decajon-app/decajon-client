@@ -23,6 +23,7 @@ export { default as RepertoryScreen } from './RepertoryScreen/RepertoryScreen.ts
 
 export { default as AddSong } from './AddSong/AddSong.tsx';
 export { default as EditSong } from './EditSong/EditSong.tsx';
+export { default as ViewSong } from './ViewSong/ViewSong.tsx';
 
 // Screens del botón Chatbot
 export { default as ChatbotScreen } from './ChatbotScreen/ChatbotScreen.tsx';

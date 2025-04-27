@@ -69,6 +69,7 @@ export type GroupsStackParamsList = {
     RepertoryScreen: undefined;
     AddSong: undefined;
     EditSong: undefined;
+    ViewSong: undefined;
 };
 
 
