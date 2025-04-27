@@ -85,85 +85,71 @@ function ChatbotStackNavigator() {
 
 // Stack que contiene el BottomTabNavigator
 function BottomTabNavigator() {
-    return (
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: {
-            height: 60, 
-            paddingBottom: 10,
-            backgroundColor: '#FFF7EE', 
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          height: 60, 
+          paddingBottom: 10,
+          backgroundColor: '#FFF7EE',
+        },
+        tabBarActiveTintColor: '#4A1900', // Ícono activo  
+        tabBarInactiveTintColor: '#795548', // Ícono inactivo
+      }}
+    >
+      <Tab.Screen
+        name="HomeTab"
+        component={HomeStackNavigator}
+        options={{
+          title: 'Inicio',
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="home" color={color} size={40} />
+          ),
+          tabBarIconStyle: {
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
           },
-          tabBarActiveTintColor: '#4A1900',
-          tabBarInactiveTintColor: '#795548', 
-            height: 60, // Ajusta la altura para que sea suficientemente grande
-            paddingBottom: 10,
-            backgroundColor: '#FFF7EE', // Color de fondo del tabBar
-          },
-          tabBarActiveTintColor: '#795548', // Color del ícono activo
-          tabBarInactiveTintColor: '#4A1900', // Color del ícono inactivo
         }}
-      >
-        <Tab.Screen
-          name="HomeTab"
-          component={HomeStackNavigator}
-          options={{
-            title: 'Inicio',
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="home" color={color} size={40} />
-            ),
-            tabBarIconStyle: {
-              width: 40, 
-              height: 40, 
-              justifyContent: 'center', 
-              alignItems: 'center',
-              <MaterialIcons name="home" color={color} size={40} /> // Tamaño del ícono 40
-            ),
-            tabBarIconStyle: {
-              width: 40, // Ancho para que el contenedor se expanda
-              height: 40, // Altura para que el contenedor se expanda
-              justifyContent: 'center', // Asegura que el ícono esté centrado verticalmente
-              alignItems: 'center', // Asegura que el ícono esté centrado horizontalmente
-            },
-          }}
-        />
-        <Tab.Screen
-          name="GroupsTab"
-          component={GroupsStackNavigator}
-          options={{
-            title: 'Grupos',
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="group" color={color} size={40} /> 
-              <MaterialIcons name="group" color={color} size={40} /> // Tamaño del ícono 40
-            ),
-            tabBarIconStyle: {
-              width: 40,
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
-          }}
-        />
-        <Tab.Screen
-          name="ChatbotTab"
-          component={ChatbotStackNavigator}
-          options={{
-            title: 'Chatbot',
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="smart-toy" color={color} size={40} /> 
-              <MaterialIcons name="smart-toy" color={color} size={40} /> // Tamaño del ícono 40
-            ),
-            tabBarIconStyle: {
-              width: 40,
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
-          }}
-        />
-      </Tab.Navigator>
-    );
-  }
+      />
+      <Tab.Screen
+        name="GroupsTab"
+        component={GroupsStackNavigator}
+        options={{
+          title: 'Grupos',
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="group" color={color} size={40} />
+          ),
+          tabBarIconStyle: {
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+        }}
+      />
+      <Tab.Screen
+        name="ChatbotTab"
+        component={ChatbotStackNavigator}
+        options={{
+          title: 'Chatbot',
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="smart-toy" color={color} size={40} />
+          ),
+          tabBarIconStyle: {
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
   
 
 

@@ -98,9 +98,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalText: {
-        fontSize: 20,
-        marginBottom: 20,
+        fontSize: 18,
         textAlign: 'center',
+        color: '#4A1900',
+        marginBottom: 20,
     },
     modalButtons: {
         flexDirection: 'row',

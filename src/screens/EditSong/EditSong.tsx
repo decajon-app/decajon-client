@@ -3,7 +3,7 @@ import { GroupsStackParamsList } from '../../types/navigation';
 import styles from "./styles";
 
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Modal, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Modal } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupDto } from "../../models";
 
@@ -13,34 +13,30 @@ const groupName = 'Nombre del grupo';
 const songName = 'Nombre de la canción';
 const songDetails = 'Compositor/Cantante';
 
-// Componente principal
 const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
-    const [isEditMode, setIsEditMode] = useState(false); // Estado para alternar entre modo edición y normal
-    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // Estado para mostrar/ocultar el modal de confirmación
-    const [isDeletedModalVisible, setIsDeletedModalVisible] = useState(false); // Estado para mostrar el modal de eliminación exitosa
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+    const [isDeletedModalVisible, setIsDeletedModalVisible] = useState(false);
 
     const handleEditToggle = () => {
-        setIsEditMode(!isEditMode); // Alternar entre mostrar y ocultar los botones de editar/borrar
+        setIsEditMode(!isEditMode);
     };
 
     const handleDeleteSong = () => {
-        setIsDeleteModalVisible(true); // Mostrar el modal de confirmación
+        setIsDeleteModalVisible(true);
     };
 
     const confirmDelete = () => {
         setIsDeleteModalVisible(false);
-        setIsDeletedModalVisible(true); // Mostrar el modal de eliminación exitosa
+        setIsDeletedModalVisible(true);
 
-        // Cerrar el modal automáticamente después de 3 segundos
         setTimeout(() => {
             setIsDeletedModalVisible(false);
         }, 3000);
-
-        // Aquí puedes agregar la lógica para eliminar la canción de la lista
     };
 
     const handleEditSong = () => {
-        navigation.navigate('EditSong'); // Navegar a la pantalla de edición de canción
+        navigation.navigate('EditSong');
     };
 
     return (
@@ -86,12 +82,15 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                {/* Botón flotante */}
-                <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('AddSong')}>
-                    <Icon name="add" size={30} color="#FFF" />
-                </TouchableOpacity>
             </ScrollView>
+
+            {/* Botón flotante fuera del ScrollView */}
+            <TouchableOpacity
+                style={styles.floatingButton}
+                onPress={() => navigation.navigate('AddSong')}
+            >
+                <Icon name="add" size={30} color="#FFF" />
+            </TouchableOpacity>
 
             {/* Modal de confirmación para eliminar */}
             <Modal
@@ -104,10 +103,16 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
                     <View style={styles.modalContent}>
                         <Text style={styles.modalText}>¿Estás seguro de que deseas eliminar esta canción?</Text>
                         <View style={styles.modalButtons}>
-                            <TouchableOpacity onPress={() => setIsDeleteModalVisible(false)} style={styles.modalButtonCancel}>
+                            <TouchableOpacity
+                                onPress={() => setIsDeleteModalVisible(false)}
+                                style={styles.modalButtonCancel}
+                            >
                                 <Text style={styles.modalButtonText}>Cancelar</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={confirmDelete} style={styles.modalButtonConfirm}>
+                            <TouchableOpacity
+                                onPress={confirmDelete}
+                                style={styles.modalButtonConfirm}
+                            >
                                 <Text style={styles.modalButtonText}>Eliminar</Text>
                             </TouchableOpacity>
                         </View>
@@ -124,9 +129,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>
-                            Canción eliminada exitosamente
-                        </Text>
+                        <Text style={styles.modalText}>Canción eliminada exitosamente</Text>
                         <Icon name="check-circle" size={50} color="#4A1900" />
                     </View>
                 </View>

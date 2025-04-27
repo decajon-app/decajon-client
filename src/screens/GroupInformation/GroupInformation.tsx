@@ -24,9 +24,6 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
     navigation.goBack();
   };
 
-    navigation.navigate('Groups');
-  };
-
   const goHome = (): void => {
     navigation.navigate('Groups');
   }
