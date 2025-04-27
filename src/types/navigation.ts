@@ -67,7 +67,7 @@ export type GroupsStackParamsList = {
     Members: undefined;
     JoinGroup: undefined;
     GroupInformation: GroupDto;
-    ViewGroup: GroupDto;
+    ViewGroup: { group: GroupDto};
     RepertoryScreen: undefined;
     AddSong: undefined;
     EditSong: undefined;

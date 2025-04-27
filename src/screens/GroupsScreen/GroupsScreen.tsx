@@ -14,17 +14,22 @@ type GroupsScreenProps = StackScreenProps<GroupsStackParamsList, 'Groups'>;
 
 const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
     const [groups, setGroups] = useState<GroupDto[]>([]);
-    const [userId, setUserId] = useState<number>(-1);
 
     useEffect(() => {
         const fetchGroups = async () => {
-            const fetchedGroups = await getGroupsFromUser(userId);
-            setGroups(fetchedGroups);
+            try {
+                const userData = await getUserData();
+                if (userData && userData.id !== undefined && userData.id !== null) {
+                    const fetchedGroups = await getGroupsFromUser(userData.id);
+                    setGroups(fetchedGroups);                    
+                } else {
+                    Alert.alert("Error", "No se pudo obtener la información del usuario.");
+                }
+            } catch (error: any) {
+                Alert.alert("Error", "Error al recuperar los grupos.");
+            }
         };
-        getUserData().then(userData => {
-            setUserId(userData.id);
-        });
-        fetchGroups();        
+        fetchGroups();
     }, []);
     
     const handleCreateGroup = () => {
@@ -64,7 +69,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
 
             <FlatList 
                 data={groups}
-                /* keyExtractor={(item) => item.id} */
+                keyExtractor={(item) => String(item.id)}
                 renderItem={({ item }) => <GroupCard item={item} navigation={navigation} />}
             />
         </View>
