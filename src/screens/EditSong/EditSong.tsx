@@ -1,42 +1,39 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Image, ScrollView, Modal, TextInput } from "react-native";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Modal } from "react-native";
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { GroupDto } from "../../models";
-
-type RepertoryScreenProps = StackScreenProps<GroupsStackParamsList, 'RepertoryScreen'>;
+type EditSongProps = StackScreenProps<GroupsStackParamsList, 'EditSong'>;
 
 const groupName = 'Nombre del grupo';
 const songName = 'Nombre de la canción';
 const songDetails = 'Compositor/Cantante';
 
-const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
-    const [isEditMode, setIsEditMode] = useState(false);
-    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-    const [isDeletedModalVisible, setIsDeletedModalVisible] = useState(false);
+const EditSong: React.FC<EditSongProps> = ({ navigation }) => {
+    const [nombre, setNombre] = useState<string>('');
+    const [artista, setArtista] = useState<string>('');
+    const [isAddedModalVisible, setIsAddedModalVisible] = useState(false);
+    const [isErrorModalVisible, setIsErrorModalVisible] = useState(false); // Nuevo estado para el modal de error
 
-    const handleEditToggle = () => {
-        setIsEditMode(!isEditMode);
-    };
+    const handleAddSong = () => {
+        if (nombre.trim() === '' || artista.trim() === '') {
+            setIsErrorModalVisible(true); // Mostrar modal de error
 
-    const handleDeleteSong = () => {
-        setIsDeleteModalVisible(true);
-    };
+            setTimeout(() => {
+                setIsErrorModalVisible(false);
+            }, 1500);
 
-    const confirmDelete = () => {
-        setIsDeleteModalVisible(false);
-        setIsDeletedModalVisible(true);
+            return;
+        }
+
+        setIsAddedModalVisible(true); // Mostrar modal de éxito
 
         setTimeout(() => {
-            setIsDeletedModalVisible(false);
-        }, 3000);
-    };
-
-    const handleEditSong = () => {
-        navigation.navigate('EditSong');
+            setIsAddedModalVisible(false);
+            navigation.goBack(); // Regresar a la pantalla anterior
+        }, 1500);
     };
 
     return (
@@ -54,83 +51,74 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
                     </View>
 
                     <View style={styles.titleTop}>
-                        <Text style={styles.titleText}>Repertorio</Text>
-                        <TouchableOpacity onPress={handleEditToggle}>
-                            <Icon name="edit" size={30} color="black" />
-                        </TouchableOpacity>
+                        <Text style={styles.titleText}>Editar canción</Text>
                     </View>
 
-                    <View style={styles.songList}>
-                        <TouchableOpacity style={styles.songItem}>
-                            <View style={styles.songImageContainer}>
-                                <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
-                            </View>
-                            <View>
-                                <Text style={styles.songName}>{songName}</Text>
-                                <Text style={styles.songDetails}>{songDetails}</Text>
-                            </View>
-                            {isEditMode && (
-                                <View style={styles.actionButtons}>
-                                    <TouchableOpacity onPress={handleEditSong}>
-                                        <Icon name="edit" size={35} color="#4A1900" />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={handleDeleteSong}>
-                                        <Icon name="delete" size={35} color="#4A1900" />
-                                    </TouchableOpacity>
-                                </View>
-                            )}
+                    <View style={styles.songImageContainer}>
+                        <Icon name="multitrack-audio" size={150} color="#FFF7EE" />
+                    </View>
+                    
+                    <View style={styles.form}>
+                        <View style={styles.inputLabel}>
+                            <Icon name="music-note" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Canción"
+                                placeholderTextColor="gray"
+                                onChangeText={setNombre}
+                                value={nombre}
+                            />
+                        </View>
+                    
+                        <View style={styles.inputLabel}>
+                            <Icon name="person" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Artista/Compositor"
+                                placeholderTextColor="gray"
+                                onChangeText={setArtista}
+                                value={artista}
+                            />
+                        </View>
+                    </View>
+
+                    <View style={styles.containerBottom}>
+                        <TouchableOpacity style={styles.buttonAdd} onPress={handleAddSong}>
+                            <Text style={styles.buttonText}>Editar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonCancel} onPress={() => navigation.goBack()}>
+                            <Text style={styles.buttonText}>Cancelar</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
 
-            {/* Botón flotante fuera del ScrollView */}
-            <TouchableOpacity
-                style={styles.floatingButton}
-                onPress={() => navigation.navigate('AddSong')}
-            >
-                <Icon name="add" size={30} color="#FFF" />
-            </TouchableOpacity>
-
-            {/* Modal de confirmación para eliminar */}
+            {/* Modal de confirmación de canción agregada */}
             <Modal
                 transparent={true}
-                visible={isDeleteModalVisible}
-                animationType="slide"
-                onRequestClose={() => setIsDeleteModalVisible(false)}
+                visible={isAddedModalVisible}
+                animationType="fade"
+                onRequestClose={() => setIsAddedModalVisible(false)}
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>¿Estás seguro de que deseas eliminar esta canción?</Text>
-                        <View style={styles.modalButtons}>
-                            <TouchableOpacity
-                                onPress={() => setIsDeleteModalVisible(false)}
-                                style={styles.modalButtonCancel}
-                            >
-                                <Text style={styles.modalButtonText}>Cancelar</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={confirmDelete}
-                                style={styles.modalButtonConfirm}
-                            >
-                                <Text style={styles.modalButtonText}>Eliminar</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <Text style={styles.modalText}>¡Canción editada exitosamente!</Text>
+                        <Icon name="check-circle" size={50} color="#4A1900" />
                     </View>
                 </View>
             </Modal>
 
-            {/* Modal de eliminación exitosa */}
+            {/* Modal de error por campos vacíos */}
             <Modal
                 transparent={true}
-                visible={isDeletedModalVisible}
+                visible={isErrorModalVisible}
                 animationType="fade"
-                onRequestClose={() => setIsDeletedModalVisible(false)}
+                onRequestClose={() => setIsErrorModalVisible(false)}
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>Canción eliminada exitosamente</Text>
-                        <Icon name="check-circle" size={50} color="#4A1900" />
+                        <Text style={styles.modalText}>Por favor, completa todos los campos.</Text>
+                        <Icon name="error" size={50} color="#FF0000" />
                     </View>
                 </View>
             </Modal>
@@ -138,4 +126,4 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
     );
 };
 
-export default RepertoryScreen;
+export default EditSong;
