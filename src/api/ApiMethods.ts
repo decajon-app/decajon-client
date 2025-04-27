@@ -26,6 +26,7 @@ export class ApiMethods {
     }
 
     static get<T>(url: string): Promise<T> {
+        console.log(url);
         return this.request<T>('GET', url);
     }
 

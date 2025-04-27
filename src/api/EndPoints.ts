@@ -1,5 +1,4 @@
-// const BASE_URL = 'http://localhost:8080/api';
-const BASE_URL = 'http://192.168.1.86:8080/api'; //IP manuel localhost
+import { DECAJON_API as BASE_URL } from '@env';
 
 export const ENDPOINTS = {
     AUTH: {
@@ -13,7 +12,8 @@ export const ENDPOINTS = {
 
     GROUPS: {
         CREATE_GROUP: `${BASE_URL}/groups`,
-        JOIN_GROUP: `${BASE_URL}/users-groups`
+        JOIN_GROUP: `${BASE_URL}/users-groups`,
+        GET_GROUPS_FROM_USER: `${BASE_URL}/groups/users`
     },
 
     REPERTOIRES: {

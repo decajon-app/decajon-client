@@ -9,3 +9,7 @@ export const createGroup = async (groupRequestData: GroupDto): Promise<GroupDto>
 export const joinGroup = async (joinGroupData: JoinGroupDto): Promise<GroupDto> => {
     return ApiMethods.post<GroupDto>(ENDPOINTS.GROUPS.JOIN_GROUP, joinGroupData);
 }
+
+export const getGroupsFromUser = async (userId: number): Promise<GroupDto[]> => {
+    return ApiMethods.get<GroupDto[]>(ENDPOINTS.GROUPS.GET_GROUPS_FROM_USER + `/${userId}`);
+}
