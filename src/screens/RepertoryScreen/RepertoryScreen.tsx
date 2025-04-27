@@ -1,7 +1,11 @@
+import { StackScreenProps } from "@react-navigation/stack";
+import { GroupsStackParamsList } from '../../types/navigation';
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, Modal } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
+
+type RepertoryScreenProps = StackScreenProps<GroupsStackParamsList, 'RepertoryScreen'>;
 
 const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
     const [isEditMode, setIsEditMode] = useState(false); // Estado para alternar entre modo edición y normal
