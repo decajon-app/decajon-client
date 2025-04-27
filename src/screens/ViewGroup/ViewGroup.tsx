@@ -2,27 +2,18 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
 import React from "react";
 import styles from "../ViewGroup/styles";
-
 import { View, Text, TouchableOpacity, FlatList, Image, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupDto } from "../../models";
-import GroupCard from "../../components/GroupCard/GroupCard";
 
-type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'ViewGroup'>;
-
-const MOCK_GROUPS: GroupDto[] = [
-    { id: 1, ownerId: 1, name: 'Mariachi Mexcalli', description: 'Ensayos sugeridos'},
-    { id: 2, ownerId: 2, name: 'Coro Voces del Alma', description: 'Próximo evento: Domingo 20 de Abril'},
-    { id: 3, ownerId: 3, name: 'Banda Sinfónica Juvenil', description: 'Repertorio para el concierto de mayo'},
-    { id: 4, ownerId: 4, name: 'CUCEI', description: 'Repertorio para el concierto de mayo'},
-];
+type ViewGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'ViewGroup'>;
 
 const groupName = 'Nombre del grupo';
 const songName = 'Nombre de la canción';
 const songDetails = 'Compositor/Cantante';
 
 // Componente principal
-const ViewGroup: React.FC<GroupInformationScreenProps> = ({ navigation, route }) => {
+const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
 
     const handleCreateGroup = () => {
         navigation.navigate('CreateGroup');
@@ -32,8 +23,12 @@ const ViewGroup: React.FC<GroupInformationScreenProps> = ({ navigation, route })
         navigation.navigate('JoinGroup');
     }
 
+    const handleRepertory = () => {
+        navigation.navigate('RepertoryScreen');
+    }
+
     return (            
-    <ScrollView>
+    <ScrollView> 
         <View style={styles.container}> 
             <View style={styles.headerLogo}>
                 <TouchableOpacity /* onPress={toggleMenu} */>
@@ -57,7 +52,7 @@ const ViewGroup: React.FC<GroupInformationScreenProps> = ({ navigation, route })
             </View>
 
             <View style={styles.buttonExtra}>
-                <TouchableOpacity style={styles.button} onPress={handleJoinGroup}>
+                <TouchableOpacity style={styles.button} onPress={handleRepertory}>
                     <Text style={styles.buttonText}>Repertorio</Text>
                 </TouchableOpacity>
             </View>
@@ -112,8 +107,6 @@ const ViewGroup: React.FC<GroupInformationScreenProps> = ({ navigation, route })
                             </View>
                           </TouchableOpacity>
                         </View>
-            
-
         </View>
         </ScrollView>
     );
