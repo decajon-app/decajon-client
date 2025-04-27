@@ -146,8 +146,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
               <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.cardEvent}>
+              <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />
+              <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.cardEvent}>
+              <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />
+              <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-
       </ScrollView>
 
       {menuVisible && (

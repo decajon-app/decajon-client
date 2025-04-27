@@ -29,9 +29,10 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
 
     return (
         <ScrollView>
-        
-
         <View style={styles.container}>
+            <TouchableOpacity style={styles.newGroupButton} onPress={handleJoinGroup}>
+                <Text style={styles.newGroupButtonText}>Unirme</Text>
+            </TouchableOpacity>
             <View style={styles.headerLogo}>
                 <TouchableOpacity /* onPress={toggleMenu} */>
                     <Icon name="account-circle" size={50} color="#4A1900" />
@@ -52,7 +53,6 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                     <Text style={styles.buttonText}>Unirme</Text>
                 </TouchableOpacity>
             </View>
-
             <View style={styles.header}>
                 <Text style={styles.title}>Mis grupos</Text>
             </View>

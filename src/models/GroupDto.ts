@@ -7,3 +7,9 @@ export interface GroupDto {
     createdAt?: string;
     updatedAt?: string;
 }
+
+export interface JoinGroupDto {
+    userId: number;
+    groupId: number;
+    password: string;
+}

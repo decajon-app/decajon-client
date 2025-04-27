@@ -16,9 +16,20 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
   // Extraer los datos del grupo que acaba de ser creado
   const { name, ownerId, id, password } = route.params;
 
+  console.log("name:", name);
+  console.log("id:", id);
+  console.log("password:", password);
+
   const returnPage = (): void => {
     navigation.goBack();
   };
+
+    navigation.navigate('Groups');
+  };
+
+  const goHome = (): void => {
+    navigation.navigate('Groups');
+  }
 
   return (
     <View style={styles.container}>

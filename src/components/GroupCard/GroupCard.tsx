@@ -15,6 +15,9 @@ interface GroupItemProps {
 const GroupCard: React.FC<GroupItemProps> = ({ item, navigation }) => {
     return (
         <TouchableOpacity  onPress={() => navigation.navigate('ViewGroup')} >
+
+        {/*<TouchableOpacity onPress={() => navigation.navigate('GroupDetails', { groupId: item.id })}>*/}
+
             <View style={styles.groupContainer}>
                 <Icon name="groups" size={120} color="#4A1900" />
                 <View style={styles.groupInformation}>

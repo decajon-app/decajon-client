@@ -1,12 +1,22 @@
+import { getToken } from "../storage/AuthStorage";
+
 export class ApiMethods {
     static async request<T>(method: string, url: string, data?: any): Promise<T> {
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+            
+        };
+
+        if(!url.includes("auth")) {
+            const token = await getToken();
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch(url, {
             method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers,
             body: data ? JSON.stringify(data) : undefined
-        })
+        });
 
         if(!response.ok) {
             throw new Error(`Error: ${response.statusText}`);

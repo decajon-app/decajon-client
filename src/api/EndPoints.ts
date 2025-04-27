@@ -13,7 +13,7 @@ export const ENDPOINTS = {
 
     GROUPS: {
         CREATE_GROUP: `${BASE_URL}/groups`,
-        GET_GROUP: `TBD`
+        JOIN_GROUP: `${BASE_URL}/users-groups`
     },
 
     REPERTOIRES: {
