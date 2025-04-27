@@ -5,15 +5,15 @@ import { View, Text, TouchableOpacity, Image, ScrollView, Modal } from "react-na
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 
-type RepertoryScreenProps = StackScreenProps<GroupsStackParamsList, 'RepertoryScreen'>;
+type MembersProps = StackScreenProps<GroupsStackParamsList, 'Members'>;
 
-const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
+const Members: React.FC<MembersProps> = ({ navigation, route }) => {
     const [isEditMode, setIsEditMode] = useState(false); // Estado para alternar entre modo edición y normal
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // Estado para mostrar/ocultar el modal de confirmación
     const [isDeletedModalVisible, setIsDeletedModalVisible] = useState(false); // Estado para mostrar el modal de eliminación exitosa
 
-    const songName = 'Nombre de la canción'; // Nombre de la canción (placeholder)
-    const songDetails = 'Compositor/Cantante'; // Detalles de la canción (placeholder)
+    const memberName = 'Nombre del miembro';
+    const instrument = 'Instrumento'; 
 
     const handleEditToggle = () => {
         setIsEditMode(!isEditMode); // Alternar entre mostrar y ocultar los botones de editar/borrar
@@ -22,6 +22,10 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
     const handleDeleteSong = () => {
         setIsDeleteModalVisible(true); // Mostrar el modal de confirmación
     };
+
+    const handleGroupInformation = () => {
+        navigation.navigate('GroupInformation', { ownerId: 123, name: 'Group Name', id: 'MX123435', password: 'ABCDE1234' }); // Navegar a la pantalla de información del grupo
+    }
 
     const confirmDelete = () => {
         setIsDeleteModalVisible(false);
@@ -58,40 +62,39 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
                     </View>
 
                     <View style={styles.titleTop}>
-                        <Text style={styles.titleText}>Repertorio</Text>
+                        <Text style={styles.titleText}>Miembros</Text>
                         <TouchableOpacity onPress={handleEditToggle}>
                             <Icon name="edit" size={30} color="black" />
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.songList}>
-                        <TouchableOpacity style={styles.songItem} onPress={handleViewSong}>
+                        <View style={styles.songItem}>
                             <View style={styles.songImageContainer}>
-                                <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
+                                <Icon name="person" size={50} color="#FFF7EE" />
                             </View>
                             <View>
-                                <Text style={styles.songName}>{songName}</Text>
-                                <Text style={styles.songDetails}>{songDetails}</Text>
+                                <Text style={styles.memberName}>{memberName}</Text>
+                                <Text style={styles.instrument}>{instrument}</Text>
                             </View>
                             {isEditMode && (
                                 <View style={styles.actionButtons}>
-                                    <TouchableOpacity onPress={handleEditSong}>
-                                        <Icon name="edit" size={35} color="#4A1900" />
-                                    </TouchableOpacity>
                                     <TouchableOpacity onPress={handleDeleteSong}>
                                         <Icon name="delete" size={35} color="#4A1900" />
                                     </TouchableOpacity>
                                 </View>
                             )}
-                        </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
 
-                {/* Botón flotante */}
-                <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('AddSong')}>
-                    <Icon name="add" size={30} color="#FFF" />
-                </TouchableOpacity>
+                
             </ScrollView>
+
+            {/* Botón flotante */}
+                <TouchableOpacity style={styles.floatingButton} onPress={handleGroupInformation}>
+                    <Icon name="share" size={30} color="#FFF" />
+                </TouchableOpacity>
 
             {/* Modal de confirmación para eliminar */}
             <Modal
@@ -103,7 +106,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalText}>
-                            ¿Estás seguro de que deseas eliminar esta canción?
+                            ¿Estás seguro de que deseas eliminar a este miembro?
                         </Text>
                         <View style={styles.modalButtons}>
                             <TouchableOpacity onPress={() => setIsDeleteModalVisible(false)} style={styles.modalButtonCancel}>
@@ -127,7 +130,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalText}>
-                            La canción se eliminó correctamente
+                            El miembro se eliminó correctamente
                         </Text>
                         <Icon name="check-circle" size={50} color="#4A1900" />
                     </View>
@@ -137,4 +140,4 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation }) => {
     );
 };
 
-export default RepertoryScreen;
+export default Members;

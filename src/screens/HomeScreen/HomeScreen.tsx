@@ -19,7 +19,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
   const songDetails = 'Compositor/Cantante';
 
   const newEvent = () => {
-    console.log('Going to create event')
+    navigation.navigate('CreateEvent');
   };
 
   const goProfile = () => {
@@ -112,46 +112,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
               </View>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.card}>
-              <View style={styles.cardIcon}>
-                <Icon style={styles.iconCard} name="music-note" size={80} color="#F6EDE1" />
-              </View>
-              <View style={styles.cardContainer}>
-                <Text style={styles.groupName}>{groupName}</Text>
-                <Text style={styles.songTitle}>{songName}</Text>
-                <Text style={styles.songDetails}>{songDetails}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.card}>
-              <View style={styles.cardIcon}>
-                <Icon style={styles.iconCard} name="music-note" size={80} color="#F6EDE1" />
-              </View>
-              <View style={styles.cardContainer}>
-                <Text style={styles.groupName}>{groupName}</Text>
-                <Text style={styles.songTitle}>{songName}</Text>
-                <Text style={styles.songDetails}>{songDetails}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Tus eventos próximos</Text>
-          <TouchableOpacity>
-            <View style={styles.cardEvent}>
-              <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />
-              <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.cardEvent}>
-              <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />
-              <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
-            </View>
-          </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.cardEvent}>
               <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />

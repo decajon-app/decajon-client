@@ -1,17 +1,36 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
-import styles from "./styles";
-
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Modal, Alert, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Modal, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import styles from "./styles";
 
 type AddSongProps = StackScreenProps<GroupsStackParamsList, 'AddSong'>;
 
-// Componente principal
 const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
     const [nombre, setNombre] = useState<string>('');
     const [artista, setArtista] = useState<string>('');
+    const [isAddedModalVisible, setIsAddedModalVisible] = useState(false);
+    const [isErrorModalVisible, setIsErrorModalVisible] = useState(false); // Nuevo estado para el modal de error
+
+    const handleAddSong = () => {
+        if (nombre.trim() === '' || artista.trim() === '') {
+            setIsErrorModalVisible(true); // Mostrar modal de error
+
+            setTimeout(() => {
+                setIsErrorModalVisible(false);
+            }, 1500);
+
+            return;
+        }
+
+        setIsAddedModalVisible(true); // Mostrar modal de éxito
+
+        setTimeout(() => {
+            setIsAddedModalVisible(false);
+            navigation.goBack(); // Regresar a la pantalla anterior
+        }, 1500);
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -32,7 +51,7 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                     </View>
 
                     <View style={styles.songImageContainer}>
-                        <Icon name="multitrack-audio" size={200} color="#FFF7EE" />
+                        <Icon name="multitrack-audio" size={150} color="#FFF7EE" />
                     </View>
                     
                     <View style={styles.form}>
@@ -40,7 +59,7 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                             <Icon name="music-note" color="#200606" size={35} />
                             <TextInput
                                 style={styles.input}
-                                placeholder="Nombre(s)"
+                                placeholder="Canción"
                                 placeholderTextColor="gray"
                                 onChangeText={setNombre}
                                 value={nombre}
@@ -60,19 +79,45 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                     </View>
 
                     <View style={styles.containerBottom}>
-                        <TouchableOpacity style={styles.buttonAdd}>
-                            <Text style={styles.buttonText}>Siguiente</Text>
+                        <TouchableOpacity style={styles.buttonAdd} onPress={handleAddSong}>
+                            <Text style={styles.buttonText}>Agregar</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonCancel}>
+                        <TouchableOpacity style={styles.buttonCancel} onPress={() => navigation.goBack()}>
                             <Text style={styles.buttonText}>Cancelar</Text>
                         </TouchableOpacity>
                     </View>
-                    
                 </View>
-
             </ScrollView>
 
-            
+            {/* Modal de confirmación de canción agregada */}
+            <Modal
+                transparent={true}
+                visible={isAddedModalVisible}
+                animationType="fade"
+                onRequestClose={() => setIsAddedModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalText}>¡Canción agregada exitosamente!</Text>
+                        <Icon name="check-circle" size={50} color="#4A1900" />
+                    </View>
+                </View>
+            </Modal>
+
+            {/* Modal de error por campos vacíos */}
+            <Modal
+                transparent={true}
+                visible={isErrorModalVisible}
+                animationType="fade"
+                onRequestClose={() => setIsErrorModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalText}>Por favor, completa todos los campos.</Text>
+                        <Icon name="error" size={50} color="#FF0000" />
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };

@@ -23,11 +23,20 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
         navigation.navigate('JoinGroup');
     }
 
+    const handleMembers = () => {
+        navigation.navigate('Members');
+    }
+
     const handleRepertory = () => {
         navigation.navigate('RepertoryScreen');
     }
 
+    const handleGroupInformation = () => {
+      navigation.navigate('GroupInformation', { ownerId: 123, name: 'Group Name', id: 'MX123435', password: 'ABCDE1234' }); // Navegar a la pantalla de información del grupo
+    }
+
     return (            
+    <View style={{ flex: 1 }}> 
     <ScrollView> 
         <View style={styles.container}> 
             <View style={styles.headerLogo}>
@@ -46,7 +55,7 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
                     <Text style={styles.buttonText}>Nuevo evento</Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity style={styles.button} onPress={handleJoinGroup}>
+                <TouchableOpacity style={styles.button} onPress={handleMembers}>
                     <Text style={styles.buttonText}>Miembros</Text>
                 </TouchableOpacity>
             </View>
@@ -108,7 +117,15 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
                           </TouchableOpacity>
                         </View>
         </View>
+
         </ScrollView>
+
+          {/* Botón flotante */}
+          <TouchableOpacity style={styles.floatingButton} onPress={handleGroupInformation}>
+            <Icon name="share" size={30} color="#FFF" />
+          </TouchableOpacity>
+      </View>
+
     );
 };
 

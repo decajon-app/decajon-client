@@ -51,17 +51,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF7EE',
     },
     songImageContainer: { 
-        marginRight: 10,
+        marginRight: 20,
         backgroundColor: '#4A1900',
         borderRadius: 10,
         padding: 5,
     },
-    songName: {
+    memberName: {
         fontSize: 20,
         fontWeight: 'bold',
         color: '#4A1900',
     },
-    songDetails: {
+    instrument: {
         fontSize: 16,
         color: '#795548',
     },
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         gap: 15,
         backgroundColor: '#FFF7EE',
         padding: 5,
-        marginLeft: -20,
+        marginLeft: 15,
     },
     modalContainer: {
         flex: 1,

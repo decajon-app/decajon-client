@@ -74,10 +74,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
   },
   groupDescription: {
     fontSize: 14,
@@ -95,7 +91,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FFF7EE',
     borderColor: '#4A1900',
-    borderWidth: 0.2,
     marginBottom: 10,
     borderRadius: 10,
     display: 'flex',
@@ -115,7 +110,6 @@ const styles = StyleSheet.create({
     paddingVertical: 60,
     backgroundColor: '#FFF7EE',
     borderColor: '#4A1900',
-    borderWidth: 0.2,
     alignItems: 'center', 
     marginBottom: 10,
     borderRadius: 10,
@@ -143,6 +137,19 @@ const styles = StyleSheet.create({
   },
   songDetails: {
     fontSize: 14,
+  },
+  floatingButton: {
+      position: 'absolute',
+      zIndex: 1,
+      bottom: 20,
+      right: 20,
+      backgroundColor: '#4A1900',
+      width: 60,
+      height: 60,
+      borderRadius: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+
   },
 });
 

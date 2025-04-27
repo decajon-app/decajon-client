@@ -55,6 +55,7 @@ export type MainTabParamList = {
 export type HomeStackParamList = {
     Home: undefined;
     Login: undefined;
+    CreateEvent: undefined;
     // Configuration?????
 };
 
@@ -63,12 +64,14 @@ export type HomeStackParamList = {
 export type GroupsStackParamsList = {
     Groups: undefined;
     CreateGroup: undefined;
+    Members: undefined;
     JoinGroup: undefined;
     GroupInformation: GroupDto;
     ViewGroup: GroupDto;
     RepertoryScreen: undefined;
     AddSong: undefined;
     EditSong: undefined;
+    ViewSong: undefined;
 };
 
 
@@ -87,6 +90,5 @@ export type ChatbotStackParamsList = {
  */
 export type AppStackParamList = {
     Welcome: undefined;
-    CreateEvent: undefined;
     Load: undefined;
 }

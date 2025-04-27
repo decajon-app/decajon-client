@@ -39,7 +39,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     songImageContainer: {
-        width: 300,
+        width: 200,
+        height: 200,
+        marginVertical: 25,
+        alignSelf: 'center',
+        alignItems: 'center',
         padding: 20,
         backgroundColor: '#4A1900',
         borderRadius: 10,
@@ -71,14 +75,6 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         width: '100%',
-        shadowColor: '#200606',
-        shadowOffset: {
-            width: 0,
-            height: 10,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 10,
-        elevation: 16,
     },
     buttonCancel: {
         backgroundColor: '#795548',
@@ -87,14 +83,6 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         width: '100%',
-        shadowColor: '#200606',
-        shadowOffset: {
-            width: 0,
-            height: 10,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 10,
-        elevation: 16,
     },
     buttonText: {
         fontSize: 20,
@@ -106,7 +94,26 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: '10%',
         width: '80%',
-      },
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        width: '80%',
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        padding: 20,
+        alignItems: 'center',
+    },
+    modalText: {
+        fontSize: 18,
+        textAlign: 'center',
+        color: '#4A1900',
+        marginBottom: 20,
+    },
 
 
 });
