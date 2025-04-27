@@ -63,6 +63,10 @@ function GroupsStackNavigator() {
             <GroupsStack.Screen name="Groups" component={Screens.GroupsScreen} options={{ headerShown: false }} />
             <GroupsStack.Screen name="CreateGroup" component={Screens.CreateGroup} options={{ headerShown: false }} />
             <GroupsStack.Screen name="GroupInformation" component={Screens.GroupInformation} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="ViewGroup" component={Screens.ViewGroup} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="RepertoryScreen" component={Screens.RepertoryScreen} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="AddSong" component={Screens.AddSong} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="EditSong" component={Screens.EditSong} options={{ headerShown: false }} />
             <GroupsStack.Screen name="JoinGroup" component={Screens.JoinGroup} options={{ headerShown: false}} />
         </GroupsStack.Navigator>
     );
@@ -86,6 +90,12 @@ function BottomTabNavigator() {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
+            height: 60, 
+            paddingBottom: 10,
+            backgroundColor: '#FFF7EE', 
+          },
+          tabBarActiveTintColor: '#4A1900',
+          tabBarInactiveTintColor: '#795548', 
             height: 60, // Ajusta la altura para que sea suficientemente grande
             paddingBottom: 10,
             backgroundColor: '#FFF7EE', // Color de fondo del tabBar
@@ -100,6 +110,13 @@ function BottomTabNavigator() {
           options={{
             title: 'Inicio',
             tabBarIcon: ({ color }) => (
+              <MaterialIcons name="home" color={color} size={40} />
+            ),
+            tabBarIconStyle: {
+              width: 40, 
+              height: 40, 
+              justifyContent: 'center', 
+              alignItems: 'center',
               <MaterialIcons name="home" color={color} size={40} /> // Tamaño del ícono 40
             ),
             tabBarIconStyle: {
@@ -116,6 +133,7 @@ function BottomTabNavigator() {
           options={{
             title: 'Grupos',
             tabBarIcon: ({ color }) => (
+              <MaterialIcons name="group" color={color} size={40} /> 
               <MaterialIcons name="group" color={color} size={40} /> // Tamaño del ícono 40
             ),
             tabBarIconStyle: {
@@ -132,6 +150,7 @@ function BottomTabNavigator() {
           options={{
             title: 'Chatbot',
             tabBarIcon: ({ color }) => (
+              <MaterialIcons name="smart-toy" color={color} size={40} /> 
               <MaterialIcons name="smart-toy" color={color} size={40} /> // Tamaño del ícono 40
             ),
             tabBarIconStyle: {

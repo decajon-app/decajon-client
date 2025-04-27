@@ -159,7 +159,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
             </View>
           </TouchableOpacity>
         </View>
-
       </ScrollView>
 
       {menuVisible && (

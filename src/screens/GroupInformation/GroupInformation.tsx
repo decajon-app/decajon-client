@@ -14,13 +14,16 @@ type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'Grou
 
 const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, route }) => {
   // Extraer los datos del grupo que acaba de ser creado
-  const { name, id, password } = route.params;
+  const { name, ownerId, id, password } = route.params;
 
   console.log("name:", name);
   console.log("id:", id);
   console.log("password:", password);
 
   const returnPage = (): void => {
+    navigation.goBack();
+  };
+
     navigation.navigate('Groups');
   };
 
@@ -30,15 +33,10 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
 
   return (
     <View style={styles.container}>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.btn} onPress={returnPage}>
-          <Icon name="navigate-before" color="white" size={30} />
-        </TouchableOpacity>
-      </View>
 
       <View style={styles.header}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.subtitle}>Tu ID del grupo es:</Text>
+        <Text style={styles.subtitle}>Tu ID del grupo es: {ownerId}</Text>
       </View>
 
       <View style={styles.container1}>
@@ -60,7 +58,7 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
         Solo tú tienes acceso a esta información.
       </Text>
 
-      <TouchableOpacity style={styles.button} onPress={goHome}>
+      <TouchableOpacity style={styles.button} onPress={returnPage}>
         <Text style={styles.buttonText}>Aceptar</Text>
       </TouchableOpacity>
 
