@@ -19,7 +19,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
   const songDetails = 'Compositor/Cantante';
 
   const newEvent = () => {
-    console.log('Going to create event')
+    navigation.navigate('CreateEvent');
   };
 
   const goProfile = () => {

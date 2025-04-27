@@ -11,6 +11,7 @@ export { default as WelcomeScreen } from '../screens/WelcomeScreen/WelcomeScreen
 
 // Screens del botón Inicio
 export { default as HomeScreen } from './HomeScreen/HomeScreen.tsx';
+export { default as CreateEventScreen } from './CreateEvent/CreateEvent.tsx';
 
 // Screens del botón Grupos
 export { default as GroupsScreen } from '../screens/GroupsScreen/GroupsScreen.tsx';
@@ -20,6 +21,7 @@ export { default as CreateEvent } from '../screens/CreateEvent/CreateEvent.tsx';
 export { default as GroupInformation } from '../screens/GroupInformation/GroupInformation.tsx';
 export { default as ViewGroup } from '../screens/ViewGroup/ViewGroup.tsx';
 export { default as RepertoryScreen } from './RepertoryScreen/RepertoryScreen.tsx';
+export { default as Members } from './Members/Members.tsx';
 
 export { default as AddSong } from './AddSong/AddSong.tsx';
 export { default as EditSong } from './EditSong/EditSong.tsx';

@@ -138,6 +138,19 @@ const styles = StyleSheet.create({
   songDetails: {
     fontSize: 14,
   },
+  floatingButton: {
+      position: 'absolute',
+      zIndex: 1,
+      bottom: 20,
+      right: 20,
+      backgroundColor: '#4A1900',
+      width: 60,
+      height: 60,
+      borderRadius: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+
+  },
 });
 
 export default styles;

@@ -44,6 +44,8 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       marginBottom: 30,
       elevation: 10,
+      width: '90%',
+      alignSelf: 'center',
     },
     newEventText: {
       color: '#FFF',

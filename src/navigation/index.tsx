@@ -51,6 +51,7 @@ function HomeStackNavigator() {
     return (
         <HomeStack.Navigator>
             <HomeStack.Screen name="Home" component={Screens.HomeScreen} options={{ headerShown: false }} />
+            <HomeStack.Screen name="CreateEvent" component={Screens.CreateEventScreen} options={{ headerShown: false }} />
         </HomeStack.Navigator>
     );
 }
@@ -69,6 +70,7 @@ function GroupsStackNavigator() {
             <GroupsStack.Screen name="AddSong" component={Screens.AddSong} options={{ headerShown: false }} />
             <GroupsStack.Screen name="EditSong" component={Screens.EditSong} options={{ headerShown: false }} />
             <GroupsStack.Screen name="ViewSong" component={Screens.ViewSong} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="Members" component={Screens.Members} options={{ headerShown: false }} />
         </GroupsStack.Navigator>
     );
 }
