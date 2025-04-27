@@ -1,7 +1,11 @@
+import { StackScreenProps } from "@react-navigation/stack";
+import { GroupsStackParamsList } from '../../types/navigation';
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, Modal, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
+
+type AddSongProps = StackScreenProps<GroupsStackParamsList, 'AddSong'>;
 
 const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
     const [nombre, setNombre] = useState<string>('');
