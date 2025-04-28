@@ -3,3 +3,5 @@ android/
 ios/
 .idea/
 .env
+
+package-lock.json
