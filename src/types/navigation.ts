@@ -1,8 +1,6 @@
 /**
  * Navigation.tsx
  */
-import type { StackScreenProps } from "@react-navigation/stack";
-import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { GroupDto } from "../models";
 
 
@@ -44,7 +42,7 @@ export type AuthStackParamList = {
  * como está mostrado abajo.
  */
 export type MainTabParamList = {
-    HomeTab: undefined;
+    HomeTab: () => void | undefined;
     GroupsTab: undefined;
     ChatbotTab: undefined;
 };
@@ -53,10 +51,9 @@ export type MainTabParamList = {
 // Ahora creamos los tipos de las pantallas que van en cada Tab
 // Crear tipo de Home
 export type HomeStackParamList = {
-    Home: undefined;
+    Home: { onLogoutSuccess?: () => void } | undefined;
     Login: undefined;
     CreateEvent: undefined;
-    // Configuration?????
 };
 
 
