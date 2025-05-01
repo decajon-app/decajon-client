@@ -46,12 +46,19 @@ function AuthStackNavigator({ onLoginSuccess }: { onLoginSuccess: () => void}) {
     );
 }
 
-
+interface HomeStackNavigatorProps {
+  onLogout: () => void;
+}
 // Stack para la navegacion del boton 'Inicio' en el BottomTab
-function HomeStackNavigator() {
+function HomeStackNavigator({ onLogout}: HomeStackNavigatorProps) {
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="Home" component={Screens.HomeScreen} options={{ headerShown: false }} />
+            <HomeStack.Screen 
+              name="Home" 
+              component={Screens.HomeScreen} 
+              options={{ headerShown: false }}
+              initialParams={{ onLogoutSuccess: onLogout }}
+            />
             <HomeStack.Screen name="CreateEvent" component={Screens.CreateEventScreen} options={{ headerShown: false }} />
         </HomeStack.Navigator>
     );
@@ -87,8 +94,18 @@ function ChatbotStackNavigator() {
 }
 
 
+// Necesario definir unas props, porque en este caso necesitamos recibir parametros en algunas pantallas
+interface BottomTabNavigatorProps {
+  route: {
+    params?: {
+      onLogoutSuccess?: () => void;
+    }
+  }
+}
 // Stack que contiene el BottomTabNavigator
-function BottomTabNavigator() {
+function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
+  const { onLogoutSuccess } = route.params || {};
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -104,7 +121,7 @@ function BottomTabNavigator() {
     >
       <Tab.Screen
         name="HomeTab"
-        component={HomeStackNavigator}
+        component={() => <HomeStackNavigator onLogout={onLogoutSuccess} />}
         options={{
           title: 'Inicio',
           tabBarIcon: ({ color }) => (
@@ -172,14 +189,22 @@ export default function AppNavigator() {
     }, []);
 
     const handleLoginSuccess = useCallback(() => {
-        setIsLoggedIn(true);
+      setIsLoggedIn(true);
+    }, []);
+
+    const handleLogoutSuccess = useCallback(() => {
+      setIsLoggedIn(false);
     }, []);
 
     return (
         <NavigationContainer>
             {isLoggedIn ? (
                 <AppStack.Navigator screenOptions={{ headerShown: false }}>
-                    <AppStack.Screen name="Welcome" component={BottomTabNavigator} />
+                    <AppStack.Screen 
+                      name="Welcome" 
+                      component={BottomTabNavigator} 
+                      initialParams={{ onLogoutSuccess: handleLogoutSuccess }}
+                    />
                 </AppStack.Navigator>
             ) : (
                 <AuthStackNavigator onLoginSuccess={handleLoginSuccess} />

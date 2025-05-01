@@ -1,18 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { styles } from './styles';
-import { Text, View, TouchableOpacity, ScrollView, Image, Animated } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getUserData } from '../../storage/UserStorage';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../types/navigation';
+import { removeToken } from '../../storage/AuthStorage';
 
 type HomeScreenProps = StackScreenProps<HomeStackParamList, 'Home'>;
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreenProps) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false); // Estado de visibilidad del menú
   const [calendarVisible, setCalendarVisible] = useState<boolean>(false); // Estado de visibilidad del calendario
   const slideAnim = useRef(new Animated.Value(300)).current; // Animación del menú
   const [userName, setUserName] = useState<string>('Nombre de usuario');
+
+  const { onLogoutSuccess } = route.params; // Para accionar el cierre de sesión desde la navegación
 
   const groupName = 'Nombre del grupo';
   const songName = 'Nombre de la canción';
@@ -30,8 +33,18 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
     console.log('Going to edit information');
   };
 
-  const logOut = () => {
-    console.log('logout');
+  const logOut = async () => {
+    console.log("Antes del if");
+    console.log(onLogoutSuccess);
+    if (onLogoutSuccess) {
+      console.log("Dentro del if");
+      try {    
+        await removeToken();
+        onLogoutSuccess();
+      } catch (error) {
+        Alert.alert("Hubo un error al tratar de cerrar la sesión.");
+      }
+    }
   };
 
   const toggleMenu = () => {
