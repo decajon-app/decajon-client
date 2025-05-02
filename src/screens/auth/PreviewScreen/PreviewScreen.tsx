@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ImageSourcePropType, TouchableOpacity, Animated } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, View, ImageSourcePropType, Animated } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { AuthStackParamList } from '../../../types/navigation';
 
 type PreviewScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Preview'>;
 
 const PreviewScreen: React.FC = () => {
   const navigation = useNavigation<PreviewScreenNavigationProp>();
-
   const images: ImageSourcePropType[] = [
     require('../../../assets/micro.png'),
     require('../../../assets/violin.png'),
   ];
 
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [fadeAnim] = useState(new Animated.Value(1));
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const animateImageChange = () => {
     Animated.timing(fadeAnim, {
@@ -38,13 +37,21 @@ const PreviewScreen: React.FC = () => {
     });
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      animateImageChange();
-    }, 2000); // 2 segundos
+  useFocusEffect(
+    React.useCallback(() => {
+      // Iniciar animación automática al entrar
+      intervalRef.current = setInterval(() => {
+        animateImageChange();
+      }, 3000);
 
-    return () => clearInterval(interval); // Limpieza al desmontar
-  }, [currentIndex]); // Dependencia al índice actual
+      return () => {
+        // Limpiar animación al salir de la pantalla
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+      };
+    }, [currentIndex])
+  );
 
   return (
     <View style={styles.body}>
@@ -61,14 +68,12 @@ const PreviewScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   body: {
-    display: 'flex',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F6EDE1',
   },
   container: {
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
@@ -79,6 +84,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'black',
   },
-}); 
+});
 
 export default PreviewScreen;
