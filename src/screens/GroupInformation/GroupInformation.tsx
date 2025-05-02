@@ -21,12 +21,8 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
   console.log("password:", password);
 
   const returnPage = (): void => {
-    navigation.goBack();
-  };
-
-  const goHome = (): void => {
     navigation.navigate('Groups');
-  }
+  };
 
   return (
     <View style={styles.container}>

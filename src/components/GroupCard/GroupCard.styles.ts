@@ -17,14 +17,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     name: {
-        fontSize: 18,
+        fontSize: 24,
         fontWeight: 'bold',
-    },
-    description: {
-        fontSize: 12,
+        color: '#4A1900',
     },
     miembros: {
-        fontSize: 12,
+        fontSize: 16,
     },
 });
 

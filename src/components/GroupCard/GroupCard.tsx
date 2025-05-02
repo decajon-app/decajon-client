@@ -16,11 +16,10 @@ const GroupCard: React.FC<GroupItemProps> = ({ item, navigation }) => {
     return (
         <TouchableOpacity  onPress={() => navigation.navigate('ViewGroup', { group: item! })}>
             <View style={styles.groupContainer}>
-                <Icon name="groups" size={120} color="#4A1900" />
+                <Icon name="groups" size={100} color="#4A1900" />
                 <View style={styles.groupInformation}>
                     <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.description}>{item.description}</Text>
-                    <Text style={styles.miembros}>[#] miembros</Text>
+                    <Text style={styles.miembros}># miembros</Text>
                 </View>
             </View>
         </TouchableOpacity>

@@ -64,6 +64,7 @@ const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation }) => {
 
       <View style={styles.header}>
         <Text style={styles.title}>Nuevo grupo</Text>
+        <Icon name="groups" size={200} color="#4A1900"  style={styles.icon}/>
         <Text style={styles.subtitle}>Nombre del grupo</Text>
       </View>
 
@@ -72,7 +73,7 @@ const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Nombre del grupo"
-          placeholderTextColor={'black'}
+          placeholderTextColor={'gray'}
           onChangeText={setNameGroup}
           value={nameGroup}
         />
@@ -117,12 +118,14 @@ const styles = StyleSheet.create({
     fontSize: 38,
     fontWeight: 'bold',
   },
+  icon: {
+    alignSelf: 'center',
+  },
   subtitle: {
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20,
-    paddingTop: 100,
   },
   btnContainer: {
     width: '100%',

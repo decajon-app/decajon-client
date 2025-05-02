@@ -57,6 +57,7 @@ const CreateEventScreen: React.FC<CreateEventScreenProps> = ({ navigation, route
 
       <View style={styles.header}>
         <Text style={styles.title}>Nuevo Evento</Text>
+        <Icon name="event" size={200} color="#4A1900"  style={styles.icon}/>
         <Text style={styles.subtitle}>Fecha del evento:</Text>
       </View>
 
@@ -65,7 +66,7 @@ const CreateEventScreen: React.FC<CreateEventScreenProps> = ({ navigation, route
         <TouchableOpacity
           style={styles.dateInput}
           onPress={() => setShow(true)}>
-          <Text style={styles.dateText}>{formattedDate || 'dd/mm/aaaa'}</Text>
+          <Text style={styles.dateText} >{formattedDate || 'dd/mm/aaaa'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -83,7 +84,7 @@ const CreateEventScreen: React.FC<CreateEventScreenProps> = ({ navigation, route
         <TextInput
           style={styles.eventTypeInput}
           placeholder="Tipo de evento"
-          placeholderTextColor={'black'}
+          placeholderTextColor={'gray'}
           onChangeText={setEventType}
           value={eventType}
         />
@@ -127,13 +128,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 38,
     fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  icon: {
+    alignSelf: 'center',
   },
   subtitle: {
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20,
-    paddingTop: 100,
   },
   btnContainer: {
     width: '100%',
@@ -166,7 +170,6 @@ const styles = StyleSheet.create({
     marginVertical: 0,
   },
   dateInput:{
-      color: '#200606',
       backgroundColor: '#FFF7EE',
       paddingVertical: 10,
       paddingHorizontal: 10,
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '80%',
-    marginVertical: 80,
+    marginVertical: 40,
     shadowColor: '#200606',
     shadowOffset: {
       width: 0,

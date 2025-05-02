@@ -8,59 +8,52 @@ import { AuthStackParamList } from '../../../types/navigation';
 type PreviewScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Preview'>;
 
 const PreviewScreen: React.FC = () => {
-  const navigation = useNavigation<PreviewScreenNavigationProp>(); 
+  const navigation = useNavigation<PreviewScreenNavigationProp>();
 
-  // Tipar el estado
-  const [currentImage, setCurrentImage] = useState<ImageSourcePropType>(require('../../../assets/micro.png')); 
+  const images: ImageSourcePropType[] = [
+    require('../../../assets/micro.png'),
+    require('../../../assets/violin.png'),
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [fadeAnim] = useState(new Animated.Value(1));
-  const [isButtonPressed, setIsButtonPressed] = useState<boolean>(false);
-  
-  const handleNext = () => {
+
+  const animateImageChange = () => {
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start(() => {
-      if (currentImage === require('../../../assets/micro.png')) {
-        setCurrentImage(require('../../../assets/violin.png')); 
+      const nextIndex = currentIndex + 1;
+      if (nextIndex >= images.length) {
+        navigation.navigate('Login');
       } else {
-        navigation.navigate('Login'); 
+        setCurrentIndex(nextIndex);
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }).start();
       }
     });
   };
 
   useEffect(() => {
-    if (currentImage !== require('../../../assets/micro.png')) {
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [currentImage]);
+    const interval = setInterval(() => {
+      animateImageChange();
+    }, 2000); // 2 segundos
+
+    return () => clearInterval(interval); // Limpieza al desmontar
+  }, [currentIndex]); // Dependencia al índice actual
 
   return (
     <View style={styles.body}>
       <View style={styles.container}>
         <Animated.Image
-          style={[styles.image, { opacity: fadeAnim }]} // Animación de opacidad aplicada a la imagen
+          style={[styles.image, { opacity: fadeAnim }]}
           resizeMode="contain"
-          source={currentImage}
+          source={images[currentIndex]}
         />
-      </View>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity
-          style={[styles.btn, isButtonPressed && styles.btnPressed]}
-          onPressIn={() => setIsButtonPressed(true)}
-          onPressOut={() => {
-            setIsButtonPressed(false);
-            handleNext(); // Llamamos la función handleNext al soltar el botón
-          }}
-        >
-          <Text style={styles.btnText}>
-            <Icon name="navigate-next" color="white" size={30} />
-          </Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -82,31 +75,10 @@ const styles = StyleSheet.create({
   },
   image: {
     height: '95%',
-    width: 350, 
+    width: 350,
     borderRadius: 20,
     backgroundColor: 'black',
   },
-  btnContainer: {
-    width: '100%',
-    alignItems: 'flex-end',
-    paddingRight: 20,
-  },
-  btn: {
-    backgroundColor: '#200606',
-    borderRadius: 15,
-    paddingVertical: 10,
-    marginVertical: 10,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-  },
-  btnPressed: {
-    backgroundColor: '#763F0F',
-  },
-  btnText: {
-    color: 'white',
-    fontWeight: 'bold',
-    paddingHorizontal: 20,
-  },
-});
+}); 
 
 export default PreviewScreen;
