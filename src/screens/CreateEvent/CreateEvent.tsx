@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 50,
+    margin: 30,
     marginVertical: 0,
   },
   dateInput:{
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 50,
+    margin: 30,
     marginTop: 20,
   },
   eventTypeInput: {

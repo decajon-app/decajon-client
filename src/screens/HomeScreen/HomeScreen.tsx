@@ -150,8 +150,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
             <Text style={styles.menuText}>Editar Información</Text>
           </TouchableOpacity>
           <View style={styles.divider} />
-          <TouchableOpacity style={styles.menuItem} onPress={logOut}>
-            <Text style={styles.menuText}>Cerrar Sesión</Text>
+          <TouchableOpacity style={styles.logOutItem} onPress={logOut}>
+            <Text style={styles.logOut}>Cerrar Sesión</Text>
           </TouchableOpacity>
         </Animated.View>
       )}

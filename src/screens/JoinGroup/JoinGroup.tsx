@@ -59,9 +59,13 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.btn} onPress={handleBackPress}>
-          <Icon name="navigate-before" color="white" size={30} />
+      <View style={styles.header1}>
+        <TouchableOpacity>
+          <Icon name="account-circle" size={50} color="#4A1900" />
+        </TouchableOpacity>
+        <Image style={styles.logo} source={require('../../assets/logo.png')} />
+        <TouchableOpacity>
+          <Icon name="calendar-month" size={50} color="#4A1900" />
         </TouchableOpacity>
       </View>
 
@@ -102,10 +106,6 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleJoinGroup}>
         <Text style={styles.buttonText}>Siguiente</Text>
       </TouchableOpacity>
-
-      <View style={styles.footer}>
-        <Image style={styles.image} source={require('../../assets/logo.png')} />
-      </View>
     </View>
   );
 };
@@ -115,20 +115,37 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fbf2e2',
   },
+  header1: {
+    backgroundColor: '#FFF7EE',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    paddingTop: 10,
+    paddingBottom: 5, 
+  },
+  logo: {
+    width: 160,
+    height: 60,
+    borderRadius: 10,
+  },
   header: {
     padding: 20,
-    marginTop: 20,
+    marginTop: 100,
     marginLeft: 20,
-    alignItems: 'flex-start',
+  },
+  title: {
+    fontSize: 38,
+    fontWeight: 'bold',
   },
   header2: {
     padding: 20,
     marginLeft: 20,
     alignItems: 'flex-start',
-  },
-  title: {
-    fontSize: 38,
-    fontWeight: 'bold',
   },
   subtitle: {
     fontSize: 22,
@@ -182,18 +199,15 @@ const styles = StyleSheet.create({
     marginVertical: 0,
   },
   input: {
-    borderWidth: 1,
     color: '#200606',
-    backgroundColor: 'transparent',
-    borderBottomColor: 'black',
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderBottomWidth: 2,
-    margin: 10,
-    marginVertical: 0,
-    fontSize: 22,
-    width: '90%',
+      backgroundColor: '#FFF7EE',
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      borderRadius: 10,
+      marginVertical: 5,
+      marginHorizontal: 10,
+      fontSize: 22,
+      width: '90%',
   },
   button: {
     backgroundColor: '#200606',

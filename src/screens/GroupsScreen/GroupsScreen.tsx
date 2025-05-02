@@ -6,7 +6,6 @@ import { View, Text, TouchableOpacity, FlatList, Image, Alert } from "react-nati
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupDto } from "../../models";
 import GroupCard from "../../components/GroupCard/GroupCard";
-import { ScrollView } from "react-native-gesture-handler";
 import { getGroupsFromUser } from "../../api/GroupsApi";
 import { getUserData } from "../../storage/UserStorage";
 
@@ -41,7 +40,6 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
     }
 
     return (
-        <ScrollView>
         <View style={styles.container}>
             <View style={styles.headerLogo}>
                 <TouchableOpacity /* onPress={toggleMenu} */>
@@ -53,7 +51,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            <Text style={styles.titleTop}>Grupos</Text>
+            <Text style={styles.titleTop}>Mis grupos</Text>
             <View style={styles.buttonsTop}>
                 <TouchableOpacity style={styles.button} onPress={handleCreateGroup}>
                     <Text style={styles.buttonText}>Crear</Text>
@@ -63,17 +61,17 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                     <Text style={styles.buttonText}>Unirme</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.header}>
-                <Text style={styles.title}>Mis grupos</Text>
-            </View>
 
             <FlatList 
                 data={groups}
                 keyExtractor={(item) => String(item.id)}
                 renderItem={({ item }) => <GroupCard item={item} navigation={navigation} />}
+                ListHeaderComponent={
+                    <View>
+                    </View>
+                }
             />
         </View>
-        </ScrollView>
     );
 };
 

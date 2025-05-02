@@ -199,6 +199,15 @@ export const styles = StyleSheet.create({
       fontSize: 18,
       color: '#4A4A4A',
     },
+    logOut: {
+      fontSize: 18,
+      color: '#4A1900',
+      fontWeight: 'bold',
+      marginTop: 10,
+    },
+    logOutItem: {
+      paddingLeft: 5,
+    },
     closeButton: {
       alignSelf: 'flex-end',
       width: 40,
@@ -211,6 +220,6 @@ export const styles = StyleSheet.create({
     divider: {
       height: 1,
       backgroundColor: '#E0E0E0',
-      marginTop: '180%',
+      marginTop: '205%',
     },
   });
