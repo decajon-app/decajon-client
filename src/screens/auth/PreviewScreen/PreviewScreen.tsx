@@ -15,22 +15,22 @@ const PreviewScreen: React.FC = () => {
     Animated.sequence([
       Animated.timing(translateX, {
         toValue: 0,
-        duration: 800,
+        duration: 1000,
         easing: Easing.out(Easing.cubic),
         useNativeDriver: true,
       }),
       // Paso 2: vibración en el centro
       Animated.sequence([
-        Animated.timing(translateX, { toValue: -10, duration: 60, useNativeDriver: true }),
+        Animated.timing(translateX, { toValue: -10, duration: 100, useNativeDriver: true }),
         Animated.timing(translateX, { toValue: 10, duration: 60, useNativeDriver: true }),
         Animated.timing(translateX, { toValue: -6, duration: 50, useNativeDriver: true }),
         Animated.timing(translateX, { toValue: 6, duration: 50, useNativeDriver: true }),
-        Animated.timing(translateX, { toValue: 0, duration: 40, useNativeDriver: true }),
+        Animated.timing(translateX, { toValue: 0, duration: 100, useNativeDriver: true }),
       ]),
       // Paso 3: salida hacia la derecha
       Animated.timing(translateX, {
-        toValue: 500, // se va a la derecha
-        duration: 1300,
+        toValue: 1000, // se va a la derecha
+        duration: 1000,
         easing: Easing.in(Easing.cubic),
         useNativeDriver: true,
       }),

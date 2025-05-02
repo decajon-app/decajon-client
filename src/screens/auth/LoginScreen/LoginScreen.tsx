@@ -11,6 +11,7 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
+  Modal,
   TextInput as TextInputType,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -32,16 +33,37 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const passwordRef = useRef<TextInputType | null>(null);
 
+  const showErrorModal = (message: string) => {
+    setModalMessage(message);
+    setModalVisible(true);
+    setTimeout(() => {
+      setModalVisible(false);
+    }, 2000);
+  };
+
+  const showSuccessModal = (message: string) => {
+    setSuccessMessage(message);
+    setSuccessModalVisible(true);
+    setTimeout(() => {
+      setSuccessModalVisible(false);
+      onLoginSuccess();
+    }, 1500);
+  };
+
   const handleLogin = async (): Promise<void> => {
     if (!email.trim() || !password.trim()) {
-      Alert.alert("Error", "Por favor, ingresa tu correo y contraseña.");
+      showErrorModal("Por favor, ingresa tu correo y contraseña.");
       return;
     }
 
-    setIsLoading(true); // Inicia la animación de carga
+    setIsLoading(true);
 
     const loginRequest: LoginRequestDto = {
       email: email,
@@ -64,17 +86,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
         await saveUserData(user);
       }
 
-      onLoginSuccess();
+      showSuccessModal("Inicio de sesión exitoso");
     } catch (error) {
       if (error instanceof Error) {
         console.error("Error en login:", error.message);
-        Alert.alert("Error", "Credenciales incorrectas o problema en el servidor.");
+        showErrorModal("Correo o contraseña invalidos.");
       } else {
         console.error("Error desconocido:", error);
-        Alert.alert("Error", "Ocurrió un error inesperado.");
+        showErrorModal("Ocurrió un error inesperado.");
       }
     } finally {
-      setIsLoading(false); // Detiene la animación de carga
+      setIsLoading(false);
     }
   };
 
@@ -141,11 +163,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
             </TouchableOpacity>
 
             <View style={styles.logContainer}>
-            <Animatable.View
-              animation={isLoading ? 'pulse' : undefined}
-              iterationCount={isLoading ? 1 : undefined}
-              duration={2000}
-            >
+              <Animatable.View
+                animation={isLoading ? 'pulse' : undefined}
+                iterationCount={isLoading ? 1 : undefined}
+                duration={2000}
+              >
                 <TouchableOpacity
                   style={styles.button}
                   onPress={handleLogin}
@@ -167,8 +189,62 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
           </View>
         </View>
       </ScrollView>
+
+      {/* Modal de Error */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={modalStyles.modalOverlay}>
+          <View style={modalStyles.modalContent}>
+            <Icon name="error-outline" size={50} color="#e74c3c" />
+            <Text style={modalStyles.modalText}>{modalMessage}</Text>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal de Éxito */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={successModalVisible}
+        onRequestClose={() => setSuccessModalVisible(false)}
+      >
+        <View style={modalStyles.modalOverlay}>
+          <View style={modalStyles.modalContent}>
+            <Icon name="check-circle" size={50} color="#2ecc71" />
+            <Text style={modalStyles.modalText}>{successMessage}</Text>
+          </View>
+        </View>
+      </Modal>
     </KeyboardAvoidingView>
   );
 };
+
+const modalStyles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    width: '80%',
+    padding: 30,
+    borderRadius: 20,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  modalText: {
+    marginTop: 15,
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#333',
+    textAlign: 'center',
+  },
+});
 
 export default LoginScreen;
