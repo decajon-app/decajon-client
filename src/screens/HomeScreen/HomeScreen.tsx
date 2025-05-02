@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { styles } from './styles';
-import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert, Modal, ActivityIndicator } from 'react-native'; // 🆕
+import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert, Modal, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getUserData } from '../../storage/UserStorage';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -12,7 +12,7 @@ type HomeScreenProps = StackScreenProps<HomeStackParamList, 'Home'>;
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreenProps) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
   const [calendarVisible, setCalendarVisible] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true); // 🆕
+  const [loading, setLoading] = useState<boolean>(true); // estado para mostrar el spinner
   const slideAnim = useRef(new Animated.Value(300)).current;
   const [userName, setUserName] = useState<string>('Nombre de usuario');
 

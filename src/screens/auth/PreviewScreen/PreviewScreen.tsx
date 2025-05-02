@@ -1,88 +1,71 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, View, ImageSourcePropType, Animated } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View, Animated, Easing, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { AuthStackParamList } from '../../../types/navigation';
 
 type PreviewScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Preview'>;
 
 const PreviewScreen: React.FC = () => {
   const navigation = useNavigation<PreviewScreenNavigationProp>();
-  const images: ImageSourcePropType[] = [
-    require('../../../assets/micro.png'),
-    require('../../../assets/violin.png'),
-  ];
+  const translateX = useRef(new Animated.Value(-300)).current; // Inicia fuera de pantalla izquierda
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const fadeAnim = useRef(new Animated.Value(1)).current;
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const animateImageChange = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => {
-      const nextIndex = currentIndex + 1;
-      if (nextIndex >= images.length) {
-        navigation.navigate('Login');
-      } else {
-        setCurrentIndex(nextIndex);
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 300,
-          useNativeDriver: true,
-        }).start();
-      }
+  useEffect(() => {
+    // Paso 1: entra al centro
+    Animated.sequence([
+      Animated.timing(translateX, {
+        toValue: 0,
+        duration: 800,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true,
+      }),
+      // Paso 2: vibración en el centro
+      Animated.sequence([
+        Animated.timing(translateX, { toValue: -10, duration: 60, useNativeDriver: true }),
+        Animated.timing(translateX, { toValue: 10, duration: 60, useNativeDriver: true }),
+        Animated.timing(translateX, { toValue: -6, duration: 50, useNativeDriver: true }),
+        Animated.timing(translateX, { toValue: 6, duration: 50, useNativeDriver: true }),
+        Animated.timing(translateX, { toValue: 0, duration: 40, useNativeDriver: true }),
+      ]),
+      // Paso 3: salida hacia la derecha
+      Animated.timing(translateX, {
+        toValue: 500, // se va a la derecha
+        duration: 1300,
+        easing: Easing.in(Easing.cubic),
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      navigation.replace('Login');
     });
-  };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      // Iniciar animación automática al entrar
-      intervalRef.current = setInterval(() => {
-        animateImageChange();
-      }, 2000);
-
-      return () => {
-        // Limpiar animación al salir de la pantalla
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-        }
-      };
-    }, [currentIndex])
-  );
+  }, []);
 
   return (
-    <View style={styles.body}>
-      <View style={styles.container}>
-        <Animated.Image
-          style={[styles.image, { opacity: fadeAnim }]}
-          resizeMode="contain"
-          source={images[currentIndex]}
-        />
-      </View>
+    <View style={styles.container}>
+      <Animated.Image
+        source={require('../../../assets/logo.png')} // Reemplaza con tu logo
+        style={[
+          styles.image,
+          {
+            transform: [{ translateX }],
+          },
+        ]}
+        resizeMode="contain"
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F6EDE1',
-  },
   container: {
+    flex: 1,
+    backgroundColor: '#F6EDE1',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
   },
   image: {
-    height: '95%',
-    width: 350,
+    width: 220,
+    height: 220,
     borderRadius: 20,
-    backgroundColor: 'black',
   },
 });
 
