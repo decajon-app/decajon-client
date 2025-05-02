@@ -42,7 +42,7 @@ const PreviewScreen: React.FC = () => {
       // Iniciar animación automática al entrar
       intervalRef.current = setInterval(() => {
         animateImageChange();
-      }, 3000);
+      }, 2000);
 
       return () => {
         // Limpiar animación al salir de la pantalla

@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  ActivityIndicator,
   TextInput as TextInputType,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -20,6 +21,7 @@ import { LoginRequestDto, LoginResponseDto, UserDto } from '../../../models';
 import { login } from '../../../api/AuthApi';
 import { saveToken } from '../../../storage/AuthStorage';
 import { saveUserData } from '../../../storage/UserStorage';
+import * as Animatable from 'react-native-animatable';
 
 type LoginScreenProps = StackScreenProps<AuthStackParamList, 'Login'> & {
   onLoginSuccess: () => void;
@@ -28,41 +30,41 @@ type LoginScreenProps = StackScreenProps<AuthStackParamList, 'Login'> & {
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, route }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const passwordRef = useRef<TextInputType | null>(null);
-  
+
   const handleLogin = async (): Promise<void> => {
     if (!email.trim() || !password.trim()) {
       Alert.alert("Error", "Por favor, ingresa tu correo y contraseña.");
       return;
     }
 
-    // Construir el UserRequestDto
+    setIsLoading(true); // Inicia la animación de carga
+
     const loginRequest: LoginRequestDto = {
       email: email,
-      password: password
-    }
+      password: password,
+    };
 
     try {
       const response: LoginResponseDto = await login(loginRequest);
 
-      if(response.token) {
+      if (response.token) {
         const token: string = response.token;
         const user: UserDto = {
           id: response.id,
           email: response.email,
           firstName: response.firstName,
-          lastName: response.lastName
-        }
+          lastName: response.lastName,
+        };
 
         await saveToken(token);
         await saveUserData(user);
       }
 
       onLoginSuccess();
-      
     } catch (error) {
       if (error instanceof Error) {
         console.error("Error en login:", error.message);
@@ -71,17 +73,16 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
         console.error("Error desconocido:", error);
         Alert.alert("Error", "Ocurrió un error inesperado.");
       }
+    } finally {
+      setIsLoading(false); // Detiene la animación de carga
     }
-
-  }
+  };
 
   const resetPassword = () => {
-    console.log('ForgotPassword');
     navigation.navigate('ForgotPassword');
   };
 
   const createAccount = () => {
-    console.log('CreateAccount:');
     navigation.navigate('CreateAccount');
   };
 
@@ -99,7 +100,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
           <Text style={styles.title}>Iniciar Sesión</Text>
 
           <View style={styles.form}>
-            {/* Campo de Correo */}
             <View style={styles.emailInput}>
               <Icon name="email" color="#200606" size={35} />
               <TextInput
@@ -108,12 +108,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
                 placeholderTextColor="black"
                 onChangeText={setEmail}
                 value={email}
-                returnKeyType="next" // Cambia el botón a "Next"
-                onSubmitEditing={() => passwordRef.current?.focus()} // Pasa al siguiente campo
+                returnKeyType="next"
+                onSubmitEditing={() => passwordRef.current?.focus()}
               />
             </View>
 
-            {/* Campo de Contraseña */}
             <View style={styles.passwordInput}>
               <Icon name="lock" color="#200606" size={35} />
               <TextInput
@@ -122,7 +121,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
                 placeholderTextColor="black"
                 onChangeText={setPassword}
                 value={password}
-                secureTextEntry={!showPassword} // <- Aquí se cambia
+                secureTextEntry={!showPassword}
                 ref={passwordRef}
                 returnKeyType="done"
                 onSubmitEditing={handleLogin}
@@ -140,11 +139,25 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
             <TouchableOpacity style={styles.forgotPassword} onPress={resetPassword}>
               <Text style={styles.txt}>Olvidé mi contraseña</Text>
             </TouchableOpacity>
-            
+
             <View style={styles.logContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Entrar</Text>
-              </TouchableOpacity>
+            <Animatable.View
+              animation={isLoading ? 'pulse' : undefined}
+              iterationCount={isLoading ? 1 : undefined}
+              duration={2000}
+            >
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleLogin}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <Text style={styles.buttonText}>Entrar</Text>
+                  )}
+                </TouchableOpacity>
+              </Animatable.View>
 
               <Text style={styles.txt}>¿Aún no tienes cuenta?</Text>
               <TouchableOpacity style={styles.createAccount} onPress={createAccount}>
@@ -158,6 +171,4 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
   );
 };
 
-  
 export default LoginScreen;
-  

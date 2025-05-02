@@ -191,13 +191,25 @@ export const styles = StyleSheet.create({
       elevation: 5,
     },
     menuItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
       padding: 15,
       borderBottomWidth: 1,
       borderBottomColor: '#E0E0E0',
     },
+    iconMenu: { 
+      marginRight: 10,
+      color: '#4A1900',
+    },
     menuText: {
       fontSize: 18,
       color: '#4A4A4A',
+    },
+    menuTextName: {
+      fontSize: 28,
+      color: '#4A1900',
+      fontWeight: 'bold',
     },
     logOut: {
       fontSize: 18,
@@ -220,6 +232,6 @@ export const styles = StyleSheet.create({
     divider: {
       height: 1,
       backgroundColor: '#E0E0E0',
-      marginTop: '205%',
+      marginTop: '180%',
     },
   });

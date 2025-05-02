@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { styles } from './styles';
-import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert, Modal, ActivityIndicator } from 'react-native'; // 🆕
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getUserData } from '../../storage/UserStorage';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -10,38 +10,35 @@ import { removeToken } from '../../storage/AuthStorage';
 type HomeScreenProps = StackScreenProps<HomeStackParamList, 'Home'>;
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreenProps) => {
-  const [menuVisible, setMenuVisible] = useState<boolean>(false); // Estado de visibilidad del menú
-  const [calendarVisible, setCalendarVisible] = useState<boolean>(false); // Estado de visibilidad del calendario
-  const slideAnim = useRef(new Animated.Value(300)).current; // Animación del menú
+  const [menuVisible, setMenuVisible] = useState<boolean>(false);
+  const [calendarVisible, setCalendarVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true); // 🆕
+  const slideAnim = useRef(new Animated.Value(300)).current;
   const [userName, setUserName] = useState<string>('Nombre de usuario');
 
-  const { onLogoutSuccess } = route.params; // Para accionar el cierre de sesión desde la navegación
+  const [loggingOut, setLoggingOut] = useState(false); // estado para mostrar el spinner
+
+  const { onLogoutSuccess } = route.params;
 
   const groupName = 'Nombre del grupo';
   const songName = 'Nombre de la canción';
   const songDetails = 'Compositor/Cantante';
 
-  const newEvent = () => {
-    navigation.navigate('CreateEvent');
-  };
-
-  const goProfile = () => {
-    console.log('Going to profile');
-  };
-
-  const goEditInformation = () => {
-    console.log('Going to edit information');
-  };
+  const newEvent = () => navigation.navigate('CreateEvent');
+  const goProfile = () => console.log('Going to profile');
+  const goEditInformation = () => console.log('Going to edit information');
 
   const logOut = async () => {
-    console.log("Antes del if");
-    console.log(onLogoutSuccess);
     if (onLogoutSuccess) {
-      console.log("Dentro del if");
-      try {    
+      try {
+        setLoggingOut(true); // Mostrar el modal
         await removeToken();
-        onLogoutSuccess();
+        setTimeout(() => {
+          setLoggingOut(false); // Ocultar el modal después de 2 segundos
+          onLogoutSuccess();
+        }, 2000);
       } catch (error) {
+        setLoggingOut(false);
         Alert.alert("Hubo un error al tratar de cerrar la sesión.");
       }
     }
@@ -49,17 +46,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
 
   const toggleMenu = () => {
     if (menuVisible) {
-      console.log('closing menu');
       Animated.timing(slideAnim, {
-        toValue: 300, // Fuera de la pantalla
+        toValue: 300,
         duration: 300,
         useNativeDriver: false,
       }).start(() => setMenuVisible(false));
     } else {
-      console.log('opening menu');
       setMenuVisible(true);
       Animated.timing(slideAnim, {
-        toValue: 0, // Visible en pantalla
+        toValue: 0,
         duration: 300,
         useNativeDriver: false,
       }).start();
@@ -68,17 +63,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
 
   const toggleCalendar = () => {
     if (calendarVisible) {
-      console.log('closing calendar');
       Animated.timing(slideAnim, {
-        toValue: 300, // Fuera de la pantalla
+        toValue: 300,
         duration: 300,
         useNativeDriver: false,
       }).start(() => setCalendarVisible(false));
     } else {
-      console.log('opening calendar');
       setCalendarVisible(true);
       Animated.timing(slideAnim, {
-        toValue: 0, // Visible en pantalla
+        toValue: 0,
         duration: 300,
         useNativeDriver: false,
       }).start();
@@ -89,12 +82,34 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
     const getUserName = async () => {
       const userData = await getUserData();
       setUserName(userData.firstName);
-    }
+    };
     getUserName();
+
+    // 🆕 Spinner visible por 3 segundos
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <View style={styles.container}>
+      <Modal
+        transparent
+        visible={loggingOut}
+        animationType="fade"
+      >
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.4)' }}>
+          <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+            <ActivityIndicator size="large" color="#4A1900" />
+            <Text style={{ marginTop: 10 }}>Cerrando sesión...</Text>
+          </View>
+        </View>
+      </Modal>
+
+
+      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={toggleMenu}>
           <Icon name="account-circle" size={50} color="#4A1900" />
@@ -104,6 +119,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
           <Icon name="calendar-month" size={50} color="#4A1900" />
         </TouchableOpacity>
       </View>
+
+      {/* Contenido */}
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.greeting}>¡Hola, {userName}!</Text>
 
@@ -138,15 +155,21 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
         </View>
       </ScrollView>
 
+      {/* Menú */}
       {menuVisible && (
         <Animated.View style={[styles.menu, { right: slideAnim }]}>
           <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
             <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
           </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuTextName}>{userName}</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={goProfile}>
+            <Icon style={styles.iconMenu} name="person" size={25} color="black" />
             <Text style={styles.menuText}>Mi Perfil</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={goEditInformation}>
+            <Icon style={styles.iconMenu} name="edit" size={25} color="black" />
             <Text style={styles.menuText}>Editar Información</Text>
           </TouchableOpacity>
           <View style={styles.divider} />
@@ -156,6 +179,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
         </Animated.View>
       )}
 
+      {/* Calendario */}
       {calendarVisible && (
         <Animated.View style={[styles.calendar, { left: slideAnim }]}>
           <TouchableOpacity style={styles.closeButton} onPress={toggleCalendar}>
