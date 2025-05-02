@@ -9,11 +9,17 @@ type ViewSongProps = StackScreenProps<GroupsStackParamsList, 'ViewSong'>;
 
 const ViewSong: React.FC<ViewSongProps> = ({ navigation }) => {
     // Datos simulados de la canción
-    const nombre = "Canción";
+    const nombre = "Nombre de la canción";
     const artista = "Artista/Compositor";
+    const genero = "Género";
+    const duracion = "Duración";
+    const rendimiento = "Rendimiento";
+    const popularidad = "Popularidad";
+    const complejidad = "Complejidad";
+    const comentarios = "Comentarios";
 
     const handleViewPartitura = () => {
-        Alert.alert('Alert','Viendo partitura');
+        Alert.alert('Partitura','Funcionalidad disponible en la siguiente versión');
     };
 
     return (
@@ -47,6 +53,36 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation }) => {
                         <View style={styles.inputLabel}>
                             <Icon name="person" color="#200606" size={35} />
                             <Text style={styles.input}>{artista}</Text>
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="library-music" color="#200606" size={35} />
+                            <Text style={styles.input}>{genero}</Text>
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="timer" color="#200606" size={35} />
+                            <Text style={styles.input}>{duracion}</Text>
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="insights" color="#200606" size={35} />
+                            <Text style={styles.input}>{complejidad}</Text>
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="star-rate" color="#200606" size={35} />
+                            <Text style={styles.input}>{popularidad}</Text>
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="fitness-center" color="#200606" size={35} />
+                            <Text style={styles.input}>{rendimiento}</Text>
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="comment" color="#200606" size={35} />
+                            <Text style={styles.input}>{comentarios}</Text>
                         </View>
                     </View>
 

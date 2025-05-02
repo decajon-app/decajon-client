@@ -10,8 +10,15 @@ type AddSongProps = StackScreenProps<GroupsStackParamsList, 'AddSong'>;
 const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
     const [nombre, setNombre] = useState<string>('');
     const [artista, setArtista] = useState<string>('');
+    const [genero, setGenero] = useState<string>('');
+    const [duracion, setDuracion] = useState<string>('');
+    const [rendimiento, setRendimiento] = useState<string>('');
+    const [popularidad, setPopularidad] = useState<string>('');
+    const [complejidad, setComplejidad] = useState<string>('');
+    const [comentarios, setComentarios] = useState<string>('');
+
     const [isAddedModalVisible, setIsAddedModalVisible] = useState(false);
-    const [isErrorModalVisible, setIsErrorModalVisible] = useState(false); // Nuevo estado para el modal de error
+    const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
     const handleAddSong = () => {
         if (nombre.trim() === '' || artista.trim() === '') {
@@ -59,7 +66,7 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                             <Icon name="music-note" color="#200606" size={35} />
                             <TextInput
                                 style={styles.input}
-                                placeholder="Canción"
+                                placeholder="Nombre de la canción"
                                 placeholderTextColor="gray"
                                 onChangeText={setNombre}
                                 value={nombre}
@@ -74,6 +81,73 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                                 placeholderTextColor="gray"
                                 onChangeText={setArtista}
                                 value={artista}
+                            />
+                        </View>
+                    
+                        <View style={styles.inputLabel}>
+                            <Icon name="library-music" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Género"
+                                placeholderTextColor="gray"
+                                onChangeText={setGenero}
+                                value={genero}
+                            />
+                        </View>
+                        
+                        <View style={styles.inputLabel}>
+                            <Icon name="timer" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Duración"
+                                placeholderTextColor="gray"
+                                onChangeText={setDuracion}
+                                value={duracion}
+                            />
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="insights" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Rendimiento"
+                                placeholderTextColor="gray"
+                                onChangeText={setRendimiento}
+                                value={rendimiento}
+                            />
+                        </View>
+                    
+                        <View style={styles.inputLabel}>
+                            <Icon name="star-rate" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Popularidad"
+                                placeholderTextColor="gray"
+                                onChangeText={setPopularidad}
+                                value={popularidad}
+                            />
+                        </View>
+                    
+                        <View style={styles.inputLabel}>
+                            <Icon name="fitness-center" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Complejidad"
+                                placeholderTextColor="gray"
+                                onChangeText={setComplejidad}
+                                value={complejidad}
+                            />
+                        </View>
+                        
+                        <View style={styles.inputLabel}>
+                            <Icon name="comment" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Comentarios..."
+                                placeholderTextColor="gray"
+                                onChangeText={setComentarios}
+                                value={comentarios}
+                                multiline={true}
                             />
                         </View>
                     </View>
@@ -98,8 +172,8 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>¡Canción agregada exitosamente!</Text>
                         <Icon name="check-circle" size={50} color="#4A1900" />
+                        <Text style={styles.modalText}>¡Canción agregada exitosamente!</Text>
                     </View>
                 </View>
             </Modal>
@@ -113,8 +187,8 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>Por favor, completa todos los campos.</Text>
                         <Icon name="error" size={50} color="#FF0000" />
+                        <Text style={styles.modalText}>Por favor, completa todos los campos.</Text>
                     </View>
                 </View>
             </Modal>
