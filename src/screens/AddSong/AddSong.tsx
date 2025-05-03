@@ -1,43 +1,90 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Modal, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Modal, TextInput, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
+import { CreateSongDto } from "../../models/RepertoireDto";
+import { createSong } from "../../api/RepertoireApi";
 
 type AddSongProps = StackScreenProps<GroupsStackParamsList, 'AddSong'>;
 
-const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
+const AddSong: React.FC<AddSongProps> = ({ navigation, route }) => {
+    const { groupId } = route.params;
+
     const [nombre, setNombre] = useState<string>('');
     const [artista, setArtista] = useState<string>('');
     const [genero, setGenero] = useState<string>('');
+    const [tono, setTono] = useState<string>('');
     const [duracion, setDuracion] = useState<string>('');
-    const [rendimiento, setRendimiento] = useState<string>('');
-    const [popularidad, setPopularidad] = useState<string>('');
-    const [complejidad, setComplejidad] = useState<string>('');
+    const [rendimiento, setRendimiento] = useState<number>(0);
+    // const [popularidad, setPopularidad] = useState<number>(0);
+    const [complejidad, setComplejidad] = useState<number>(0);
     const [comentarios, setComentarios] = useState<string>('');
 
     const [isAddedModalVisible, setIsAddedModalVisible] = useState(false);
     const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
-    const handleAddSong = () => {
+    const handleAddSong = async (): Promise<void> => {
         if (nombre.trim() === '' || artista.trim() === '') {
             setIsErrorModalVisible(true); // Mostrar modal de error
-
             setTimeout(() => {
                 setIsErrorModalVisible(false);
             }, 1500);
-
             return;
         }
 
-        setIsAddedModalVisible(true); // Mostrar modal de éxito
+        const newSong: CreateSongDto = {
+            groupId: groupId,
+            title: nombre,
+            artist: artista,
+            genre: genero ? genero : undefined,
+            duration: duracion ? timeToSeconds(duracion) : undefined,
+            performance: rendimiento ? rendimiento : undefined,
+            complexity: complejidad ? complejidad : undefined,
+            comments: comentarios ? comentarios : undefined,
+            tone: tono ? tono : undefined
+        };
 
-        setTimeout(() => {
-            setIsAddedModalVisible(false);
-            navigation.goBack(); // Regresar a la pantalla anterior
-        }, 1500);
+        try {
+            const response = await createSong(newSong);
+            console.log(response);
+            setIsAddedModalVisible(true); // Mostrar modal de éxito
+            setTimeout(() => {
+                setIsAddedModalVisible(false);
+                navigation.goBack(); // Regresar a la pantalla anterior
+            }, 1500);
+        } catch (error) {
+            console.log(error);
+            Alert.alert('Error', 'No se pudo agregar la canción.');
+        }
     };
+
+    const handleInputChange = (text: string, setValue: (value: number | null) => void) => {
+        const number = parseInt(text, 10);
+
+        if(!isNaN(number)) {
+            setValue(number);
+        } else if (text === '') {
+            setValue(null);
+        } else {
+            Alert.alert("Dato no valido, se esperan valores numericos para este campo.");
+        }
+    }
+
+    const timeToSeconds = (timeString: string): number | null => {
+        const parts = timeString.split(':');
+        if (parts.length < 2 || parts.length > 3) return null;
+        let totalSeconds = 0;
+        let factor = 1;
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const value = parseInt(parts[i], 10);
+          if (isNaN(value)) return null;
+          totalSeconds += value * factor;
+          factor *= 60;
+        }
+        return totalSeconds;
+      };
 
     return (
         <View style={{ flex: 1 }}>
@@ -94,6 +141,17 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                                 value={genero}
                             />
                         </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="library-music" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Tonalidad"
+                                placeholderTextColor="gray"
+                                onChangeText={setTono}
+                                value={tono}
+                            />
+                        </View>
                         
                         <View style={styles.inputLabel}>
                             <Icon name="timer" color="#200606" size={35} />
@@ -112,12 +170,15 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                                 style={styles.input}
                                 placeholder="Rendimiento"
                                 placeholderTextColor="gray"
-                                onChangeText={setRendimiento}
-                                value={rendimiento}
+                                onChangeText={
+                                    (text) => handleInputChange(text, setRendimiento)
+                                }
+                                value={rendimiento !== null ? rendimiento.toString() : ''}
+                                keyboardType="numeric"
                             />
                         </View>
                     
-                        <View style={styles.inputLabel}>
+                        {/*<View style={styles.inputLabel}>
                             <Icon name="star-rate" color="#200606" size={35} />
                             <TextInput
                                 style={styles.input}
@@ -125,8 +186,9 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                                 placeholderTextColor="gray"
                                 onChangeText={setPopularidad}
                                 value={popularidad}
+                                keyboardType="numeric"
                             />
-                        </View>
+                        </View>*/}
                     
                         <View style={styles.inputLabel}>
                             <Icon name="fitness-center" color="#200606" size={35} />
@@ -134,8 +196,11 @@ const AddSong: React.FC<AddSongProps> = ({ navigation }) => {
                                 style={styles.input}
                                 placeholder="Complejidad"
                                 placeholderTextColor="gray"
-                                onChangeText={setComplejidad}
-                                value={complejidad}
+                                onChangeText={
+                                    (text) => handleInputChange(text, setComplejidad)
+                                }
+                                value={complejidad !== null ? complejidad.toString() : ''}
+                                keyboardType="numeric"
                             />
                         </View>
                         
