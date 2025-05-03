@@ -17,12 +17,11 @@ export const ENDPOINTS = {
     },
 
     REPERTOIRES: {
-        CREATE_REPERTOIRE: `TBD`,
-        GET_REPERTOIRE: `TBD`,
+        CREATE_REPERTOIRE: `${BASE_URL}/repertoires/add`,
+        GET_REPERTOIRE: `${BASE_URL}/repertoires/group`,
     },
 
     SONGS: {
-        CREATE_SONG: `TBD`,
-        GET_SONG: `TBD`,
+        GET_SONG: `TBD`
     }
 }
