@@ -36,7 +36,6 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
         setTimeout(() => {
             setIsDeletedModalVisible(false);
         }, 3000);
-
     };
 
     const handleEditSong = () => {

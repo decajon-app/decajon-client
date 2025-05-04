@@ -51,7 +51,7 @@ export type MainTabParamList = {
 // Ahora creamos los tipos de las pantallas que van en cada Tab
 // Crear tipo de Home
 export type HomeStackParamList = {
-    Home: { onLogoutSuccess?: () => void } | undefined;
+    Home: { onLogoutSuccess?: () => void };
     Login: undefined;
     CreateEvent: undefined;
 };
