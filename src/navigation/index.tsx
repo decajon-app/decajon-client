@@ -13,7 +13,6 @@ import {
     HomeStackParamList,
     GroupsStackParamsList,
     ChatbotStackParamsList,
-    LoginScreenProps
 } from '../types/navigation';
 
 import { useCallback, useEffect, useState } from 'react';
@@ -34,11 +33,10 @@ function AuthStackNavigator({ onLoginSuccess }: { onLoginSuccess: () => void}) {
     return (
         <AuthStack.Navigator screenOptions={{ headerShown: false }}>
             <AuthStack.Screen name="Preview" component={Screens.PreviewScreen} />
-            <AuthStack.Screen 
-                name="Login" 
-                component={(props: LoginScreenProps) => (
-                    <Screens.LoginScreen {...props} onLoginSuccess={onLoginSuccess} />
-                )} 
+            <AuthStack.Screen
+              name="Login"
+              component={Screens.LoginScreen} // Usamos directamente el componente importado
+              initialParams={{ onLoginSuccess: onLoginSuccess }} // Pasamos la función como initialParams
             />
             <AuthStack.Screen name="CreateAccount" component={Screens.CreateAccount} />
             <AuthStack.Screen name="ForgotPassword" component={Screens.ForgotPassword} />

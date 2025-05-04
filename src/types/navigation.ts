@@ -20,7 +20,7 @@ import { GroupDto } from "../models";
  * agregarla aquí.
  */
 export type AuthStackParamList = {
-    Login: undefined;
+    Login: { onLoginSuccess: () => void } | undefined;
     CreateAccount: undefined;
     ForgotPassword: undefined;
     ResetPassword: undefined;
@@ -86,6 +86,6 @@ export type ChatbotStackParamsList = {
  * pantallas que se integran en la barra de navegación inferior.
  */
 export type AppStackParamList = {
-    Welcome: undefined;
+    Welcome: { onLogoutSuccess: () => void } | undefined;
     Load: undefined;
 }
