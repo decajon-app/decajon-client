@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     },
     logContainer: {
         position: 'relative',
-        top: '40%',
+        marginTop: 100,
         alignItems: 'center',
         width: '70%',
     },
@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
     button: {
         backgroundColor: '#200606',
         padding: 15,
-        marginBottom: 15,
+        marginBottom: 0,
         borderRadius: 50,
         alignItems: 'center',
         width: 300,

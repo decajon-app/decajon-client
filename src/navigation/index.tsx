@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import Header from '../components/Header/Header';
 
 // Import de todas las screens
 import * as Screens from '../screens';
@@ -107,18 +108,18 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
   const { onLogoutSuccess } = route.params || {};
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          height: 60, 
-          paddingBottom: 10,
-          backgroundColor: '#FFF7EE',
-        },
-        tabBarActiveTintColor: '#4A1900', // Ícono activo  
-        tabBarInactiveTintColor: '#795548', // Ícono inactivo
-      }}
-    >
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            height: 60,
+            paddingBottom: 10,
+            backgroundColor: '#FFF7EE',
+          },
+          tabBarActiveTintColor: '#4A1900',
+          tabBarInactiveTintColor: '#795548',
+        }}
+      >
       <Tab.Screen
         name="HomeTab"
         component={() => <HomeStackNavigator onLogout={onLogoutSuccess} />}

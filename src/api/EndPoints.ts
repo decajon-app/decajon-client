@@ -1,4 +1,6 @@
-import { DECAJON_API as BASE_URL } from '@env';
+//import { DECAJON_API as BASE_URL } from '@env';
+
+const BASE_URL = 'http://192.168.1.86:8080/api';
 
 export const ENDPOINTS = {
     AUTH: {
