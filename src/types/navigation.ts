@@ -20,7 +20,7 @@ import { GroupDto } from "../models";
  * agregarla aquí.
  */
 export type AuthStackParamList = {
-    Login: undefined;
+    Login: { onLoginSuccess: () => void } | undefined;
     CreateAccount: undefined;
     ForgotPassword: undefined;
     ResetPassword: undefined;
@@ -51,7 +51,7 @@ export type MainTabParamList = {
 // Ahora creamos los tipos de las pantallas que van en cada Tab
 // Crear tipo de Home
 export type HomeStackParamList = {
-    Home: { onLogoutSuccess?: () => void } | undefined;
+    Home: { onLogoutSuccess?: () => void };
     Login: undefined;
     CreateEvent: undefined;
 };
@@ -65,8 +65,8 @@ export type GroupsStackParamsList = {
     JoinGroup: undefined;
     GroupInformation: GroupDto;
     ViewGroup: { group: GroupDto};
-    RepertoryScreen: undefined;
-    AddSong: undefined;
+    RepertoryScreen: { groupId: number };
+    AddSong: { groupId: number };
     EditSong: undefined;
     ViewSong: undefined;
 };
@@ -86,6 +86,6 @@ export type ChatbotStackParamsList = {
  * pantallas que se integran en la barra de navegación inferior.
  */
 export type AppStackParamList = {
-    Welcome: undefined;
+    Welcome: { onLogoutSuccess: () => void } | undefined;
     Load: undefined;
 }

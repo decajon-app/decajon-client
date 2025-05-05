@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef} from 'react';
 import { styles } from './styles';
 import {
   StyleSheet,
@@ -17,6 +17,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Alert } from 'react-native';
 import { AuthStackParamList } from '../../../types/navigation';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoginRequestDto, LoginResponseDto, UserDto } from '../../../models';
 import { login } from '../../../api/AuthApi';
@@ -24,11 +25,11 @@ import { saveToken } from '../../../storage/AuthStorage';
 import { saveUserData } from '../../../storage/UserStorage';
 import * as Animatable from 'react-native-animatable';
 
-type LoginScreenProps = StackScreenProps<AuthStackParamList, 'Login'> & {
-  onLoginSuccess: () => void;
-};
+interface LoginScreenProps extends StackScreenProps<AuthStackParamList, 'Login'> {
+  // onLoginSuccess?: () => void; // Ya lo obtenemos de route.params
+}
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, route }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState(false);
@@ -53,7 +54,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
     setSuccessModalVisible(true);
     setTimeout(() => {
       setSuccessModalVisible(false);
-      onLoginSuccess();
+      route.params?.onLoginSuccess?.(); 
     }, 1500);
   };
 
