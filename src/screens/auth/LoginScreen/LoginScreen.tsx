@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { styles } from './styles';
 import {
   StyleSheet,
@@ -17,7 +17,6 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Alert } from 'react-native';
 import { AuthStackParamList } from '../../../types/navigation';
-import { useRoute, RouteProp } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoginRequestDto, LoginResponseDto, UserDto } from '../../../models';
 import { login } from '../../../api/AuthApi';
@@ -25,11 +24,11 @@ import { saveToken } from '../../../storage/AuthStorage';
 import { saveUserData } from '../../../storage/UserStorage';
 import * as Animatable from 'react-native-animatable';
 
-interface LoginScreenProps extends StackScreenProps<AuthStackParamList, 'Login'> {
-  // onLoginSuccess?: () => void; // Ya lo obtenemos de route.params
-}
+type LoginScreenProps = StackScreenProps<AuthStackParamList, 'Login'> & {
+  onLoginSuccess: () => void;
+};
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, route }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState(false);
@@ -54,7 +53,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
     setSuccessModalVisible(true);
     setTimeout(() => {
       setSuccessModalVisible(false);
-      route.params?.onLoginSuccess?.(); 
+      onLoginSuccess();
     }, 1500);
   };
 
@@ -114,10 +113,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.header}>
           <Image style={styles.image} source={require('../../../assets/logo.png')} />
         </View>
@@ -218,7 +214,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
       >
         <View style={modalStyles.modalOverlay}>
           <View style={modalStyles.modalContent}>
-            <Icon name="check-circle" size={50} color="#4A1900" />
+            <Icon name="check-circle" size={50} color="#200606" />
             <Text style={modalStyles.modalText}>{successMessage}</Text>
           </View>
         </View>
@@ -232,7 +228,7 @@ const modalStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   modalContent: {
     backgroundColor: 'white',
@@ -244,7 +240,9 @@ const modalStyles = StyleSheet.create({
   },
   modalText: {
     marginTop: 15,
-    fontSize: 18,
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#333',
     textAlign: 'center',
   },
 });
