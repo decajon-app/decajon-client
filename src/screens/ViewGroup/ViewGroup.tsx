@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import styles from "../ViewGroup/styles";
 import { View, Text, TouchableOpacity, FlatList, Image, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { GroupDto } from "../../models";
 
 type ViewGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'ViewGroup'>;
 
@@ -19,16 +20,21 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
       navigation.navigate('CreateGroup');
   }
 
+  const handleJoinGroup = () => {
+      navigation.navigate('JoinGroup');
+  }
+
   const handleMembers = () => {
       navigation.navigate('Members');
   }
 
   const handleRepertory = () => {
-      navigation.navigate('RepertoryScreen', { groupId: group.id! });
+      navigation.navigate('RepertoryScreen');
   }
 
   const handleGroupInformation = () => {
-    navigation.navigate('GroupInformation', { ownerId: group.ownerId!, name: group.name!, id: group.id!, password: group.password! }); // Navegar a la pantalla de información del grupo
+    navigation.navigate('GroupInformation', group);
+
   }
 
   return (            

@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
     button: {
         backgroundColor: '#200606',
         padding: 15,
-        marginBottom: 0,
+        marginBottom: 10,
         borderRadius: 50,
         alignItems: 'center',
         width: 300,
