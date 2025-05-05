@@ -15,7 +15,8 @@ export const ENDPOINTS = {
     GROUPS: {
         CREATE_GROUP: `${BASE_URL}/groups`,
         JOIN_GROUP: `${BASE_URL}/users-groups`,
-        GET_GROUPS_FROM_USER: `${BASE_URL}/groups/users`
+        GET_GROUPS_FROM_USER: `${BASE_URL}/groups/users`,
+        GET_MEMBERS_COUNT: (groupId: number) => `${BASE_URL}/groups/${groupId}/members/count`
     },
 
     REPERTOIRES: {

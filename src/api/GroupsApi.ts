@@ -13,3 +13,7 @@ export const joinGroup = async (joinGroupData: JoinGroupDto): Promise<GroupDto> 
 export const getGroupsFromUser = async (userId: number): Promise<GroupDto[]> => {
     return ApiMethods.get<GroupDto[]>(ENDPOINTS.GROUPS.GET_GROUPS_FROM_USER + `/${userId}`);
 }
+
+export const getGroupMembersCount = async (groupId: number): Promise<number> => {
+    return ApiMethods.get<number>(ENDPOINTS.GROUPS.GET_MEMBERS_COUNT(groupId));
+}
