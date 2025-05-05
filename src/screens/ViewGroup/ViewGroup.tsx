@@ -2,9 +2,8 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
 import React, { useState } from "react";
 import styles from "../ViewGroup/styles";
-import { View, Text, TouchableOpacity, FlatList, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { GroupDto } from "../../models";
 
 type ViewGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'ViewGroup'>;
 
@@ -31,6 +30,7 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
       } else {
           console.error("Group ID is undefined");
       }
+      // navigation.navigate('RepertoryScreen', { groupId: group.id! });
   }
 
   const handleGroupInformation = () => {
