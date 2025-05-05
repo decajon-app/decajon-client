@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Alert } from 'react-native';
@@ -14,7 +15,6 @@ import { registerUser } from '../../../api/AuthApi.ts';
 import { UserRequestDto, UserDto } from '../../../models/index.ts';
 import { AuthStackParamList } from '../../../types/navigation.ts';
 import { StackScreenProps } from '@react-navigation/stack';
-import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
 
 type CreateAccountScreenProps = StackScreenProps<AuthStackParamList, 'CreateAccount'>;
 
