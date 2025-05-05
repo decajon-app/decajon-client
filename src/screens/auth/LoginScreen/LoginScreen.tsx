@@ -114,7 +114,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={styles.header}>
           <Image style={styles.image} source={require('../../../assets/logo.png')} />
         </View>

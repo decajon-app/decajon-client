@@ -85,7 +85,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
     };
     getUserName();
 
-    // 🆕 Spinner visible por 3 segundos
+    // Spinner visible por 3 segundos
     const timer = setTimeout(() => {
       setLoading(false);
     }, 3000);
@@ -94,7 +94,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
   }, []);
 
   return (
+
     <View style={styles.container}>
+
+
+    <View style={styles.header}>
+          <TouchableOpacity onPress={toggleMenu}>
+            <Icon name="account-circle" size={50} color="#4A1900" />
+          </TouchableOpacity>
+          <Image style={styles.logo} source={require('../../assets/logo.png')} />
+          <TouchableOpacity onPress={toggleCalendar}>
+            <Icon name="calendar-month" size={50} color="#4A1900" />
+          </TouchableOpacity>
+        </View>
+
       <Modal
         transparent
         visible={loggingOut}
@@ -107,18 +120,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
           </View>
         </View>
       </Modal>
-
-
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={toggleMenu}>
-          <Icon name="account-circle" size={50} color="#4A1900" />
-        </TouchableOpacity>
-        <Image style={styles.logo} source={require('../../assets/logo.png')} />
-        <TouchableOpacity onPress={toggleCalendar}>
-          <Icon name="calendar-month" size={50} color="#4A1900" />
-        </TouchableOpacity>
-      </View>
 
       {/* Contenido */}
       <ScrollView contentContainerStyle={styles.content}>
