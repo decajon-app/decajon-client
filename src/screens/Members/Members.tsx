@@ -1,17 +1,19 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
+import { GroupDto } from "../../models";
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, Modal } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 
-type MembersProps = StackScreenProps<GroupsStackParamsList, 'Members'>;
+type MembersScreenProps = StackScreenProps<GroupsStackParamsList, 'Members'>;
 
-const Members: React.FC<MembersProps> = ({ navigation, route }) => {
+const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
     const [isEditMode, setIsEditMode] = useState(false); // Estado para alternar entre modo edición y normal
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // Estado para mostrar/ocultar el modal de confirmación
     const [isDeletedModalVisible, setIsDeletedModalVisible] = useState(false); // Estado para mostrar el modal de eliminación exitosa
 
+    const { group } = route.params;
     const memberName = 'Nombre del miembro';
     const instrument = 'Instrumento'; 
 
@@ -24,8 +26,9 @@ const Members: React.FC<MembersProps> = ({ navigation, route }) => {
     };
 
     const handleGroupInformation = () => {
-        navigation.navigate('GroupInformation', { ownerId: 123, name: 'Group Name', id: 'MX123435', password: 'ABCDE1234' }); // Navegar a la pantalla de información del grupo
-    }
+        navigation.navigate('GroupInformation', group);
+    };
+      
 
     const confirmDelete = () => {
         setIsDeleteModalVisible(false);

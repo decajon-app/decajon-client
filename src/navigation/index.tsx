@@ -260,49 +260,81 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
       {/* Menú */}
       {menuVisible && (
         <Animated.View style={[styles.menu, { right: slideAnim }]}>
-          <View style={styles.menuContent}>
-          <View>
-            <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
-              <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem}>
-              <Text style={styles.menuTextName}>{userName}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem} onPress={goProfile}>
-              <Icon style={styles.iconMenu} name="person" size={25} color="black" />
-              <Text style={styles.menuText}>Mi Perfil</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem} onPress={goEditInformation}>
-              <Icon style={styles.iconMenu} name="edit" size={25} color="black" />
-              <Text style={styles.menuText}>Editar Información</Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.logOutItem} onPress={logOut}>
-            <View style={styles.divider} />
-            <Text style={styles.logOut}>Cerrar Sesión</Text>
-          </TouchableOpacity>
-          </View>
+          <ScrollView>
+            <View style={styles.menuContent}>
+              <View>
+                <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
+                  <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuItem}>
+                  <Text style={styles.menuTextName}>{userName}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuItem} onPress={goProfile}>
+                  <Icon style={styles.iconMenu} name="person" size={25} color="black" />
+                  <Text style={styles.menuText}>Mi Perfil</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuItem} onPress={goEditInformation}>
+                  <Icon style={styles.iconMenu} name="edit" size={25} color="black" />
+                  <Text style={styles.menuText}>Editar Información</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={styles.logOutItem} onPress={logOut}>
+                <View style={styles.divider} />
+                <Text style={styles.logOut}>Cerrar Sesión</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </Animated.View>
       )}
 
       {/* Calendario */}
       {calendarVisible && (
         <Animated.View style={[styles.calendar, { left: slideAnim }]}>
-          <TouchableOpacity style={styles.closeButton} onPress={toggleCalendar}>
-            <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
-          </TouchableOpacity>
-          <Text style={styles.calendarTitle}>Mi calendario</Text>
-          <View style={styles.calendarDays}>
-            <Text style={styles.calendarDay}>L</Text>
-            <Text style={styles.calendarDay}>M</Text>
-            <Text style={styles.calendarDay}>I</Text>
-            <Text style={styles.calendarDay}>J</Text>
-            <Text style={styles.calendarDay}>V</Text>
-            <Text style={styles.calendarDay}>S</Text>
-            <Text style={styles.calendarDay}>D</Text>
-          </View>
+          <ScrollView>
+            <TouchableOpacity style={styles.closeButton} onPress={toggleCalendar}>
+              <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
+            </TouchableOpacity>
+            
+            <Text style={styles.calendarTitle}>MI CALENDARIO</Text>
+            
+            {/* Nombre del mes actual */}
+            <TouchableOpacity>
+              <Text style={styles.calendarTitle}>
+                {'<'}
+                {'     '}
+                {new Date().toLocaleString('es-ES', { month: 'long' }).toUpperCase()}
+                {' '}
+                {new Date().getFullYear()}
+                {'     '}
+                {'>'}
+              </Text>
+            </TouchableOpacity>
+
+
+            {/* Días de la semana */}
+            <View style={styles.calendarDays}>
+              <Text style={styles.calendarDay}>L</Text>
+              <Text style={styles.calendarDay}>M</Text>
+              <Text style={styles.calendarDay}>I</Text>
+              <Text style={styles.calendarDay}>J</Text>
+              <Text style={styles.calendarDay}>V</Text>
+              <Text style={styles.calendarDay}>S</Text>
+              <Text style={styles.calendarDay}>D</Text>
+            </View>
+
+            {/* Ejemplo de días del mes */}
+            <View style={styles.calendarGrid}>
+              {Array.from({ length: 31 }).map((_, index) => (
+                <TouchableOpacity key={index} style={styles.calendarDate}>
+                  <Text style={styles.dateText}>{index + 1}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
         </Animated.View>
       )}
+
+
 
       {/* Modal de cierre de sesion */}
       {loggingOut && (
