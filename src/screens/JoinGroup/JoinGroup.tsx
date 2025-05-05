@@ -8,6 +8,9 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupsStackParamsList } from '../../types/navigation';
@@ -30,9 +33,9 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
     getUserId();
   }, []);
 
-  const handleBackPress = () => {
+  /* const handleBackPress = () => {
     navigation.navigate('Groups');
-  };
+  }; */
 
   const handleGroupIdChange = (text: string) => {
     const numericGroupId = Number(text);
@@ -50,7 +53,9 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
     try {
       const newJoinGroupData: GroupDto = await joinGroup(joinGroupData);
       console.log(newJoinGroupData);
-      navigation.navigate('GroupInformation', {...newJoinGroupData});
+      // navigation.navigate('GroupInformation', {...newJoinGroupData});
+      Alert.alert('Éxito!', 'Te has unido al grupo.');
+      navigation.navigate('Groups', { group: newJoinGroupData });
     } catch (error) {
       Alert.alert('Error', 'No fue posible unirse al grupo.');
       return;
@@ -58,55 +63,61 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header1}>
-        <TouchableOpacity>
-          <Icon name="account-circle" size={50} color="#4A1900" />
-        </TouchableOpacity>
-        <Image style={styles.logo} source={require('../../assets/logo.png')} />
-        <TouchableOpacity>
-          <Icon name="calendar-month" size={50} color="#4A1900" />
-        </TouchableOpacity>
-      </View>
+    <KeyboardAvoidingView
+    > 
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.header1}>
+            <TouchableOpacity>
+              <Icon name="account-circle" size={50} color="#4A1900" />
+            </TouchableOpacity>
+            <Image style={styles.logo} source={require('../../assets/logo.png')} />
+            <TouchableOpacity>
+              <Icon name="calendar-month" size={50} color="#4A1900" />
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.header}>
-        <Text style={styles.title}>Unirme a un grupo</Text>
-        <Text style={styles.subtitle}>Ingresa el ID del grupo</Text>
-      </View>
+          <View style={styles.header}>
+            <Text style={styles.title}>Unirme a un grupo</Text>
+            <Text style={styles.subtitle}>Ingresa el ID del grupo</Text>
+          </View>
 
-      <View style={styles.nameGroupInput}>
-        <Icon name="groups" color="#200606" size={30} />
-        <TextInput
-          style={styles.input}
-          placeholder="ID del grupo"
-          placeholderTextColor={'black'}
-          onChangeText={handleGroupIdChange}
-          keyboardType='numeric'
-        />
-      </View>
+          <View style={styles.nameGroupInput}>
+            <Icon name="groups" color="#200606" size={30} />
+            <TextInput
+              style={styles.input}
+              placeholder="ID del grupo"
+              placeholderTextColor={'black'}
+              onChangeText={handleGroupIdChange}
+              keyboardType='numeric'
+            />
+          </View>
 
-      <View style={styles.header2}>
-        <Text style={styles.subtitle2}>Contraseña del grupo</Text>
-      </View>
+          <View style={styles.header2}>
+            <Text style={styles.subtitle2}>Contraseña del grupo</Text>
+          </View>
 
-      <View style={styles.nameGroupInput}>
-        <Icon name="key" color="#200606" size={30} />
-        <TextInput
-          style={styles.input}
-          placeholder="Contraseña"
-          placeholderTextColor={'black'}
-          secureTextEntry
-          onChangeText={(text) => setPasswordGroup(text)}
-          value={passwordGroup}
-        />
-      </View>
+          <View style={styles.nameGroupInput}>
+            <Icon name="key" color="#200606" size={30} />
+            <TextInput
+              style={styles.input}
+              placeholder="Contraseña"
+              placeholderTextColor={'black'}
+              secureTextEntry
+              onChangeText={(text) => setPasswordGroup(text)}
+              value={passwordGroup}
+            />
+          </View>
 
-      <Text style={styles.subtitle3}>Solicita el ID y contraseña al administrador del grupo</Text>
+          <Text style={styles.subtitle3}>Solicita el ID y contraseña al administrador del grupo</Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleJoinGroup}>
-        <Text style={styles.buttonText}>Siguiente</Text>
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity style={styles.button} onPress={handleJoinGroup}>
+            <Text style={styles.buttonText}>Siguiente</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+    
   );
 };
 
