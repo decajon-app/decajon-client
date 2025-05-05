@@ -1,7 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import Header from '../components/Header/Header';
+import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert, Modal, ActivityIndicator } from 'react-native';
+import { useCallback, useEffect, useState, useRef } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { getToken } from '../storage/AuthStorage';
+import { removeToken } from '../storage/AuthStorage';
+import { getUserData } from '../storage/UserStorage';
+import Header from '../components/Header/Header';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // Import de todas las screens
 import * as Screens from '../screens';
@@ -16,11 +23,7 @@ import {
     ChatbotStackParamsList,
     LoginScreenProps
 } from '../types/navigation';
-
-import { useCallback, useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { getToken } from '../storage/AuthStorage';
-
+import styles from '../components/Header/Header.styles';
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
 const AppStack = createStackNavigator<AppStackParamList>();
@@ -106,8 +109,92 @@ interface BottomTabNavigatorProps {
 // Stack que contiene el BottomTabNavigator
 function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
   const { onLogoutSuccess } = route.params || {};
+  const [loading, setLoading] = useState<boolean>(true); // estado para mostrar el spinner
+
+  // Estados para el menú y el calendario
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [calendarVisible, setCalendarVisible] = useState(false);
+  const slideAnim = useRef(new Animated.Value(300)).current;
+  const [userName, setUserName] = useState<string>('Nombre de usuario');
+
+
+  // Funciones para navegar a otras pantallas
+  const goProfile = () => console.log('Going to profile');
+  const goEditInformation = () => console.log('Going to edit information');
+
+  const [loggingOut, setLoggingOut] = useState(false); // estado para mostrar el spinner
+
+  const logOut = async () => {
+      if (onLogoutSuccess) {
+        try {
+          setLoggingOut(true); // Mostrar el modal
+          await removeToken();
+          setTimeout(() => {
+            setLoggingOut(false); // Ocultar el modal después de 2 segundos
+            onLogoutSuccess();
+          }, 2000);
+        } catch (error) {
+          setLoggingOut(false);
+          Alert.alert("Hubo un error al tratar de cerrar la sesión.");
+        }
+      }
+    };
+  
+    const toggleMenu = () => {
+      if (menuVisible) {
+        Animated.timing(slideAnim, {
+          toValue: 300,
+          duration: 300,
+          useNativeDriver: false,
+        }).start(() => setMenuVisible(false));
+      } else {
+        setMenuVisible(true);
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: false,
+        }).start();
+      }
+    };
+  
+    const toggleCalendar = () => {
+      if (calendarVisible) {
+        Animated.timing(slideAnim, {
+          toValue: 300,
+          duration: 300,
+          useNativeDriver: false,
+        }).start(() => setCalendarVisible(false));
+      } else {
+        setCalendarVisible(true);
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: false,
+        }).start();
+      }
+    };
+
+    useEffect(() => {
+        const getUserName = async () => {
+          const userData = await getUserData();
+          setUserName(userData.firstName);
+        };
+        getUserName();
+    
+        // Spinner visible por 3 segundos
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 3000);
+    
+        return () => clearTimeout(timer);
+      }, []);
 
   return (
+    <>
+      {/* Header global */}
+      <Header toggleMenu={toggleMenu} toggleCalendar={toggleCalendar} />
+
+      {/* Contenido del BottomTabNavigator */}
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
@@ -169,6 +256,88 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
         }}
       />
     </Tab.Navigator>
+
+      {/* Menú */}
+      {menuVisible && (
+        <Animated.View style={[styles.menu, { right: slideAnim }]}>
+          <View style={styles.menuContent}>
+          <View>
+            <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
+              <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem}>
+              <Text style={styles.menuTextName}>{userName}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={goProfile}>
+              <Icon style={styles.iconMenu} name="person" size={25} color="black" />
+              <Text style={styles.menuText}>Mi Perfil</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={goEditInformation}>
+              <Icon style={styles.iconMenu} name="edit" size={25} color="black" />
+              <Text style={styles.menuText}>Editar Información</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={styles.logOutItem} onPress={logOut}>
+            <View style={styles.divider} />
+            <Text style={styles.logOut}>Cerrar Sesión</Text>
+          </TouchableOpacity>
+          </View>
+        </Animated.View>
+      )}
+
+      {/* Calendario */}
+      {calendarVisible && (
+        <Animated.View style={[styles.calendar, { left: slideAnim }]}>
+          <TouchableOpacity style={styles.closeButton} onPress={toggleCalendar}>
+            <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.calendarTitle}>Mi calendario</Text>
+          <View style={styles.calendarDays}>
+            <Text style={styles.calendarDay}>L</Text>
+            <Text style={styles.calendarDay}>M</Text>
+            <Text style={styles.calendarDay}>I</Text>
+            <Text style={styles.calendarDay}>J</Text>
+            <Text style={styles.calendarDay}>V</Text>
+            <Text style={styles.calendarDay}>S</Text>
+            <Text style={styles.calendarDay}>D</Text>
+          </View>
+        </Animated.View>
+      )}
+
+      {/* Modal de cierre de sesion */}
+      {loggingOut && (
+        <Modal
+        transparent
+        visible={loggingOut}
+        animationType="fade"
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        }}>
+          <View style={{
+            backgroundColor: 'white',
+            padding: 20,
+            borderRadius: 10,
+            alignItems: 'center',
+          }}>
+            <ActivityIndicator size="large" color="#4A1900" />
+            <Text style={{ 
+              marginTop: 10, 
+              fontSize: 18, 
+            }}>Cerrando sesión...</Text>
+          </View>
+        </View>
+      </Modal>
+      
+      )}
+
+
+
+
+    </>
   );
 }
 

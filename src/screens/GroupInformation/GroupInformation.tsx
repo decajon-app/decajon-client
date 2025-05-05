@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupsStackParamsList } from '../../types/navigation';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'GroupInformation'>;
 
@@ -16,49 +17,47 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
   // Extraer los datos del grupo que acaba de ser creado
   const { name, id, password } = route.params;
 
-  console.log("name:", name);
+  /* console.log("name:", name);
   console.log("id:", id);
-  console.log("password:", password);
+  console.log("password:", password); */
 
   const returnPage = (): void => {
-    navigation.navigate('Groups');
+    navigation.navigate('ViewGroup', { group: { name, id, password } });
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.subtitle}>Tu ID del grupo es</Text>
+        </View>
 
-      <View style={styles.header}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.subtitle}>Tu ID del grupo es</Text>
+        <View style={styles.container1}>
+          <Icon name="groups" color="#200606" size={50} />
+          <Text style={styles.idGroup}>{ id }</Text>
+        </View>
+
+        <View style={styles.header2}>
+          <Text style={styles.subtitle2}>Contraseña del grupo</Text>
+        </View>
+
+        <View style={styles.container1}>
+          <Icon name="key" color="#200606" size={50} />
+          <Text style={styles.idGroup}>{ password }</Text>
+        </View>
+
+        <Text style={styles.subtitle3}>
+          Compártela con tus compañeros de grupo para que accedan a eventos y ensayos personalizados en conjunto.{'\n\n'}
+          Solo tú tienes acceso a esta información.
+        </Text>
+
+        <TouchableOpacity style={styles.button} onPress={returnPage}>
+          <Text style={styles.buttonText}>Aceptar</Text>
+        </TouchableOpacity>
       </View>
+    </ScrollView>
 
-      <View style={styles.container1}>
-        <Icon name="groups" color="#200606" size={50} />
-        <Text style={styles.idGroup}>{ id }</Text>
-      </View>
-
-      <View style={styles.header2}>
-        <Text style={styles.subtitle2}>Contraseña del grupo</Text>
-      </View>
-
-      <View style={styles.container1}>
-        <Icon name="key" color="#200606" size={50} />
-        <Text style={styles.idGroup}>{ password }</Text>
-      </View>
-
-      <Text style={styles.subtitle3}>
-        Compártela con tus compañeros de grupo para que accedan a eventos y ensayos personalizados en conjunto.{'\n\n'}
-        Solo tú tienes acceso a esta información.
-      </Text>
-
-      <TouchableOpacity style={styles.button} onPress={returnPage}>
-        <Text style={styles.buttonText}>Aceptar</Text>
-      </TouchableOpacity>
-
-      <View style={styles.footer}>
-        <Image style={styles.image} source={require('../../assets/logo.png')} />
-      </View>
-    </View>
   );
 };
 
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    marginTop: 20,
+    marginTop: 100,
     marginLeft: 20,
     alignItems: 'flex-start',
   },

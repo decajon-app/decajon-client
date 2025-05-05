@@ -14,6 +14,7 @@ import { registerUser } from '../../../api/AuthApi.ts';
 import { UserRequestDto, UserDto } from '../../../models/index.ts';
 import { AuthStackParamList } from '../../../types/navigation.ts';
 import { StackScreenProps } from '@react-navigation/stack';
+import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
 
 type CreateAccountScreenProps = StackScreenProps<AuthStackParamList, 'CreateAccount'>;
 
@@ -52,87 +53,88 @@ const CreateAccountScreen: React.FC<CreateAccountScreenProps> = ({ navigation, r
   };
 
   return (
-    <View style={styles.container}>
-
-      <View style={styles.headerImg}>
-        <Image style={styles.image} source={require('../../../assets/logo.png')} />
-      </View>
-
-      <View style={styles.header}>
-        <Text style={styles.title}>Registro</Text>
-      </View>
-
-      <View style={styles.form}>
-        <View style={styles.inputLabel}>
-          <Icon name="person" color="#200606" size={35} />
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre(s)"
-            placeholderTextColor="black"
-            onChangeText={setNombre}
-            value={nombre}
-          />
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.headerImg}>
+          <Image style={styles.image} source={require('../../../assets/logo.png')} />
         </View>
 
-        <View style={styles.inputLabel}>
-          <Icon name="looks-one" color="#200606" size={35} />
-          <TextInput
-            style={styles.input}
-            placeholder="Primer apellido"
-            placeholderTextColor="black"
-            onChangeText={setApellido1}
-            value={apellido1}
-          />
+        <View style={styles.header}>
+          <Text style={styles.title}>Registro</Text>
         </View>
 
-        <View style={styles.inputLabel}>
-          <Icon name="looks-two" color="#200606" size={35} />
-          <TextInput
-            style={styles.input}
-            placeholder="Segundo apellido"
-            placeholderTextColor="black"
-            onChangeText={setApellido2}
-            value={apellido2}
-          />
-        </View>
+        <View style={styles.form}>
+          <View style={styles.inputLabel}>
+            <Icon name="person" color="#200606" size={35} />
+            <TextInput
+              style={styles.input}
+              placeholder="Nombre(s)"
+              placeholderTextColor="black"
+              onChangeText={setNombre}
+              value={nombre}
+            />
+          </View>
 
-        <View style={styles.inputLabel}>
-          <Icon name="email" color="#200606" size={35} />
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor="black"
-            onChangeText={setEmail}
-            value={email}
-          />
-        </View>
+          <View style={styles.inputLabel}>
+            <Icon name="looks-one" color="#200606" size={35} />
+            <TextInput
+              style={styles.input}
+              placeholder="Primer apellido"
+              placeholderTextColor="black"
+              onChangeText={setApellido1}
+              value={apellido1}
+            />
+          </View>
 
-        <View style={styles.inputLabel}>
-          <Icon name="lock" color="#200606" size={35} />
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            placeholderTextColor="black"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-          />
-        </View>
+          <View style={styles.inputLabel}>
+            <Icon name="looks-two" color="#200606" size={35} />
+            <TextInput
+              style={styles.input}
+              placeholder="Segundo apellido"
+              placeholderTextColor="black"
+              onChangeText={setApellido2}
+              value={apellido2}
+            />
+          </View>
 
-        <View style={styles.containerBottom}>
-          <TouchableOpacity style={styles.button} onPress={createAccount}>
-            <Text style={styles.buttonText}>Siguiente</Text>
-          </TouchableOpacity>
-          <Text style={styles.txt}>¡Ya tengo cuenta!</Text>
-          <TouchableOpacity
-            style={styles.createAccount}
-            onPress={() => returnPage()}
-          >
-            <Text style={styles.loginText}>Iniciar Sesión</Text>
-          </TouchableOpacity>
+          <View style={styles.inputLabel}>
+            <Icon name="email" color="#200606" size={35} />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="black"
+              onChangeText={setEmail}
+              value={email}
+            />
+          </View>
+
+          <View style={styles.inputLabel}>
+            <Icon name="lock" color="#200606" size={35} />
+            <TextInput
+              style={styles.input}
+              placeholder="Contraseña"
+              placeholderTextColor="black"
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry
+            />
+          </View>
+
+          <View style={styles.containerBottom}>
+            <TouchableOpacity style={styles.button} onPress={createAccount}>
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
+            <Text style={styles.txt}>¡Ya tengo cuenta!</Text>
+            <TouchableOpacity
+              style={styles.createAccount}
+              onPress={() => returnPage()}
+            >
+              <Text style={styles.loginText}>Iniciar Sesión</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </View>
+        </View>
+    </ScrollView>
   );
 };
 

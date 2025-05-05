@@ -33,7 +33,8 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
   }
 
   const handleGroupInformation = () => {
-    navigation.navigate('GroupInformation', { ownerId: 123, name: 'Group Name', id: 'MX123435', password: 'ABCDE1234' }); // Navegar a la pantalla de información del grupo
+    navigation.navigate('GroupInformation', group);
+
   }
 
   return (            

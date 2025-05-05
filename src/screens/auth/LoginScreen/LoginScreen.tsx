@@ -217,7 +217,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, r
       >
         <View style={modalStyles.modalOverlay}>
           <View style={modalStyles.modalContent}>
-            <Icon name="check-circle" size={50} color="#2ecc71" />
+            <Icon name="check-circle" size={50} color="#4A1900" />
             <Text style={modalStyles.modalText}>{successMessage}</Text>
           </View>
         </View>
@@ -231,7 +231,7 @@ const modalStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     backgroundColor: 'white',
@@ -243,9 +243,7 @@ const modalStyles = StyleSheet.create({
   },
   modalText: {
     marginTop: 15,
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#333',
+    fontSize: 18,
     textAlign: 'center',
   },
 });

@@ -7,30 +7,8 @@ export const styles = StyleSheet.create({
       backgroundColor: '#F6EDE1',
     },
     content: {
-      marginTop: 60,
       padding: 10,
-    },
-    header: {
-      backgroundColor: '#FFF7EE',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 1,
-      paddingTop: 10,
-      paddingBottom: 5, 
-    },
-    logo: {
-      width: 160,
-      height: 60,
-      borderRadius: 10,
-    },
-    iconContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      paddingTop: 70,
     },
     greeting: {
       fontSize: 24,

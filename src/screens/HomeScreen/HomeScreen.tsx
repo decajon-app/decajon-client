@@ -14,7 +14,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
   const [calendarVisible, setCalendarVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true); // estado para mostrar el spinner
   const slideAnim = useRef(new Animated.Value(300)).current;
-  const [userName, setUserName] = useState<string>('Nombre de usuario');
+  const [userName, setUserName] = useState<string>('');
 
   const [loggingOut, setLoggingOut] = useState(false); // estado para mostrar el spinner
 
@@ -94,20 +94,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
   }, []);
 
   return (
-
     <View style={styles.container}>
-
-
-    <View style={styles.header}>
-          <TouchableOpacity onPress={toggleMenu}>
-            <Icon name="account-circle" size={50} color="#4A1900" />
-          </TouchableOpacity>
-          <Image style={styles.logo} source={require('../../assets/logo.png')} />
-          <TouchableOpacity onPress={toggleCalendar}>
-            <Icon name="calendar-month" size={50} color="#4A1900" />
-          </TouchableOpacity>
-        </View>
-
       <Modal
         transparent
         visible={loggingOut}
@@ -156,48 +143,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
         </View>
       </ScrollView>
 
-      {/* Menú */}
-      {menuVisible && (
-        <Animated.View style={[styles.menu, { right: slideAnim }]}>
-          <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
-            <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem}>
-            <Text style={styles.menuTextName}>{userName}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={goProfile}>
-            <Icon style={styles.iconMenu} name="person" size={25} color="black" />
-            <Text style={styles.menuText}>Mi Perfil</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={goEditInformation}>
-            <Icon style={styles.iconMenu} name="edit" size={25} color="black" />
-            <Text style={styles.menuText}>Editar Información</Text>
-          </TouchableOpacity>
-          <View style={styles.divider} />
-          <TouchableOpacity style={styles.logOutItem} onPress={logOut}>
-            <Text style={styles.logOut}>Cerrar Sesión</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      )}
-
-      {/* Calendario */}
-      {calendarVisible && (
-        <Animated.View style={[styles.calendar, { left: slideAnim }]}>
-          <TouchableOpacity style={styles.closeButton} onPress={toggleCalendar}>
-            <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
-          </TouchableOpacity>
-          <Text style={styles.calendarTitle}>Mi calendario</Text>
-          <View style={styles.calendarDays}>
-            <Text style={styles.calendarDay}>L</Text>
-            <Text style={styles.calendarDay}>M</Text>
-            <Text style={styles.calendarDay}>I</Text>
-            <Text style={styles.calendarDay}>J</Text>
-            <Text style={styles.calendarDay}>V</Text>
-            <Text style={styles.calendarDay}>S</Text>
-            <Text style={styles.calendarDay}>D</Text>
-          </View>
-        </Animated.View>
-      )}
     </View>
   );
 };
