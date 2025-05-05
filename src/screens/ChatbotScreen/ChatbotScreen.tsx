@@ -9,18 +9,105 @@ import { ScrollView } from "react-native-gesture-handler";
 // Definir las props para esta pantalla, usar el ParamsList correcto
 type ChatbotScreenProps = StackScreenProps<ChatbotStackParamsList, 'Chatbot'>;
 
+type Message = {
+    sender: 'user' | 'bot';
+    text: string;
+    isTyping?: boolean;
+  };
+  
+
 // Componente principal
 const ChatbotScreen: React.FC<ChatbotScreenProps> = ({ navigation, route }) => {
+    const scrollViewRef = React.useRef<ScrollView>(null);
+    const [typingDots, setTypingDots] = React.useState('');
 
     const [message, setMessage] = React.useState<string>("");
-    const [messages, setMessages] = React.useState<string[]>([]);
+    const [messages, setMessages] = React.useState<Message[]>([]);
 
-    const handleSendMessage = () => {
-        if (message.trim() !== "") {
-            setMessages((prevMessages) => [...prevMessages, message]);
-            setMessage("");
+    const isGreeting = (msg: string) =>
+        /hola|buenas|qué tal|hey|saludos/i.test(msg);
+    
+    const isThankYou = (msg: string) =>
+        /gracias|muchas gracias|te agradezco/i.test(msg);
+    
+    const isGroupInfoRequest = (msg: string) =>
+        /información.*grupo|info.*grupo|detalles.*grupo/i.test(msg);
+    
+    const isActionRequest = (msg: string) =>
+        /crear|añadir|agregar|eliminar|modificar|editar/i.test(msg);
+    
+    const generateBotResponse = (msg: string): string => {
+        const lower = msg.toLowerCase();
+      
+        if (/(hola|buenos días|buenas tardes|buenas noches|hey)/.test(lower)) {
+          return '¡Hola! ¿En qué puedo ayudarte? 😁';
         }
+      
+        if (/gracias|te agradezco|mil gracias/.test(lower)) {
+          return '¡Por nada, estoy para ayudarte! 😊';
+        }
+      
+        if (/grupo.*(información|detalles)|información.*grupo/.test(lower)) {
+          return 'Aquí tienes la información del grupo.';
+        }
+      
+        if (/canciones?|eventos?|ensayos?|miembros?/.test(lower) && /(mostrar|ver|lista|detalles|hay)/.test(lower)) {
+          return 'Aquí está la información solicitada.';
+        }
+      
+        if (/agregar|añadir|crear|eliminar|borrar|modificar|editar/.test(lower)) {
+          return 'La acción se realizó correctamente. ✅';
+        }
+
+        if (/ola|Ola/.test(lower)) {
+            return 'Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 😂';
+        }
+      
+        return 'Lo siento, no entendí tu mensaje. ¿Podrías reformularlo? 🤔';
     };
+      
+          
+      React.useEffect(() => {
+        let interval: NodeJS.Timeout;
+      
+        // Solo activa la animación si hay un mensaje con isTyping
+        if (messages.some((msg) => msg.isTyping)) {
+          let dotCount = 0;
+          interval = setInterval(() => {
+            dotCount = (dotCount + 1) % 4;
+            setTypingDots('.'.repeat(dotCount));
+          }, 300);
+        } else {
+          setTypingDots('');
+        }
+      
+        return () => clearInterval(interval);
+      }, [messages]);
+      
+
+      const handleSendMessage = () => {
+        if (message.trim() !== "") {
+          const userMessage = message.trim();
+          const botReply = generateBotResponse(userMessage);
+      
+          const userMsgObj: Message = { sender: "user", text: userMessage };
+          const typingMsgObj: Message = { sender: "bot", text: "", isTyping: true };
+      
+          setMessages((prevMessages) => [...prevMessages, userMsgObj, typingMsgObj]);
+      
+          setTimeout(() => {
+            setMessages((prevMessages) => {
+              // Elimina el último mensaje que es el que tiene isTyping
+              const updatedMessages = prevMessages.slice(0, -1);
+              const botMsgObj: Message = { sender: "bot", text: botReply };
+              return [...updatedMessages, botMsgObj];
+            });
+          }, 2000);
+      
+          setMessage("");
+        }
+      };
+      
 
     const handleRestoreChat = () => {
         setMessages([]);
@@ -29,16 +116,6 @@ const ChatbotScreen: React.FC<ChatbotScreenProps> = ({ navigation, route }) => {
     
     return (
         <View style={styles.container}>
-            <View style={styles.headerLogo}>
-                <TouchableOpacity /* onPress={toggleMenu} */>
-                    <Icon name="account-circle" size={50} color="#4A1900" />
-                </TouchableOpacity>
-                <Image style={styles.logo} source={require('../../assets/logo.png')} />
-                <TouchableOpacity /* onPress={toggleCalendar} */>
-                    <Icon name="calendar-month" size={50} color="#4A1900" />
-                </TouchableOpacity>
-            </View>
-    
             {messages.length === 0 ? (
                 <View style={styles.containerExample}>
                     <Icon name="smart-toy" size={250} color="#4A1900"/>
@@ -75,12 +152,20 @@ const ChatbotScreen: React.FC<ChatbotScreenProps> = ({ navigation, route }) => {
                     </View>
                 </View>
             ) : (
-                <ScrollView style={styles.messageList}>
+                <ScrollView
+                    style={styles.messageList}
+                    ref={scrollViewRef}
+                    onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
+                >
                     {messages.map((msg, index) => (
-                        <View key={index} style={styles.messageContainer}>
-                            <Text style={styles.sentMessage}>
-                                {msg}
+                        <View key={index} style={msg.sender === 'user' ? styles.messageRowUser : styles.messageRowBot}>
+                            {msg.sender === 'bot' && <Icon name="smart-toy" size={24} color="white" style={styles.iconBot} />}
+                            <View style={msg.sender === 'user' ? styles.messageBubbleUser : styles.messageBubbleBot}>
+                            <Text style={msg.sender === 'user' ? styles.messageTextUser : styles.messageTextBot}>
+                                {msg.isTyping ? `Escribiendo${typingDots}` : msg.text}
                             </Text>
+                            </View>
+                            {msg.sender === 'user' && <Icon name="person" size={24} color="#4A1900" style={styles.iconUser} />}
                         </View>
                     ))}
                 </ScrollView>
@@ -95,8 +180,8 @@ const ChatbotScreen: React.FC<ChatbotScreenProps> = ({ navigation, route }) => {
                     multiline
                     textAlignVertical="top"
                     scrollEnabled
-                    placeholder="Tipo de evento"
-                    placeholderTextColor={'#4A1900'}
+                    placeholder="Mensaje" 
+                    placeholderTextColor={'gray'}
                     onChangeText={setMessage}
                     value={message}
                 />
