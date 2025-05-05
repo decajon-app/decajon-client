@@ -15,13 +15,10 @@ const songDetails = 'Compositor/Cantante';
 // Componente principal
 const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
   const { group } = route.params;
+  const name = group.name;
 
-  const handleCreateGroup = () => {
-      navigation.navigate('CreateGroup');
-  }
-
-  const handleJoinGroup = () => {
-      navigation.navigate('JoinGroup');
+  const handleCreateEvent = () => { 
+    navigation.navigate('CreateEvent');
   }
 
   const handleMembers = () => {
@@ -29,31 +26,24 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
   }
 
   const handleRepertory = () => {
-      navigation.navigate('RepertoryScreen');
+      if (group.id !== undefined) {
+          navigation.navigate({ name: 'RepertoryScreen', params: { groupId: group.id } });
+      } else {
+          console.error("Group ID is undefined");
+      }
   }
 
   const handleGroupInformation = () => {
     navigation.navigate('GroupInformation', group);
-
   }
 
   return (            
   <View style={{ flex: 1 }}> 
   <ScrollView> 
       <View style={styles.container}> 
-          <View style={styles.headerLogo}>
-              <TouchableOpacity /* onPress={toggleMenu} */>
-                  <Icon name="account-circle" size={50} color="#4A1900" />
-              </TouchableOpacity>
-              <Image style={styles.logo} source={require('../../assets/logo.png')} />
-              <TouchableOpacity /* onPress={toggleCalendar} */>
-                <Icon name="calendar-month" size={50} color="#4A1900" />
-              </TouchableOpacity>
-          </View>
-
           <Text style={styles.titleTop}>{group.name}</Text>
           <View style={styles.buttonsTop}>
-              <TouchableOpacity style={styles.button} onPress={handleCreateGroup}>
+              <TouchableOpacity style={styles.button} onPress={handleCreateEvent}>
                   <Text style={styles.buttonText}>Nuevo evento</Text>
               </TouchableOpacity>
               

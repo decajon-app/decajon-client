@@ -61,6 +61,7 @@ export type HomeStackParamList = {
 export type GroupsStackParamsList = {
     Groups: { group: GroupDto };
     CreateGroup: undefined;
+    CreateEvent: undefined;
     Members: { group: GroupDto };
     JoinGroup: undefined;
     GroupInformation: GroupDto;
