@@ -25,7 +25,7 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
   }
 
   const handleMembers = () => {
-      navigation.navigate('Members');
+      navigation.navigate({ name: 'Members', params: { group } });
   }
 
   const handleRepertory = () => {

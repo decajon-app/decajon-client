@@ -291,7 +291,24 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
           <TouchableOpacity style={styles.closeButton} onPress={toggleCalendar}>
             <Icon style={styles.closeButtonText} name="close" size={40} color="black" />
           </TouchableOpacity>
-          <Text style={styles.calendarTitle}>Mi calendario</Text>
+          
+          <Text style={styles.calendarTitle}>MI CALENDARIO</Text>
+          
+          {/* Nombre del mes actual */}
+          <TouchableOpacity>
+            <Text style={styles.calendarTitle}>
+              {'<'}
+              {'     '}
+              {new Date().toLocaleString('es-ES', { month: 'long' }).toUpperCase()}
+              {' '}
+              {new Date().getFullYear()}
+              {'     '}
+              {'>'}
+            </Text>
+          </TouchableOpacity>
+
+
+          {/* Días de la semana */}
           <View style={styles.calendarDays}>
             <Text style={styles.calendarDay}>L</Text>
             <Text style={styles.calendarDay}>M</Text>
@@ -301,8 +318,19 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
             <Text style={styles.calendarDay}>S</Text>
             <Text style={styles.calendarDay}>D</Text>
           </View>
+
+          {/* Ejemplo de días del mes */}
+          <View style={styles.calendarGrid}>
+            {Array.from({ length: 31 }).map((_, index) => (
+              <TouchableOpacity key={index} style={styles.calendarDate}>
+                <Text style={styles.dateText}>{index + 1}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </Animated.View>
       )}
+
+
 
       {/* Modal de cierre de sesion */}
       {loggingOut && (

@@ -22,7 +22,7 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
   console.log("password:", password); */
 
   const returnPage = (): void => {
-    navigation.navigate('ViewGroup', { group: { name, id, password } });
+    navigation.navigate('ViewGroup', { group: { name, id, password, ownerId: route.params.ownerId } });
   };
 
   return (

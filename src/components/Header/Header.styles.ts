@@ -236,6 +236,46 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#E0E0E0',
   },
+  calendarGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    display: 'flex',
+    padding: 0,
+    paddingTop: 5,
+    margin: 0,
+    justifyContent: 'flex-start',
+  },
+  
+  calendarDate: {
+    width: 35,
+    height: 35,
+    margin: 1,
+    marginBottom: 1,
+    borderRadius: 5,
+    backgroundColor: '#F6EDE1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#4A1900',
+  },
+  
+  dateText: {
+    fontSize: 18,
+    color: '#4A1900',
+    fontWeight: 'bold',
+  },
+
+  calendarMonth: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#4A1900',
+    textAlign: 'center',
+    marginBottom: 10,
+    textTransform: 'uppercase',
+  },
+  
+  
 });
 
 export default styles;
