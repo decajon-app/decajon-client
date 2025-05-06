@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, Modal, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
-import { RepertoireSongCardDto, RepertoireSongDto } from "../../models/RepertoireDto";
+import { RepertoireSongCardDto } from "../../models/RepertoireDto";
 import { FlatList } from "react-native-gesture-handler";
 import { getRepertoire } from "../../api/RepertoireApi";
 
@@ -42,8 +42,8 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
         navigation.navigate('EditSong'); // Navegar a la pantalla de edición de canción
     };
 
-    const handleViewSong = () => {
-        navigation.navigate('ViewSong'); // Navegar a la pantalla de vista de canción
+    const handleViewSong = (songId: number) => {
+        navigation.navigate('ViewSong', { songId: songId }); // Navegar a la pantalla de vista de canción
     }
 
     useEffect(() => {
@@ -93,7 +93,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                             data={songs}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (
-                                <TouchableOpacity style={styles.songItem} onPress={handleViewSong}>
+                                <TouchableOpacity style={styles.songItem} onPress={(event) => handleViewSong(item.id)}>
                                     <View style={styles.songImageContainer}>
                                         <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
                                     </View>

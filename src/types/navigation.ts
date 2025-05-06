@@ -65,7 +65,7 @@ export type GroupsStackParamsList = {
     RepertoryScreen: { groupId: number };
     AddSong: { groupId: number };
     EditSong: undefined;
-    ViewSong: undefined;
+    ViewSong: { songId: number };
 };
 
 
