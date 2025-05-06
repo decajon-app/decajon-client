@@ -1,6 +1,6 @@
 import { ApiMethods } from "./ApiMethods";
 import { ENDPOINTS } from "./EndPoints";
-import { GroupDto, JoinGroupDto } from "../models";
+import { GroupDto, GroupMemberDto, JoinGroupDto } from "../models";
 
 export const createGroup = async (groupRequestData: GroupDto): Promise<GroupDto> => {
     return ApiMethods.post<GroupDto>(ENDPOINTS.GROUPS.CREATE_GROUP, groupRequestData);
@@ -16,4 +16,8 @@ export const getGroupsFromUser = async (userId: number): Promise<GroupDto[]> => 
 
 export const getGroupMembersCount = async (groupId: number): Promise<number> => {
     return ApiMethods.get<number>(ENDPOINTS.GROUPS.GET_MEMBERS_COUNT(groupId));
+}
+
+export const getGroupMembersList = async (groupId: number): Promise<GroupMemberDto[]> => {
+    return ApiMethods.get<GroupMemberDto[]>(ENDPOINTS.GROUPS.GET_MEMBERS_LIST(groupId));
 }

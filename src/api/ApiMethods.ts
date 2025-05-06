@@ -12,17 +12,11 @@ export class ApiMethods {
             headers['Authorization'] = `Bearer ${token}`;
         }
 
-        console.log("Antes del fetch!");
-
         const response = await fetch(url, {
             method,
             headers,
             body: data ? JSON.stringify(data) : undefined
         });
-
-        console.log(response);
-
-        console.log("Despues del fetch!");
 
         if(!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
@@ -32,7 +26,6 @@ export class ApiMethods {
     }
 
     static get<T>(url: string): Promise<T> {
-        console.log(url);
         return this.request<T>('GET', url);
     }
 

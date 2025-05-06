@@ -21,8 +21,7 @@ const GroupCard: React.FC<GroupItemProps> = ({ item, navigation }) => {
     useEffect(() => {
         const fetchMemberCount = async () => {
             try {
-                const membersCount = await getGroupMembersCount(item.id);
-                console.log(`ID: ${item.id} | Miembros: ${membersCount}`);
+                const membersCount = await getGroupMembersCount(item.id!);
                 setMemberCount(membersCount);
             } catch (error: any) {
                 setError(error.message);

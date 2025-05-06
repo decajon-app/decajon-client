@@ -1,23 +1,21 @@
-import { StackScreenProps } from "@react-navigation/stack";
-import { GroupDto } from "../../models";
-import { GroupsStackParamsList } from "../../types/navigation";
 import { TouchableOpacity } from "react-native";
 import { Text } from "react-native-gesture-handler";
 import { View } from "react-native";
 import styles from "./SongCard.styles";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { RepertoireSongCardDto } from "../../models/RepertoireDto";
 
 interface SongItemProps { 
-    item: RepertoireSongDto,
-    navigation: StackScreenProps<GroupsStackParamsList, 'Groups'>['navigation']; 
+    item: RepertoireSongCardDto,
+    isEditMode: boolean,
+    handleViewSong: () => void,
+    handleEditSong: () => void,
+    handleDeleteSong: () => void
 }
 
-const SongCard: React.FC<SongItemProps> = ({ item, navigation, route }) => {
-    const { handleViewSong } = route.params;
-    const { handleEditSong } = route.params;
-    const { handleDeleteSong } = route.params;
-    const { isEditMode } = route.params;
-
+const SongCard: React.FC<SongItemProps> = ({ 
+    item, isEditMode, handleViewSong, handleEditSong, handleDeleteSong 
+}) => {
     return (
         <View style={styles.songList}>
             <TouchableOpacity style={styles.songItem} onPress={handleViewSong}>
@@ -25,8 +23,8 @@ const SongCard: React.FC<SongItemProps> = ({ item, navigation, route }) => {
                 <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
             </View>
             <View>
-                <Text style={styles.songName}>{songName}</Text>
-                <Text style={styles.songDetails}>{songDetails}</Text>
+                <Text style={styles.songName}>{item.song}</Text>
+                <Text style={styles.songDetails}>{item.artist}</Text>
             </View>
             {isEditMode && (
                 <View style={styles.actionButtons}>
@@ -43,4 +41,4 @@ const SongCard: React.FC<SongItemProps> = ({ item, navigation, route }) => {
     );
 };
 
-export default GroupCard;
+export default SongCard;

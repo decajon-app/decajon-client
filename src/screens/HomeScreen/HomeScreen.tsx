@@ -5,78 +5,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getUserData } from '../../storage/UserStorage';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../types/navigation';
-import { removeToken } from '../../storage/AuthStorage';
 
 type HomeScreenProps = StackScreenProps<HomeStackParamList, 'Home'>;
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreenProps) => {
-  const [menuVisible, setMenuVisible] = useState<boolean>(false);
-  const [calendarVisible, setCalendarVisible] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true); // estado para mostrar el spinner
-  const slideAnim = useRef(new Animated.Value(300)).current;
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) => {
   const [userName, setUserName] = useState<string>('');
-
   const [loggingOut, setLoggingOut] = useState(false); // estado para mostrar el spinner
-
-  const { onLogoutSuccess } = route.params;
-
-  const groupName = 'Nombre del grupo';
-  const songName = 'Nombre de la canción';
-  const songDetails = 'Compositor/Cantante';
-
   const newEvent = () => navigation.navigate('CreateEvent');
-  const goProfile = () => console.log('Going to profile');
-  const goEditInformation = () => console.log('Going to edit information');
-
-  const logOut = async () => {
-    if (onLogoutSuccess) {
-      try {
-        setLoggingOut(true); // Mostrar el modal
-        await removeToken();
-        setTimeout(() => {
-          setLoggingOut(false); // Ocultar el modal después de 2 segundos
-          onLogoutSuccess();
-        }, 2000);
-      } catch (error) {
-        setLoggingOut(false);
-        Alert.alert("Hubo un error al tratar de cerrar la sesión.");
-      }
-    }
-  };
-
-  const toggleMenu = () => {
-    if (menuVisible) {
-      Animated.timing(slideAnim, {
-        toValue: 300,
-        duration: 300,
-        useNativeDriver: false,
-      }).start(() => setMenuVisible(false));
-    } else {
-      setMenuVisible(true);
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-    }
-  };
-
-  const toggleCalendar = () => {
-    if (calendarVisible) {
-      Animated.timing(slideAnim, {
-        toValue: 300,
-        duration: 300,
-        useNativeDriver: false,
-      }).start(() => setCalendarVisible(false));
-    } else {
-      setCalendarVisible(true);
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-    }
-  };
 
   useEffect(() => {
     const getUserName = async () => {
@@ -87,7 +22,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
 
     // Spinner visible por 3 segundos
     const timer = setTimeout(() => {
-      setLoading(false);
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -125,9 +59,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }: HomeScreen
                 <Icon style={styles.iconCard} name="music-note" size={80} color="#F6EDE1" />
               </View>
               <View style={styles.cardContainer}>
-                <Text style={styles.groupName}>{groupName}</Text>
-                <Text style={styles.songTitle}>{songName}</Text>
-                <Text style={styles.songDetails}>{songDetails}</Text>
+                <Text style={styles.groupName}>group name</Text>
+                <Text style={styles.songTitle}>song title</Text>
+                <Text style={styles.songDetails}>song details</Text>
               </View>
             </View>
           </TouchableOpacity>
