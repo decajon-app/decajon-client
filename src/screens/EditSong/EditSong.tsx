@@ -10,10 +10,24 @@ type EditSongProps = StackScreenProps<GroupsStackParamsList, 'EditSong'>;
 const groupName = 'Nombre del grupo';
 const songName = 'Nombre de la canción';
 const songDetails = 'Compositor/Cantante';
+const genre = 'Género';
+const duration = 'Duración';
+const complexity = 'Complejidad';
+const popularity = 'Popularidad';
+const performance = 'Calidad';
+const comment = 'Comentarios';
+
 
 const EditSong: React.FC<EditSongProps> = ({ navigation }) => {
     const [nombre, setNombre] = useState<string>('');
     const [artista, setArtista] = useState<string>('');
+    const [genre, setGenre] = useState<string>('');
+    const [duration, setDuration] = useState<string>('');
+    const [complexity, setComplexity] = useState<string>('');
+    const [popularity, setPopularity] = useState<string>('');
+    const [performance, setPerformance] = useState<string>('');
+    const [comment, setComment] = useState<string>('');
+
     const [isAddedModalVisible, setIsAddedModalVisible] = useState(false);
     const [isErrorModalVisible, setIsErrorModalVisible] = useState(false); // Nuevo estado para el modal de error
 
@@ -78,6 +92,72 @@ const EditSong: React.FC<EditSongProps> = ({ navigation }) => {
                                 placeholderTextColor="gray"
                                 onChangeText={setArtista}
                                 value={artista}
+                            />
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="library-music" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Género"
+                                placeholderTextColor="gray"
+                                onChangeText={setGenre}
+                                value={genre}
+                            />
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="timer" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Duración"
+                                placeholderTextColor="gray"
+                                onChangeText={setDuration}
+                                value={duration}
+                            />
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="insights" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Complejidad"
+                                placeholderTextColor="gray"
+                                onChangeText={setComplexity}
+                                value={complexity}
+                            />
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="star-rate" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Popularidad"
+                                placeholderTextColor="gray"
+                                onChangeText={setPopularity}
+                                value={popularity}
+                            />
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="fitness-center" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Calidad"
+                                placeholderTextColor="gray"
+                                onChangeText={setPerformance}
+                                value={performance}
+                            />
+                        </View>
+
+                        <View style={styles.inputLabel}>
+                            <Icon name="comment" color="#200606" size={35} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Comentarios"
+                                placeholderTextColor="gray"
+                                onChangeText={setComment}
+                                value={comment}
                             />
                         </View>
                     </View>

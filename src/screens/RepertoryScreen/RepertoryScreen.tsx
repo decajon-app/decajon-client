@@ -57,7 +57,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                 setSongs(fetchedSongs);
                 setLoading(false);
             } catch (error) {
-                Alert.alert("No se ha podido recuperar el repertorio del grupo.");
+                Alert.alert("Error","No se ha podido recuperar el repertorio del grupo.");
             }
         };
         fetchRepertoireByGroup();
@@ -78,10 +78,24 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
 
                 <View style={styles.titleTop}>
                     <Text style={styles.titleText}>Repertorio</Text>
-                    <TouchableOpacity onPress={handleEditToggle}>
+                    {/* <TouchableOpacity onPress={handleEditToggle}>
                         <Icon name="edit" size={30} color="black" />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
+                
+                {/* Prueba con cancion estatica...
+
+                <View>
+                <TouchableOpacity style={styles.songItem} onPress={(event) => handleViewSong(0)}>
+                                    <View style={styles.songImageContainer}>
+                                        <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
+                                    </View>
+                                    <View>
+                                        <Text style={styles.songName}>song</Text>
+                                        <Text style={styles.songDetails}>artist</Text>
+                                    </View>
+                </TouchableOpacity>
+                </View> */}
 
                 {loading ?
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -101,7 +115,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                                         <Text style={styles.songName}>{item.song}</Text>
                                         <Text style={styles.songDetails}>{item.artist}</Text>
                                     </View>
-                                    {isEditMode && (
+                                    {/* {isEditMode && (
                                         <View style={styles.actionButtons}>
                                             <TouchableOpacity onPress={handleEditSong}>
                                                 <Icon name="edit" size={35} color="#4A1900" />
@@ -110,7 +124,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                                                 <Icon name="delete" size={35} color="#4A1900" />
                                             </TouchableOpacity>
                                         </View>
-                                    )}
+                                    )} */}
                                 </TouchableOpacity>
                             )}
                         >
@@ -126,7 +140,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
             </TouchableOpacity>
             
             {/* Modal de confirmación para eliminar */}
-            <Modal
+            {/* <Modal
                 transparent={true}
                 visible={isDeleteModalVisible}
                 animationType="slide"
@@ -147,10 +161,10 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                         </View>
                     </View>
                 </View>
-            </Modal>
+            </Modal> */}
 
             {/* Modal de eliminación exitosa */}
-            <Modal
+            {/* <Modal
                 transparent={true}
                 visible={isDeletedModalVisible}
                 animationType="fade"
@@ -164,7 +178,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                         <Icon name="check-circle" size={50} color="#4A1900" />
                     </View>
                 </View>
-            </Modal>
+            </Modal> */}
         </View>
     );
 };
