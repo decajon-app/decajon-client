@@ -65,68 +65,66 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
 
     return (
         <View style={{ flex: 1 }}>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.body}>
-                <View style={styles.container}>
-                    <View style={styles.headerLogo}>
-                        <TouchableOpacity>
-                            <Icon name="account-circle" size={50} color="#4A1900" />
-                        </TouchableOpacity>
-                        <Image style={styles.logo} source={require('../../assets/logo.png')} />
-                        <TouchableOpacity>
-                            <Icon name="calendar-month" size={50} color="#4A1900" />
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.titleTop}>
-                        <Text style={styles.titleText}>Repertorio</Text>
-                        <TouchableOpacity onPress={handleEditToggle}>
-                            <Icon name="edit" size={30} color="black" />
-                        </TouchableOpacity>
-                    </View>
-
-                    {loading ?
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                            <Text>{loadingMessage}</Text>
-                        </View>
-                    :
-                        <View style={styles.songList}>
-                            <FlatList
-                                data={songs}
-                                keyExtractor={(item) => item.id.toString()}
-                                renderItem={({ item }) => (
-                                    <TouchableOpacity style={styles.songItem} onPress={handleViewSong}>
-                                        <View style={styles.songImageContainer}>
-                                            <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
-                                        </View>
-                                        <View>
-                                            <Text style={styles.songName}>{item.song}</Text>
-                                            <Text style={styles.songDetails}>{item.artist}</Text>
-                                        </View>
-                                        {isEditMode && (
-                                            <View style={styles.actionButtons}>
-                                                <TouchableOpacity onPress={handleEditSong}>
-                                                    <Icon name="edit" size={35} color="#4A1900" />
-                                                </TouchableOpacity>
-                                                <TouchableOpacity onPress={handleDeleteSong}>
-                                                    <Icon name="delete" size={35} color="#4A1900" />
-                                                </TouchableOpacity>
-                                            </View>
-                                        )}
-                                    </TouchableOpacity>
-                                )}
-                            >
-                            </FlatList>
-
-                        </View>
-                    }
+            <View style={styles.container}>
+                <View style={styles.headerLogo}>
+                    <TouchableOpacity>
+                        <Icon name="account-circle" size={50} color="#4A1900" />
+                    </TouchableOpacity>
+                    <Image style={styles.logo} source={require('../../assets/logo.png')} />
+                    <TouchableOpacity>
+                        <Icon name="calendar-month" size={50} color="#4A1900" />
+                    </TouchableOpacity>
                 </View>
 
-                {/* Botón flotante */}
-                <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('AddSong', { groupId: groupId })}>
-                    <Icon name="add" size={30} color="#FFF" />
-                </TouchableOpacity>
-            </ScrollView>
+                <View style={styles.titleTop}>
+                    <Text style={styles.titleText}>Repertorio</Text>
+                    <TouchableOpacity onPress={handleEditToggle}>
+                        <Icon name="edit" size={30} color="black" />
+                    </TouchableOpacity>
+                </View>
 
+                {loading ?
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <Text>{loadingMessage}</Text>
+                    </View>
+                :
+                    <View style={styles.songList}>
+                        <FlatList
+                            data={songs}
+                            keyExtractor={(item) => item.id.toString()}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity style={styles.songItem} onPress={handleViewSong}>
+                                    <View style={styles.songImageContainer}>
+                                        <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
+                                    </View>
+                                    <View>
+                                        <Text style={styles.songName}>{item.song}</Text>
+                                        <Text style={styles.songDetails}>{item.artist}</Text>
+                                    </View>
+                                    {isEditMode && (
+                                        <View style={styles.actionButtons}>
+                                            <TouchableOpacity onPress={handleEditSong}>
+                                                <Icon name="edit" size={35} color="#4A1900" />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={handleDeleteSong}>
+                                                <Icon name="delete" size={35} color="#4A1900" />
+                                            </TouchableOpacity>
+                                        </View>
+                                    )}
+                                </TouchableOpacity>
+                            )}
+                        >
+                        </FlatList>
+
+                    </View>
+                }
+            </View>
+
+            {/* Botón flotante */}
+            <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('AddSong', { groupId: groupId })}>
+                <Icon name="add" size={30} color="#FFF" />
+            </TouchableOpacity>
+            
             {/* Modal de confirmación para eliminar */}
             <Modal
                 transparent={true}

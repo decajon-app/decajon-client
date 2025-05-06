@@ -13,3 +13,9 @@ export interface JoinGroupDto {
     groupId: number;
     password: string;
 }
+
+export interface GroupMemberDto {
+    userId: number;
+    firstName: string;
+    lastName: string;
+}

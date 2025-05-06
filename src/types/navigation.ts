@@ -3,7 +3,6 @@
  */
 import { GroupDto } from "../models";
 
-
 /**
  * AuthStack typos
  * Aquí declaramos las patanllas que corresponden
@@ -20,14 +19,13 @@ import { GroupDto } from "../models";
  * agregarla aquí.
  */
 export type AuthStackParamList = {
-    Login: { onLoginSuccess: () => void } | undefined;
+    Login: { onLoginSuccess: () => void };
     CreateAccount: undefined;
     ForgotPassword: undefined;
     ResetPassword: undefined;
     Preview: undefined;
 };
 /// -----------------------------------------------------------------
-
 
 /**
  * MainTab typos
@@ -42,20 +40,18 @@ export type AuthStackParamList = {
  * como está mostrado abajo.
  */
 export type MainTabParamList = {
-    HomeTab: () => void | undefined;
+    HomeTab: undefined;
     GroupsTab: undefined;
     ChatbotTab: undefined;
 };
 
-
 // Ahora creamos los tipos de las pantallas que van en cada Tab
 // Crear tipo de Home
 export type HomeStackParamList = {
-    Home: { onLogoutSuccess?: () => void };
+    Home: undefined;
     Login: undefined;
     CreateEvent: undefined;
 };
-
 
 // Crear tipo de Grupos
 export type GroupsStackParamsList = {
@@ -77,8 +73,8 @@ export type GroupsStackParamsList = {
 export type ChatbotStackParamsList = {
     Chatbot: undefined;
 };
-/// -----------------------------------------------------------------
 
+/// -----------------------------------------------------------------
 
 /**
  * AppStack typos
@@ -87,6 +83,6 @@ export type ChatbotStackParamsList = {
  * pantallas que se integran en la barra de navegación inferior.
  */
 export type AppStackParamList = {
-    Welcome: { onLogoutSuccess: () => void } | undefined;
+    Welcome: { onLogoutSuccess: () => void };
     Load: undefined;
 }

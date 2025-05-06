@@ -1,4 +1,4 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, StackScreenProps } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert, Modal, ActivityIndicator } from 'react-native';
@@ -20,8 +20,7 @@ import {
     MainTabParamList,
     HomeStackParamList,
     GroupsStackParamsList,
-    ChatbotStackParamsList,
-    LoginScreenProps
+    ChatbotStackParamsList
 } from '../types/navigation';
 import styles from '../components/Header/Header.styles';
 
@@ -32,42 +31,36 @@ const HomeStack = createStackNavigator<HomeStackParamList>();
 const GroupsStack = createStackNavigator<GroupsStackParamsList>();
 const ChatbotStack = createStackNavigator<ChatbotStackParamsList>();
 
+// ----------------------------------------------------------------------
 
+interface AuthStackNavigatorProps {
+  onLoginSuccess: () => void;
+}
 // Stack para la navegación en la autenticación
-function AuthStackNavigator({ onLoginSuccess }: { onLoginSuccess: () => void}) {
+function AuthStackNavigator({ onLoginSuccess }: AuthStackNavigatorProps) {
     return (
         <AuthStack.Navigator screenOptions={{ headerShown: false }}>
             <AuthStack.Screen name="Preview" component={Screens.PreviewScreen} />
-            <AuthStack.Screen 
-                name="Login" 
-                component={(props: LoginScreenProps) => (
+            <AuthStack.Screen name="Login">
+              {(props: StackScreenProps<AuthStackParamList, 'Login'>) => (
                     <Screens.LoginScreen {...props} onLoginSuccess={onLoginSuccess} />
-                )} 
-            />
+              )}
+            </AuthStack.Screen>
             <AuthStack.Screen name="CreateAccount" component={Screens.CreateAccount} />
             <AuthStack.Screen name="ForgotPassword" component={Screens.ForgotPassword} />
         </AuthStack.Navigator>
     );
 }
 
-interface HomeStackNavigatorProps {
-  onLogout: () => void;
-}
 // Stack para la navegacion del boton 'Inicio' en el BottomTab
-function HomeStackNavigator({ onLogout}: HomeStackNavigatorProps) {
+function HomeStackNavigator() {
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen 
-              name="Home" 
-              component={Screens.HomeScreen} 
-              options={{ headerShown: false }}
-              initialParams={{ onLogoutSuccess: onLogout }}
-            />
+            <HomeStack.Screen name="Home" component={Screens.HomeScreen} options={{ headerShown: false }}/>
             <HomeStack.Screen name="CreateEvent" component={Screens.CreateEventScreen} options={{ headerShown: false }} />
         </HomeStack.Navigator>
     );
 }
-
 
 // Stack para la navegación del botón 'Grupos' en el BottomTab
 function GroupsStackNavigator() {
@@ -88,7 +81,6 @@ function GroupsStackNavigator() {
     );
 }
 
-
 // Stack para la navegacion del botón 'Chatbot' en el BottomTab
 function ChatbotStackNavigator() {
     return (
@@ -98,20 +90,20 @@ function ChatbotStackNavigator() {
     );
 }
 
-
 // Necesario definir unas props, porque en este caso necesitamos recibir parametros en algunas pantallas
 interface BottomTabNavigatorProps {
   route: {
     params?: {
-      onLogoutSuccess?: () => void;
-    }
-  }
+      onLogoutSuccess: () => void;
+    };
+  };
 }
 // Stack que contiene el BottomTabNavigator
 function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
   const { onLogoutSuccess } = route.params || {};
-  const [loading, setLoading] = useState<boolean>(true); // estado para mostrar el spinner
 
+  const [loading, setLoading] = useState<boolean>(true); // estado para mostrar el spinner
+  
   // Estados para el menú y el calendario
   const [menuVisible, setMenuVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
@@ -126,74 +118,77 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
   const [loggingOut, setLoggingOut] = useState(false); // estado para mostrar el spinner
 
   const logOut = async () => {
-      if (onLogoutSuccess) {
-        try {
-          setLoggingOut(true); // Mostrar el modal
-          await removeToken();
-          setTimeout(() => {
-            setLoggingOut(false); // Ocultar el modal después de 2 segundos
-            onLogoutSuccess();
-          }, 2000);
-        } catch (error) {
-          setLoggingOut(false);
-          Alert.alert("Hubo un error al tratar de cerrar la sesión.");
-        }
+    if (onLogoutSuccess) {
+      try {
+        setLoggingOut(true); // Mostrar el modal
+        await removeToken();
+        setTimeout(() => {
+          setLoggingOut(false); // Ocultar el modal después de 2 segundos
+          onLogoutSuccess();
+        }, 2000);
+      } catch (error) {
+        setLoggingOut(false);
+        Alert.alert("Hubo un error al tratar de cerrar la sesión.");
       }
-    };
-  
-    const toggleMenu = () => {
-      if (menuVisible) {
-        Animated.timing(slideAnim, {
-          toValue: 300,
-          duration: 300,
-          useNativeDriver: false,
-        }).start(() => setMenuVisible(false));
-      } else {
-        setMenuVisible(true);
-        Animated.timing(slideAnim, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: false,
-        }).start();
-      }
-    };
-  
-    const toggleCalendar = () => {
-      if (calendarVisible) {
-        Animated.timing(slideAnim, {
-          toValue: 300,
-          duration: 300,
-          useNativeDriver: false,
-        }).start(() => setCalendarVisible(false));
-      } else {
-        setCalendarVisible(true);
-        Animated.timing(slideAnim, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: false,
-        }).start();
-      }
-    };
+    }
+  };
 
-    useEffect(() => {
-        const getUserName = async () => {
-          const userData = await getUserData();
-          setUserName(userData.firstName);
-        };
-        getUserName();
-    
-        // Spinner visible por 3 segundos
-        const timer = setTimeout(() => {
-          setLoading(false);
-        }, 3000);
-    
-        return () => clearTimeout(timer);
-      }, []);
+  const toggleMenu = () => {
+    if (menuVisible) {
+      Animated.timing(slideAnim, {
+        toValue: 300,
+        duration: 300,
+        useNativeDriver: false,
+      }).start(() => setMenuVisible(false));
+    } else {
+      setMenuVisible(true);
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    }
+  };
+
+  const toggleCalendar = () => {
+    if (calendarVisible) {
+      Animated.timing(slideAnim, {
+        toValue: 300,
+        duration: 300,
+        useNativeDriver: false,
+      }).start(() => setCalendarVisible(false));
+    } else {
+      setCalendarVisible(true);
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    }
+  };
+
+  useEffect(() => {
+      const getUserName = async () => {
+        const userData = await getUserData();
+        setUserName(userData.firstName);
+      };
+      getUserName();
+  
+      // Spinner visible por 3 segundos
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+  
+      return () => clearTimeout(timer);
+    }, []);
 
   return (
     <>
       {/* Header global */}
-      <Header toggleMenu={toggleMenu} toggleCalendar={toggleCalendar} />
+      <Header 
+        toggleMenu={toggleMenu} 
+        toggleCalendar={toggleCalendar}
+      />
 
       {/* Contenido del BottomTabNavigator */}
       <Tab.Navigator
@@ -210,7 +205,7 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
       >
       <Tab.Screen
         name="HomeTab"
-        component={() => <HomeStackNavigator onLogout={onLogoutSuccess} />}
+        component={HomeStackNavigator}
         options={{
           title: 'Inicio',
           tabBarIcon: ({ color }) => (
@@ -335,8 +330,6 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
         </Animated.View>
       )}
 
-
-
       {/* Modal de cierre de sesion */}
       {loggingOut && (
         <Modal
@@ -364,54 +357,47 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
           </View>
         </View>
       </Modal>
-      
       )}
-
-
-
-
     </>
   );
 }
 
-  
-
 
 // Componente de navegación principal
 export default function AppNavigator() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
-        const getAccessToken = async () => {
-            const token = await getToken();
-            if (token !== null) {
-                setIsLoggedIn(true);
-            }
+  useEffect(() => {
+    const getAccessToken = async () => {
+        const token = await getToken();
+        if (token !== null) {
+            setIsLoggedIn(true);
         }
-        getAccessToken();
-    }, []);
+    }
+    getAccessToken();
+  }, []);
 
-    const handleLoginSuccess = useCallback(() => {
-      setIsLoggedIn(true);
-    }, []);
+  const handleLoginSuccess = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
 
-    const handleLogoutSuccess = useCallback(() => {
-      setIsLoggedIn(false);
-    }, []);
+  const handleLogoutSuccess = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
 
-    return (
-        <NavigationContainer>
-            {isLoggedIn ? (
-                <AppStack.Navigator screenOptions={{ headerShown: false }}>
-                    <AppStack.Screen 
-                      name="Welcome" 
-                      component={BottomTabNavigator} 
-                      initialParams={{ onLogoutSuccess: handleLogoutSuccess }}
-                    />
-                </AppStack.Navigator>
-            ) : (
-                <AuthStackNavigator onLoginSuccess={handleLoginSuccess} />
-            )}
-        </NavigationContainer>
-    );
+  return (
+      <NavigationContainer>
+          {isLoggedIn ? (
+            <AppStack.Navigator screenOptions={{ headerShown: false }}>
+              <AppStack.Screen 
+                name="Welcome" 
+                component={BottomTabNavigator} 
+                initialParams={{ onLogoutSuccess: handleLogoutSuccess }}
+              />
+            </AppStack.Navigator>
+          ) : (
+              <AuthStackNavigator onLoginSuccess={handleLoginSuccess} />
+          )}
+      </NavigationContainer>
+  );
 }

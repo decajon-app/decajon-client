@@ -15,7 +15,6 @@ import {
   TextInput as TextInputType,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Alert } from 'react-native';
 import { AuthStackParamList } from '../../../types/navigation';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoginRequestDto, LoginResponseDto, UserDto } from '../../../models';
@@ -24,11 +23,11 @@ import { saveToken } from '../../../storage/AuthStorage';
 import { saveUserData } from '../../../storage/UserStorage';
 import * as Animatable from 'react-native-animatable';
 
-type LoginScreenProps = StackScreenProps<AuthStackParamList, 'Login'> & {
+interface LoginScreenProps extends StackScreenProps<AuthStackParamList, 'Login'> {
   onLoginSuccess: () => void;
-};
+}
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess, route }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLoginSuccess }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState(false);

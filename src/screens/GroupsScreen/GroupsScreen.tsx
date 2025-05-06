@@ -30,7 +30,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
         };
         fetchGroups();
     }, []);
-    
+
     const handleCreateGroup = () => {
         navigation.navigate('CreateGroup');
     }
