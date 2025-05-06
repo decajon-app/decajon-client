@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Modal, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Modal, Alert, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 import { RepertoireSongCardDto } from "../../models/RepertoireDto";
@@ -19,6 +19,8 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
     
     const [loading, setLoading] = useState(true);
     const [loadingMessage, setLoadingMessage] = useState<string>('Cargando repertorio...');
+
+    // const [searchQuery, setSearchQuery] = useState<string>(''); // Estado para la búsqueda de canciones
 
     const handleEditToggle = () => {
         setIsEditMode(!isEditMode); // Alternar entre mostrar y ocultar los botones de editar/borrar
@@ -81,6 +83,20 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                     {/* <TouchableOpacity onPress={handleEditToggle}>
                         <Icon name="edit" size={30} color="black" />
                     </TouchableOpacity> */}
+                    <View style={styles.searchContainer}>
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder="Buscar canción..."
+                            placeholderTextColor="gray"
+                            // value={searchQuery}
+                            // onChangeText={setSearchQuery}
+                        ></TextInput>
+                        <TouchableOpacity style={styles.search} onPress={handleEditToggle}>
+                            <Icon name="search" size={30} color="gray" />
+                        </TouchableOpacity>
+
+                    </View>
+                    
                 </View>
                 
                 {/* Prueba con cancion estatica...

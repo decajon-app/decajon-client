@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { SearchBar } from 'react-native-screens';
 
 const styles = StyleSheet.create({
     body: {
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
     },
     titleText: {
         fontSize: 24,
@@ -127,6 +129,32 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontWeight: 'bold',
         fontSize: 18,
+    },
+
+    searchContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#FFF7EE',
+        borderWidth: 0.3,
+        borderColor: '#4A1900',
+        borderRadius: 8,
+        paddingHorizontal: 5,
+        width: '60%',
+    },
+
+    searchInput: {
+        width: '80%',
+        color: 'black',
+        maxHeight: 40,
+        fontSize: 16,
+    },
+
+    search: {
+        borderLeftColor: 'gray',
+        borderLeftWidth: 1,
+        paddingLeft: 5,
     },
 
 
