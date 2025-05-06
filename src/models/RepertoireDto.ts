@@ -19,13 +19,14 @@ export interface RepertoireSongCardDto {
 
 export interface RepertoireSongDto {
     repertoireId: number;
-    groupId: number;
-    songName: string;
-    artistName?: string;
-    genreName?: string;
     tone?: string;
+    comment?: string;
     performance?: number;
     popularity?: number;
     complexity?: number;
     practicedAt?: string;
+    title: string;
+    duration?: number;
+    genre?: string;
+    artist?: string;
 };
