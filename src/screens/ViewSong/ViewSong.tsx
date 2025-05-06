@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Alert, Modal } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 import { getSongByRepertoireId } from "../../api/RepertoireApi";
@@ -13,8 +13,33 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation, route }) => {
     const [song, setSong] = useState<RepertoireSongDto>();
     const { songId } = route.params;
 
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // Estado para mostrar/ocultar el modal de confirmación
+    const [isDeletedModalVisible, setIsDeletedModalVisible] = useState(false); // Estado para mostrar el modal de eliminación exitosa
+
     const handleViewPartitura = () => {
         Alert.alert('Partitura','Funcionalidad disponible en la siguiente versión');
+    };
+
+    const handleEditSong = () => {
+        navigation.navigate('EditSong'); // Navegar a la pantalla de edición de canción
+    };
+
+    const handleDeleteSong = () => {
+        setIsDeleteModalVisible(true); // Mostrar el modal de confirmación
+    };
+
+    const confirmDelete = () => {
+        setIsDeleteModalVisible(false);
+        setIsDeletedModalVisible(true); // Mostrar el modal de eliminación exitosa
+
+        
+        // Lógica para eliminar la canción
+
+
+        // Cerrar el modal automáticamente después de 3 segundos
+        setTimeout(() => {
+            setIsDeletedModalVisible(false);
+        }, 3000);
     };
 
     useEffect(() => {
@@ -34,19 +59,14 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation, route }) => {
     return (
         <View style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.body}>
-                <View style={styles.container}>
-                    <View style={styles.headerLogo}>
-                        <TouchableOpacity>
-                            <Icon name="account-circle" size={50} color="#4A1900" />
+                <View style={styles.container}> 
+                    <View style={styles.actionButtons}>
+                        <TouchableOpacity  onPress={handleEditSong}>
+                            <Icon name="edit" size={35} color="#4A1900" />
                         </TouchableOpacity>
-                        <Image style={styles.logo} source={require('../../assets/logo.png')} />
-                        <TouchableOpacity>
-                            <Icon name="calendar-month" size={50} color="#4A1900" />
+                        <TouchableOpacity onPress={handleDeleteSong}>
+                            <Icon name="delete" size={35} color="#4A1900" />
                         </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.titleTop}>
-                        <Text style={styles.titleText}></Text>
                     </View>
 
                     <View style={styles.songImageContainer}>
@@ -102,6 +122,47 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation, route }) => {
                     </View>
                 </View>
             </ScrollView>
+
+            {/* Modal de confirmación para eliminar */}
+            <Modal
+                transparent={true}
+                visible={isDeleteModalVisible}
+                animationType="slide"
+                onRequestClose={() => setIsDeleteModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalText}>
+                            ¿Estás seguro de que deseas eliminar esta canción?
+                        </Text>
+                        <View style={styles.modalButtons}>
+                            <TouchableOpacity onPress={() => setIsDeleteModalVisible(false)} style={styles.modalButtonCancel}>
+                                <Text style={styles.modalButtonText}>Cancelar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={confirmDelete} style={styles.modalButtonConfirm}>
+                                <Text style={styles.modalButtonText}>Eliminar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+
+            {/* Modal de eliminación exitosa */}
+            <Modal
+                transparent={true}
+                visible={isDeletedModalVisible}
+                animationType="fade"
+                onRequestClose={() => setIsDeletedModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalText}>
+                            La canción se eliminó correctamente
+                        </Text>
+                        <Icon name="check-circle" size={50} color="#4A1900" />
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };

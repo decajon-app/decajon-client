@@ -113,6 +113,42 @@ const styles = StyleSheet.create({
         color: '#4A1900',
         marginBottom: 20,
     },
+    
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    modalButtonCancel: {
+        backgroundColor: '#795548',
+        padding: 10,
+        borderRadius: 5,
+        flex: 1,
+        marginRight: 5,
+        alignItems: 'center',
+    },
+    modalButtonConfirm: {
+        backgroundColor: '#4A1900',
+        padding: 10,
+        borderRadius: 5,
+        flex: 1,
+        marginLeft: 5,
+        alignItems: 'center',
+    },
+    modalButtonText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
+
+    
+    actionButtons: {
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        justifyContent: 'space-between',
+        gap: 10,
+        marginTop: 70,
+    },
 
 
 });
