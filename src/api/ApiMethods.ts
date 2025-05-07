@@ -18,6 +18,8 @@ export class ApiMethods {
             body: data ? JSON.stringify(data) : undefined
         });
 
+        console.log(response);
+
         if(!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
         }
@@ -30,14 +32,14 @@ export class ApiMethods {
     }
 
     static async post<T>(url: string, data: unknown): Promise<T> {
-        return this.request('POST', url, data);
+        return this.request<T>('POST', url, data);
     }
 
     static put<T>(url: string, data: Record<string, unknown>): Promise<T> {
-        return this.request('PUT', url, data);
+        return this.request<T>('PUT', url, data);
     }
 
     static delete<T>(url: string): Promise<T> {
-        return this.request('DELETE', url);
+        return this.request<T>('DELETE', url);
     }
 }

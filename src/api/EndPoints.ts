@@ -21,7 +21,8 @@ export const ENDPOINTS = {
     },
 
     USERS_GROUPS: {
-        GET_USER_PERMISSIONS: (userId: number, groupId: number) => `${BASE_URL}/users-groups/user/${userId}/group/${groupId}/permissions`
+        GET_USER_PERMISSIONS: (userId: number, groupId: number) => `${BASE_URL}/users-groups/user/${userId}/group/${groupId}/permissions`,
+        DELETE_GROUP_MEMBER: (groupId: number, userId: number) => `${BASE_URL}/users-groups/group/${groupId}/user/${userId}`
     },
 
     REPERTOIRES: {
