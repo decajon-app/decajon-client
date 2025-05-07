@@ -18,13 +18,11 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navigation,
   const [email, setEmail] = useState<string>('');
 
   const resetPassword = (): void => {
-    console.log('Email:', email);
     // navigation.navigate('ResetPassword');
   };
 
   const returnPage = (): void => {
-    console.log('Return page button');
-    navigation.navigate('Login');
+    // navigation.navigate('Login');
   };
 
   return (

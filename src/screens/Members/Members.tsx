@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, Modal, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
-import { getGroupMembersList } from "../../api/GroupsApi";
+import { deleteGroupMember, getGroupMembersList } from "../../api/GroupsApi";
 import { FlatList } from "react-native-gesture-handler";
 import MemberCard from "../../components/MemberCard/MemberCard";
 
@@ -18,25 +18,42 @@ const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
 
     const [members, setMembers] = useState<GroupMemberDto[]>([]);
 
+    const [memberToDeleteId, setMemberToDeleteId] = useState<number | null>(null);
+
     const { group } = route.params;
+    const { role } = route.params;
 
     const handleEditToggle = () => {
         setIsEditMode(!isEditMode); // Alternar entre mostrar y ocultar los botones de editar/borrar
     };
 
-    const handleDeleteMember = () => {
-        setIsDeleteModalVisible(true); // Mostrar el modal de confirmación
+    const handleDeleteMember = (userId: number) => {
+        if (role === 'OWNER' || role === 'ADMIN') {
+            setMemberToDeleteId(userId);
+            setIsDeleteModalVisible(true);
+        } else {
+            Alert.alert("Permiso denegado", "No tienes permiso para eliminar miembros");
+        }
     };
 
-    const confirmDelete = () => {
-        setIsDeleteModalVisible(false);
-        setIsDeletedModalVisible(true); // Mostrar el modal de eliminación exitosa
+    const confirmDelete = async () => {
+        if(memberToDeleteId === null) return;
+        
+        try {
+            const response = await deleteGroupMember(group.id!, memberToDeleteId);
 
-        // Cerrar el modal automáticamente después de 3 segundos
-        setTimeout(() => {
-            setIsDeletedModalVisible(false);
-        }, 3000);
+            setMembers(prev => prev.filter(m => m.userId !== memberToDeleteId));
 
+            setIsDeletedModalVisible(true);
+            setIsDeleteModalVisible(false);
+
+            setTimeout(() => {
+                setIsDeletedModalVisible(false);
+            }, 1000);
+        } catch (error: any) {
+            Alert.alert("Error", "No se pudo eliminar al miembro.");
+            setIsDeleteModalVisible(false);
+        }
     };
 
     useEffect(() => {
@@ -67,9 +84,11 @@ const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
 
                 <View style={styles.titleTop}>
                     <Text style={styles.titleText}>Miembros</Text>
-                    <TouchableOpacity onPress={handleEditToggle}>
-                        <Icon name="edit" size={30} color="black" />
-                    </TouchableOpacity>
+                    {(role === 'OWNER' || role === 'ADMIN') && (
+                        <TouchableOpacity onPress={handleEditToggle}>
+                            <Icon name="edit" size={30} color="black" />
+                        </TouchableOpacity>
+                    )}
                 </View>
 
                 <FlatList
@@ -80,6 +99,7 @@ const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
                             item={item}
                             isEditMode={isEditMode}
                             handleDeleteMember={handleDeleteMember}
+                            role={role}
                         />
                     )}
                 />

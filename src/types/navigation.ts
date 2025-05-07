@@ -58,7 +58,7 @@ export type GroupsStackParamsList = {
     Groups: { group: GroupDto };
     CreateGroup: undefined;
     CreateEvent: undefined;
-    Members: { group: GroupDto };
+    Members: { group: GroupDto; role: string; };
     JoinGroup: undefined;
     GroupInformation: GroupDto;
     ViewGroup: { group: GroupDto};

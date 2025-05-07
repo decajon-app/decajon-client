@@ -20,6 +20,11 @@ export const ENDPOINTS = {
         GET_MEMBERS_LIST: (groupId: number) => `${BASE_URL}/groups/${groupId}/members`
     },
 
+    USERS_GROUPS: {
+        GET_USER_PERMISSIONS: (userId: number, groupId: number) => `${BASE_URL}/users-groups/user/${userId}/group/${groupId}/permissions`,
+        DELETE_GROUP_MEMBER: (groupId: number, userId: number) => `${BASE_URL}/users-groups/group/${groupId}/user/${userId}`
+    },
+
     REPERTOIRES: {
         CREATE_REPERTOIRE: `${BASE_URL}/repertoires/add`,
         GET_REPERTOIRE: `${BASE_URL}/repertoires/group`,

@@ -1,9 +1,11 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../ViewGroup/styles";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { getUserData } from "../../storage/UserStorage";
+import { getRoleByUserIdAndGroupId } from "../../api/UsersGroupsApi";
 
 type ViewGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'ViewGroup'>;
 
@@ -14,14 +16,14 @@ const songDetails = 'Compositor/Cantante';
 // Componente principal
 const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
   const { group } = route.params;
-  const name = group.name;
+  const [role, setRole] = useState<string>('MEMBER');
 
   const handleCreateEvent = () => { 
     navigation.navigate('CreateEvent');
   }
 
   const handleMembers = () => {
-      navigation.navigate({ name: 'Members', params: { group } });
+      navigation.navigate({ name: 'Members', params: { group, role } });
   }
 
   const handleRepertory = () => {
@@ -30,12 +32,29 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
       } else {
           console.error("Group ID is undefined");
       }
-      // navigation.navigate('RepertoryScreen', { groupId: group.id! });
   }
 
   const handleGroupInformation = () => {
     navigation.navigate('GroupInformation', group);
   }
+
+  useEffect(() => {
+    const fetchUserPermissions = async () => {
+      const user = await getUserData();
+      const userId = user.id;
+      const groupId = group.id!;
+
+      try {
+        const response: { role: string } = await getRoleByUserIdAndGroupId(userId, groupId);
+        setRole(response.role);
+      } catch (error: any) {
+        Alert.alert("Error", "Hubo un error determinando los permisos del usuario.");
+      }
+    };
+    fetchUserPermissions();
+
+    console.log(role);
+  }, []);
 
   return (            
   <View style={{ flex: 1 }}> 

@@ -21,3 +21,7 @@ export const getGroupMembersCount = async (groupId: number): Promise<number> => 
 export const getGroupMembersList = async (groupId: number): Promise<GroupMemberDto[]> => {
     return ApiMethods.get<GroupMemberDto[]>(ENDPOINTS.GROUPS.GET_MEMBERS_LIST(groupId));
 }
+
+export const deleteGroupMember = async (groupId: number, userId: number): Promise<string> => {
+    return ApiMethods.delete(ENDPOINTS.USERS_GROUPS.DELETE_GROUP_MEMBER(groupId, userId));
+}
