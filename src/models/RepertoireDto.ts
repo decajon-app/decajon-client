@@ -31,7 +31,7 @@ export interface RepertoireSongDto {
     artist?: string;
 };
 
-export interface ReperotireReviewSongDto {
+export interface RepertoireReviewSongDto {
     repertoireId: number;
     rating: number;
 }
