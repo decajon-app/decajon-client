@@ -48,14 +48,12 @@ const AddSong: React.FC<AddSongProps> = ({ navigation, route }) => {
 
         try {
             const response = await createSong(newSong);
-            console.log(response);
             setIsAddedModalVisible(true); // Mostrar modal de éxito
             setTimeout(() => {
                 setIsAddedModalVisible(false);
                 navigation.goBack(); // Regresar a la pantalla anterior
             }, 1500);
         } catch (error) {
-            console.log(error);
             Alert.alert('Error', 'No se pudo agregar la canción.');
         }
     };

@@ -19,13 +19,18 @@ const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
     const [members, setMembers] = useState<GroupMemberDto[]>([]);
 
     const { group } = route.params;
+    const { role } = route.params;
 
     const handleEditToggle = () => {
         setIsEditMode(!isEditMode); // Alternar entre mostrar y ocultar los botones de editar/borrar
     };
 
     const handleDeleteMember = () => {
-        setIsDeleteModalVisible(true); // Mostrar el modal de confirmación
+        if (role === 'OWNER' || role === 'ADMIN') {
+            setIsDeleteModalVisible(true);
+        } else {
+            Alert.alert("Permiso denegado", "No tienes permiso para eliminar miembros");
+        }
     };
 
     const confirmDelete = () => {
@@ -67,9 +72,11 @@ const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
 
                 <View style={styles.titleTop}>
                     <Text style={styles.titleText}>Miembros</Text>
-                    <TouchableOpacity onPress={handleEditToggle}>
-                        <Icon name="edit" size={30} color="black" />
-                    </TouchableOpacity>
+                    {(role === 'OWNER' || role === 'ADMIN') && (
+                        <TouchableOpacity onPress={handleEditToggle}>
+                            <Icon name="edit" size={30} color="black" />
+                        </TouchableOpacity>
+                    )}
                 </View>
 
                 <FlatList
@@ -80,6 +87,7 @@ const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
                             item={item}
                             isEditMode={isEditMode}
                             handleDeleteMember={handleDeleteMember}
+                            role={role}
                         />
                     )}
                 />
