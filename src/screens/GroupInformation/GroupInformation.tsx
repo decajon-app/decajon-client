@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupsStackParamsList } from '../../types/navigation';
 import { ScrollView } from 'react-native-gesture-handler';
-import { deleteGroupMember } from '../../api/GroupsApi';
+import { deleteGroup, deleteGroupMember } from '../../api/GroupsApi';
 import { getUserData } from '../../storage/UserStorage';
 
 type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'GroupInformation'>;
@@ -35,7 +35,20 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
   };
 
   const handleDeleteGroup = async () => {
+    const groupId: number = group.id!;
 
+    try {
+      await deleteGroup(groupId);
+      Alert.alert("Grupo eliminado", "Se ha eliminado el grupo satisfactoriamente.", [
+        {
+          text: "OK",
+          onPress: () => navigation.navigate('Groups')
+        }
+      ]);
+    } catch (error: any) {
+      const errorMsg = error?.response?.data?.message || error.message || "No se pudo eliminar el grupo.";
+      Alert.alert("Error", errorMsg);
+    }    
   };
 
   return (

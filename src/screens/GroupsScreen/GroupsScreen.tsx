@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from "../../types/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./GroupsScreen.styles";
 import { View, Text, TouchableOpacity, FlatList, Image, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,28 +8,32 @@ import { GroupDto } from "../../models";
 import GroupCard from "../../components/GroupCard/GroupCard";
 import { getGroupsFromUser } from "../../api/GroupsApi";
 import { getUserData } from "../../storage/UserStorage";
+import { useFocusEffect } from "@react-navigation/native";
 
 type GroupsScreenProps = StackScreenProps<GroupsStackParamsList, 'Groups'>;
 
 const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
     const [groups, setGroups] = useState<GroupDto[]>([]);
 
-    useEffect(() => {
-        const fetchGroups = async () => {
-            try {
-                const userData = await getUserData();
-                if (userData && userData.id !== undefined && userData.id !== null) {
-                    const fetchedGroups = await getGroupsFromUser(userData.id);
-                    setGroups(fetchedGroups);                    
-                } else {
-                    Alert.alert("Error", "No se pudo obtener la información del usuario.");
+    useFocusEffect(
+        useCallback(() => {
+            const fetchGroups = async () => {
+                try {
+                    const userData = await getUserData();
+                    if (userData && userData.id !== undefined && userData.id !== null) {
+                        const fetchedGroups = await getGroupsFromUser(userData.id);
+                        setGroups(fetchedGroups);                    
+                    } else {
+                        Alert.alert("Error", "No se pudo obtener la información del usuario.");
+                    }
+                } catch (error: any) {
+                    Alert.alert("Error", "Error al recuperar los grupos.");
                 }
-            } catch (error: any) {
-                Alert.alert("Error", "Error al recuperar los grupos.");
-            }
-        };
-        fetchGroups();
-    }, []);
+            };
+
+            fetchGroups();
+        }, [])
+    );
 
     const handleCreateGroup = () => {
         navigation.navigate('CreateGroup');
