@@ -6,36 +6,45 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GroupsStackParamsList } from '../../types/navigation';
 import { ScrollView } from 'react-native-gesture-handler';
+import { deleteGroupMember } from '../../api/GroupsApi';
+import { getUserData } from '../../storage/UserStorage';
 
 type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'GroupInformation'>;
 
 const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, route }) => {
-  // Extraer los datos del grupo que acaba de ser creado
-  const { name, id, password } = route.params;
-
-  /* console.log("name:", name);
-  console.log("id:", id);
-  console.log("password:", password); */
+  const { group, mode } = route.params;
 
   const returnPage = (): void => {
-    navigation.navigate('ViewGroup', { group: { name, id, password, ownerId: route.params.ownerId } });
+    navigation.navigate('ViewGroup', { group });
+  };
+
+  const handleLeaveGroup = async () => {
+    const user = await getUserData();
+
+    try {
+      await deleteGroupMember(group.id!, user.id);
+      navigation.navigate('Groups');
+    } catch (error) {
+      Alert.alert('No se pudo salir del grupo. Intenta de nuevo.');
+    }
   };
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.title}>{group.name}</Text>
           <Text style={styles.subtitle}>Tu ID del grupo es</Text>
         </View>
 
         <View style={styles.container1}>
           <Icon name="groups" color="#200606" size={50} />
-          <Text style={styles.idGroup}>{ id }</Text>
+          <Text style={styles.idGroup}>{ group.id }</Text>
         </View>
 
         <View style={styles.header2}>
@@ -44,13 +53,19 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
 
         <View style={styles.container1}>
           <Icon name="key" color="#200606" size={50} />
-          <Text style={styles.idGroup}>{ password }</Text>
+          <Text style={styles.idGroup}>{ group.password }</Text>
         </View>
 
         <Text style={styles.subtitle3}>
           Compártela con tus compañeros de grupo para que accedan a eventos y ensayos personalizados en conjunto.{'\n\n'}
           Solo tú tienes acceso a esta información.
         </Text>
+
+        {mode === 'view' && (
+          <TouchableOpacity style={styles.buttonRed} onPress={handleLeaveGroup}>
+            <Text style={styles.buttonText}>Salir del grupo</Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity style={styles.button} onPress={returnPage}>
           <Text style={styles.buttonText}>Aceptar</Text>
@@ -141,6 +156,21 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#200606',
+    padding: 15,
+    margin: 40,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    marginVertical: 30,
+    shadowColor: '#200606',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 16,
+  },
+  buttonRed: {
+    backgroundColor: '#CA3433',
     padding: 15,
     margin: 40,
     borderRadius: 50,

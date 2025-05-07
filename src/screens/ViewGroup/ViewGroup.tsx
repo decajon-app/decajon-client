@@ -35,7 +35,7 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
   }
 
   const handleGroupInformation = () => {
-    navigation.navigate('GroupInformation', group);
+    navigation.navigate('GroupInformation', { group, mode: 'view'});
   }
 
   useEffect(() => {
