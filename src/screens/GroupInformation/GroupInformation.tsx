@@ -62,7 +62,21 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
         </Text>
 
         {mode === 'view' && (
-          <TouchableOpacity style={styles.buttonRed} onPress={handleLeaveGroup}>
+          <TouchableOpacity style={styles.buttonRed} onPress={() => {
+            Alert.alert(
+              '¿Salir del grupo?',
+              '¿Estás seguro de que deseas salir de este grupo?',
+              [
+                { text: 'Cancelar', style: 'cancel' },
+                {
+                  text: 'Salir',
+                  style: 'destructive',
+                  onPress: () => handleLeaveGroup(),
+                },
+              ],
+              { cancelable: true }
+            );
+          }}>
             <Text style={styles.buttonText}>Salir del grupo</Text>
           </TouchableOpacity>
         )}

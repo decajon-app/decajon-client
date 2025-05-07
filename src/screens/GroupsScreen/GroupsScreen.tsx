@@ -66,8 +66,11 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                 data={groups}
                 keyExtractor={(item) => String(item.id)}
                 renderItem={({ item }) => <GroupCard item={item} navigation={navigation} />}
-                ListHeaderComponent={
-                    <View>
+                ListEmptyComponent={
+                    <View style={{ alignItems: 'center', marginTop: 50 }}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#763F0E' }}>
+                            Vaya, no te has unido a un grupo todavía 😅
+                        </Text>
                     </View>
                 }
             />
