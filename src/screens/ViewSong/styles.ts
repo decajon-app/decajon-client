@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     modalButtonText: {
         color: '#FFF',
-        fontWeight: 'bold',
+        textAlign: 'center',
         fontSize: 18,
     },
 

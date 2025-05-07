@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 import { getSongByRepertoireId } from "../../api/RepertoireApi";
 import { RepertoireSongDto } from "../../models/RepertoireDto";
+import { Rating } from 'react-native-ratings';
+
+
 
 type ViewSongProps = StackScreenProps<GroupsStackParamsList, 'ViewSong'>;
 
@@ -15,6 +18,17 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation, route }) => {
 
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // Estado para mostrar/ocultar el modal de confirmación
     const [isDeletedModalVisible, setIsDeletedModalVisible] = useState(false); // Estado para mostrar el modal de eliminación exitosa
+    const [isRatingModalVisible, setIsRatingModalVisible] = useState(false);
+    const [rating, setRating] = useState(0);
+
+    const closeRatingModal = () => setIsRatingModalVisible(false);
+    const confirmRating = () => {
+    console.log("Calificación confirmada:", rating);
+    setIsRatingModalVisible(false);
+    };
+    const handleRatingPractice = () => {
+        setIsRatingModalVisible(true);
+    };
 
     const handleViewPartitura = () => {
         Alert.alert('Partitura','Funcionalidad disponible en la siguiente versión');
@@ -116,6 +130,9 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation, route }) => {
                     </View>
 
                     <View style={styles.containerBottom}>
+                        <TouchableOpacity style={styles.buttonAdd} onPress={handleRatingPractice}>
+                            <Text style={styles.buttonText}>Calificar</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonAdd} onPress={handleViewPartitura}>
                             <Text style={styles.buttonText}>Partitura</Text>
                         </TouchableOpacity>
@@ -150,19 +167,39 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation, route }) => {
             {/* Modal de eliminación exitosa */}
             <Modal
                 transparent={true}
-                visible={isDeletedModalVisible}
-                animationType="fade"
-                onRequestClose={() => setIsDeletedModalVisible(false)}
-            >
+                visible={isRatingModalVisible}
+                animationType="slide"
+                onRequestClose={() => setIsRatingModalVisible(false)}
+                >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>
-                            La canción se eliminó correctamente
-                        </Text>
-                        <Icon name="check-circle" size={50} color="#4A1900" />
+                    <Text style={styles.modalText}>Califica tu ensayo:</Text>
+                    
+                        <Rating
+                            type="star"
+                            ratingCount={4}
+                            imageSize={40}
+                            startingValue={rating}
+                            onFinishRating={(value: number) => {
+                                setRating(value);
+                                console.log("Califica tu ensayo:", value);
+                            }}
+                            
+                            showRating
+                        />
+
+                        <View style={styles.modalButtons}>
+                            <TouchableOpacity onPress={confirmRating} style={styles.modalButtonConfirm}>
+                                <Text style={styles.modalButtonText}>Confirmar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={closeRatingModal} style={styles.modalButtonConfirm}>
+                                <Text style={styles.modalButtonText}>Cancelar</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </Modal>
+
         </View>
     );
 };
