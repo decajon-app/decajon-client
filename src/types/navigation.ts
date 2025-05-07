@@ -60,7 +60,11 @@ export type GroupsStackParamsList = {
     CreateEvent: undefined;
     Members: { group: GroupDto; role: string; };
     JoinGroup: undefined;
-    GroupInformation: { group: GroupDto, mode: 'joined' | 'view'};
+    GroupInformation: { 
+        group: GroupDto, 
+        mode: 'joined' | 'view', 
+        role: 'MEMBER' | 'ADMIN' | 'OWNER'
+    };
     ViewGroup: { group: GroupDto};
     RepertoryScreen: { groupId: number };
     AddSong: { groupId: number };

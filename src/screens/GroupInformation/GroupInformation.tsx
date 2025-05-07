@@ -17,7 +17,7 @@ import { getUserData } from '../../storage/UserStorage';
 type GroupInformationScreenProps = StackScreenProps<GroupsStackParamsList, 'GroupInformation'>;
 
 const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, route }) => {
-  const { group, mode } = route.params;
+  const { group, mode, role } = route.params;
 
   const returnPage = (): void => {
     navigation.navigate('ViewGroup', { group });
@@ -32,6 +32,10 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
     } catch (error) {
       Alert.alert('No se pudo salir del grupo. Intenta de nuevo.');
     }
+  };
+
+  const handleDeleteGroup = async () => {
+
   };
 
   return (
@@ -61,7 +65,7 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
           Solo tú tienes acceso a esta información.
         </Text>
 
-        {mode === 'view' && (
+        {mode === 'view' && role !== 'OWNER' && (
           <TouchableOpacity style={styles.buttonRed} onPress={() => {
             Alert.alert(
               '¿Salir del grupo?',
@@ -78,6 +82,26 @@ const GroupInformation: React.FC<GroupInformationScreenProps> = ({ navigation, r
             );
           }}>
             <Text style={styles.buttonText}>Salir del grupo</Text>
+          </TouchableOpacity>
+        )}
+
+        {mode === 'view' && role === 'OWNER' && (
+          <TouchableOpacity style={styles.buttonRed} onPress={() => {
+            Alert.alert(
+              '¿Eliminar grupo?',
+              '¿Estás seguro de que deseas eliminar este grupo?',
+              [
+                { text: 'Cancelar', style: 'cancel' },
+                {
+                  text: 'Eliminar',
+                  style: 'destructive',
+                  onPress: () => handleDeleteGroup(),
+                },
+              ],
+              { cancelable: true }
+            );
+          }}>
+            <Text style={styles.buttonText}>Eliminar grupo</Text>
           </TouchableOpacity>
         )}
 
