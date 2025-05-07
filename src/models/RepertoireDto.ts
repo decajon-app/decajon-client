@@ -30,3 +30,8 @@ export interface RepertoireSongDto {
     genre?: string;
     artist?: string;
 };
+
+export interface RepertoireReviewSongDto {
+    repertoireId: number;
+    rating: number;
+}

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 import { getSongByRepertoireId } from "../../api/RepertoireApi";
 import { RepertoireSongDto } from "../../models/RepertoireDto";
+import { reviewSongCardById } from "../../api/RepertoireApi";
 import { Rating } from 'react-native-ratings';
 
 
@@ -22,9 +23,20 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation, route }) => {
     const [rating, setRating] = useState(0);
 
     const closeRatingModal = () => setIsRatingModalVisible(false);
-    const confirmRating = () => {
-    console.log("Calificación confirmada:", rating);
-    setIsRatingModalVisible(false);
+
+    const confirmRating = async () => {
+        setIsRatingModalVisible(false);
+        try{
+            const reviewCard = {
+                repertoireId: songId,
+                rating: rating,
+            };
+            await reviewSongCardById(reviewCard);
+            console.log("Calificación enviada:", reviewCard);
+            Alert.alert("Éxito", "Calificación enviada correctamente");
+        }catch (error: any) {
+            Alert.alert("Error", "Error al calificar la canción");
+        }
     };
     const handleRatingPractice = () => {
         setIsRatingModalVisible(true);
@@ -164,7 +176,7 @@ const ViewSong: React.FC<ViewSongProps> = ({ navigation, route }) => {
                 </View>
             </Modal>
 
-            {/* Modal de eliminación exitosa */}
+            {/* Modal de rating */}
             <Modal
                 transparent={true}
                 visible={isRatingModalVisible}
