@@ -21,6 +21,7 @@
     "react-native-animatable": "^1.4.0",
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "^2.24.0",
+    "react-native-ratings": "^8.1.0",
     "react-native-reanimated": "^3.17.1",
     "react-native-safe-area-context": "^5.3.0",
     "react-native-screens": "^4.10.0",
