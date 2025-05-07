@@ -55,12 +55,12 @@ export type HomeStackParamList = {
 
 // Crear tipo de Grupos
 export type GroupsStackParamsList = {
-    Groups: { group: GroupDto };
+    Groups: undefined;
     CreateGroup: undefined;
     CreateEvent: undefined;
     Members: { group: GroupDto; role: string; };
     JoinGroup: undefined;
-    GroupInformation: GroupDto;
+    GroupInformation: { group: GroupDto, mode: 'joined' | 'view'};
     ViewGroup: { group: GroupDto};
     RepertoryScreen: { groupId: number };
     AddSong: { groupId: number };

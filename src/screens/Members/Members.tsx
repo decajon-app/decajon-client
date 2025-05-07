@@ -40,8 +40,7 @@ const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
         if(memberToDeleteId === null) return;
         
         try {
-            const response = await deleteGroupMember(group.id!, memberToDeleteId);
-
+            await deleteGroupMember(group.id!, memberToDeleteId);
             setMembers(prev => prev.filter(m => m.userId !== memberToDeleteId));
 
             setIsDeletedModalVisible(true);

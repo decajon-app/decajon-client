@@ -29,15 +29,11 @@ const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation }) => {
 
     try {
       const newGroupData: GroupDto = await createGroup(newGroupRequest);
-      navigation.navigate('GroupInformation', {...newGroupData});
+      navigation.navigate('GroupInformation', {group: newGroupData, mode: 'joined'});
     } catch (error) {
       Alert.alert('Error', 'No se pudo crear el grupo.');
       return;
     }
-  };
-
-  const returnPage = (): void => {
-    navigation.navigate('Groups');
   };
 
   useEffect(() => {
