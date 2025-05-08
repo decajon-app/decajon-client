@@ -10,30 +10,6 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: '#F6EDE1',
     },
-    headerLogo: {
-        backgroundColor: '#FFF7EE',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1,
-        paddingTop: 10,
-        paddingBottom: 5, 
-    },
-    logo: {
-        width: 160,
-        height: 60,
-        borderRadius: 10,
-    },
-    titleTop: {
-        marginTop: 70,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
     titleText: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -140,17 +116,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
     },
-
-    
     actionButtons: {
         display: 'flex',
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         gap: 10,
-        marginTop: 70,
+        marginTop: 10,
     },
-
-
 });
 
 export default styles;

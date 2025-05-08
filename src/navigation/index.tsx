@@ -57,6 +57,7 @@ function HomeStackNavigator() {
     return (
         <HomeStack.Navigator>
             <HomeStack.Screen name="Home" component={Screens.HomeScreen} />
+            <HomeStack.Screen name="ViewSong" component={Screens.ViewSong} />
         </HomeStack.Navigator>
     );
 }
@@ -264,14 +265,14 @@ function BottomTabNavigator({ route }: BottomTabNavigatorProps) {
                 <TouchableOpacity style={styles.menuItem}>
                   <Text style={styles.menuTextName}>{userName}</Text>
                 </TouchableOpacity>
-                {/*<TouchableOpacity style={styles.menuItem} onPress={goProfile}>
+                <TouchableOpacity style={styles.menuItem} onPress={goProfile}>
                   <Icon style={styles.iconMenu} name="person" size={25} color="black" />
                   <Text style={styles.menuText}>Mi Perfil</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.menuItem} onPress={goEditInformation}>
                   <Icon style={styles.iconMenu} name="edit" size={25} color="black" />
                   <Text style={styles.menuText}>Editar Información</Text>
-                </TouchableOpacity>*/}
+                </TouchableOpacity>
               </View>
               <TouchableOpacity style={styles.logOutItem} onPress={logOut}>
                 <View style={styles.divider} />
