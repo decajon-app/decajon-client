@@ -73,7 +73,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                 ListEmptyComponent={
                     <View style={{ alignItems: 'center', marginTop: 50 }}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#763F0E' }}>
-                            Vaya, no te has unido a un grupo todavía 😅
+                            Vaya, no te has unido a un grupo todavía
                         </Text>
                     </View>
                 }

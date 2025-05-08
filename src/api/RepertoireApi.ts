@@ -17,3 +17,7 @@ export const getSongByRepertoireId = async (repertoireId: number): Promise<Reper
 export const reviewSongCardById = async (reviewCard: RepertoireReviewSongDto): Promise<void> => {
     return ApiMethods.post<void>(ENDPOINTS.REPERTOIRES.REVIEW_CARD, reviewCard);
 };
+
+export const fetchSuggestionsPractice = async (query: string): Promise<RepertoireSongCardDto[]> => {
+    return await ApiMethods.get<RepertoireSongCardDto[]>(ENDPOINTS.PRACTICE.SUGGESTED);
+}
