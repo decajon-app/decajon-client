@@ -17,7 +17,7 @@ export interface RepertoireSongCardDto {
     artist: string;
 };
 
-export interface RepertoireSongDto {
+export interface RepertoireSongDto { /////////esta se devuelve en el front tambien
     repertoireId: number;
     tone?: string;
     comment?: string;
@@ -34,4 +34,13 @@ export interface RepertoireSongDto {
 export interface RepertoireReviewSongDto {
     repertoireId: number;
     rating: number;
+}
+
+export interface SuggestionCardDto {
+    group: string;
+    repertoireId: number;
+    title: string;
+    artist: string;
+    performance?: number;
+    dueDate: string;
 }

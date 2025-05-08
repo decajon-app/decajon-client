@@ -1,4 +1,4 @@
-import { CreateSongDto, RepertoireSongCardDto, RepertoireSongDto, RepertoireReviewSongDto } from "../models/RepertoireDto";
+import { CreateSongDto, RepertoireSongCardDto, RepertoireSongDto, RepertoireReviewSongDto, SuggestionCardDto } from "../models/RepertoireDto";
 import { ApiMethods } from "./ApiMethods";
 import { ENDPOINTS } from "./EndPoints";
 
@@ -17,3 +17,7 @@ export const getSongByRepertoireId = async (repertoireId: number): Promise<Reper
 export const reviewSongCardById = async (reviewCard: RepertoireReviewSongDto): Promise<void> => {
     return ApiMethods.post<void>(ENDPOINTS.REPERTOIRES.REVIEW_CARD, reviewCard);
 };
+
+export const fetchSuggestionsPractice = async (userId: number): Promise<SuggestionCardDto[]> => {
+    return await ApiMethods.get<RepertoireSongCardDto[]>(ENDPOINTS.REPERTOIRES.SUGGESTIONS_PRACTICE(userId));
+  }
