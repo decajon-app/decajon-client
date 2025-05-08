@@ -5,7 +5,7 @@ import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert, Modal
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getUserData } from '../../storage/UserStorage';
 import { StackScreenProps } from '@react-navigation/stack';
-import { HomeStackParamList } from '../../types/navigation';
+import { HomeStackParamList, } from '../../types/navigation';
 import { SuggestionCardDto } from '../../models/RepertoireDto';
 import { fetchSuggestionsPractice } from '../../api/RepertoireApi'
 
@@ -16,9 +16,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
   const [userId, setUserId] = useState(null)
   const [loggingOut, setLoggingOut] = useState(false); // estado para mostrar el spinner
   const [suggestedPractices, setSuggestedPractices] = useState<SuggestionCardDto[]>([]);
-  const [loadingPractices, setLoadingPractices] = useState(true);
   const newEvent = () => navigation.navigate('CreateEvent');
 
+  const handleViewSong = (songId: number) => {
+    navigation.navigate('ViewSong', { songId: songId });
+  };
   useEffect(() => {
     const getUserName = async () => {
       const userData = await getUserData();
@@ -42,9 +44,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
         setSuggestedPractices(data);
       } catch (error) {
         Alert.alert("Error", "No se pudieron cargar los ensayos sugeridos.");
-      } finally {
-        setLoadingPractices(false);
-      }
+      } 
     };
   
     loadPractices();
@@ -79,7 +79,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
             data={suggestedPractices}
             keyExtractor={(item) => item.repertoireId.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.cardEvent}>
+              <TouchableOpacity style={styles.cardEvent}
+              onPress={() => handleViewSong(item.repertoireId)}
+              >
                 <Icon style={styles.iconCard} name="music-note" size={40} color="#4A1900" />
                 <View>
                   <Text style={styles.cardText}>{item.title}</Text>
