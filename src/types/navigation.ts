@@ -51,6 +51,7 @@ export type HomeStackParamList = {
     Home: undefined;
     Login: undefined;
     CreateEvent: undefined;
+    ViewSong: { songId: number };
 };
 
 // Crear tipo de Grupos
