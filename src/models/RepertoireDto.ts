@@ -36,3 +36,11 @@ export interface RepertoireReviewSongDto {
     rating: number;
 }
 
+export interface HomeScreenRepertoireSongCardDto {
+    groupId: number;
+    title: string;
+    artist: string;
+    rating: number;
+    performance?: number;
+    duedate: string;
+}
