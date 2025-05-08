@@ -37,7 +37,7 @@ export interface RepertoireReviewSongDto {
 }
 
 export interface SuggestionCardDto {
-    groupId: number;
+    group: string;
     repertoireId: number;
     title: string;
     artist: string;
