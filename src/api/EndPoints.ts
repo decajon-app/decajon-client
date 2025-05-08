@@ -30,7 +30,8 @@ export const ENDPOINTS = {
         CREATE_REPERTOIRE: `${BASE_URL}/repertoires/add`,
         GET_REPERTOIRE: `${BASE_URL}/repertoires/group`,
         GET_SONG: (repertoireId: number) => `${BASE_URL}/repertoires/${repertoireId}/song-details`,
-        REVIEW_CARD: `${BASE_URL}/repertoires/review-card`
+        REVIEW_CARD: `${BASE_URL}/repertoires/review-card`,
+        SUGGESTIONS_PRACTICE: `${BASE_URL}/repertoires/suggestions`,
     },
 
     SONGS: {

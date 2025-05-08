@@ -19,5 +19,5 @@ export const reviewSongCardById = async (reviewCard: RepertoireReviewSongDto): P
 };
 
 export const fetchSuggestionsPractice = async (query: string): Promise<RepertoireSongCardDto[]> => {
-    return await ApiMethods.get<RepertoireSongCardDto[]>(ENDPOINTS.PRACTICE.SUGGESTED);
+    return await ApiMethods.get<RepertoireSongCardDto[]>(ENDPOINTS.REPERTOIRES.SUGGESTIONS_PRACTICE + `/${query}`);
 }
