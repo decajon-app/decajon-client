@@ -38,9 +38,9 @@ export interface RepertoireReviewSongDto {
 
 export interface SuggestionCardDto {
     groupId: number;
+    repertoireId: number;
     title: string;
     artist: string;
-    rating: number;
     performance?: number;
     duedate: string;
 }
