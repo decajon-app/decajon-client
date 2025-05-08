@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { Image } from 'react-native-reanimated/lib/typescript/Animated';
 
 export const styles = StyleSheet.create({
     container: {

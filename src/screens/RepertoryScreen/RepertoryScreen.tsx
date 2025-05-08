@@ -68,16 +68,6 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
-                <View style={styles.headerLogo}>
-                    <TouchableOpacity>
-                        <Icon name="account-circle" size={50} color="#4A1900" />
-                    </TouchableOpacity>
-                    <Image style={styles.logo} source={require('../../assets/logo.png')} />
-                    <TouchableOpacity>
-                        <Icon name="calendar-month" size={50} color="#4A1900" />
-                    </TouchableOpacity>
-                </View>
-
                 <View style={styles.titleTop}>
                     <Text style={styles.titleText}>Repertorio</Text>
                     {/* <TouchableOpacity onPress={handleEditToggle}>
@@ -99,20 +89,6 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                     
                 </View>
                 
-                {/* Prueba con cancion estatica...
-
-                <View>
-                <TouchableOpacity style={styles.songItem} onPress={(event) => handleViewSong(0)}>
-                                    <View style={styles.songImageContainer}>
-                                        <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
-                                    </View>
-                                    <View>
-                                        <Text style={styles.songName}>song</Text>
-                                        <Text style={styles.songDetails}>artist</Text>
-                                    </View>
-                </TouchableOpacity>
-                </View> */}
-
                 {loading ?
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <Text>{loadingMessage}</Text>
@@ -131,16 +107,6 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                                         <Text style={styles.songName}>{item.song}</Text>
                                         <Text style={styles.songDetails}>{item.artist}</Text>
                                     </View>
-                                    {/* {isEditMode && (
-                                        <View style={styles.actionButtons}>
-                                            <TouchableOpacity onPress={handleEditSong}>
-                                                <Icon name="edit" size={35} color="#4A1900" />
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={handleDeleteSong}>
-                                                <Icon name="delete" size={35} color="#4A1900" />
-                                            </TouchableOpacity>
-                                        </View>
-                                    )} */}
                                 </TouchableOpacity>
                             )}
                         >
@@ -154,47 +120,6 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
             <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('AddSong', { groupId: groupId })}>
                 <Icon name="add" size={30} color="#FFF" />
             </TouchableOpacity>
-            
-            {/* Modal de confirmación para eliminar */}
-            {/* <Modal
-                transparent={true}
-                visible={isDeleteModalVisible}
-                animationType="slide"
-                onRequestClose={() => setIsDeleteModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>
-                            ¿Estás seguro de que deseas eliminar esta canción?
-                        </Text>
-                        <View style={styles.modalButtons}>
-                            <TouchableOpacity onPress={() => setIsDeleteModalVisible(false)} style={styles.modalButtonCancel}>
-                                <Text style={styles.modalButtonText}>Cancelar</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={confirmDelete} style={styles.modalButtonConfirm}>
-                                <Text style={styles.modalButtonText}>Eliminar</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </Modal> */}
-
-            {/* Modal de eliminación exitosa */}
-            {/* <Modal
-                transparent={true}
-                visible={isDeletedModalVisible}
-                animationType="fade"
-                onRequestClose={() => setIsDeletedModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>
-                            La canción se eliminó correctamente
-                        </Text>
-                        <Icon name="check-circle" size={50} color="#4A1900" />
-                    </View>
-                </View>
-            </Modal> */}
         </View>
     );
 };

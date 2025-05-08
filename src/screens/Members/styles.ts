@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     titleTop: {
-        marginTop: 70,
+        marginTop: 10,
+        marginBottom: 10,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',

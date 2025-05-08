@@ -49,7 +49,6 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
       password: passwordGroup
     }
 
-    
     try {
       const newJoinGroupData: GroupDto = await joinGroup(joinGroupData);
       console.log(newJoinGroupData);
@@ -63,20 +62,9 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-    > 
-      <ScrollView>
+    <KeyboardAvoidingView style={{ flex: 1 }}> 
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
-          <View style={styles.header1}>
-            <TouchableOpacity>
-              <Icon name="account-circle" size={50} color="#4A1900" />
-            </TouchableOpacity>
-            <Image style={styles.logo} source={require('../../assets/logo.png')} />
-            <TouchableOpacity>
-              <Icon name="calendar-month" size={50} color="#4A1900" />
-            </TouchableOpacity>
-          </View>
-
           <View style={styles.header}>
             <Text style={styles.title}>Unirme a un grupo</Text>
             <Text style={styles.subtitle}>Ingresa el ID del grupo</Text>
@@ -116,8 +104,7 @@ const JoinGroupScreen: React.FC<JoinGroupScreenProps> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
-    
+    </KeyboardAvoidingView>    
   );
 };
 
@@ -146,7 +133,7 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    marginTop: 100,
+    marginTop: 10,
     marginLeft: 20,
   },
   title: {
@@ -163,7 +150,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20,
-    paddingTop: 80,
+    paddingTop: 50,
   },
   subtitle2: {
     fontSize: 22,

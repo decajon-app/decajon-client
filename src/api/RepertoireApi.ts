@@ -18,6 +18,10 @@ export const reviewSongCardById = async (reviewCard: RepertoireReviewSongDto): P
     return ApiMethods.post<void>(ENDPOINTS.REPERTOIRES.REVIEW_CARD, reviewCard);
 };
 
-export const fetchSuggestionsPractice = async (userId: number): Promise<SuggestionCardDto[]> => {
-    return await ApiMethods.get<RepertoireSongCardDto[]>(ENDPOINTS.REPERTOIRES.SUGGESTIONS_PRACTICE(userId));
-  }
+export const getSuggestionsByUserId = async (userId: number): Promise<SuggestionCardDto[]> => {
+    return ApiMethods.get<SuggestionCardDto[]>(ENDPOINTS.REPERTOIRES.SUGGESTIONS_USER_PRACTICE(userId));
+}
+
+export const getSuggestionsByGroupId = async (groupId: number): Promise<SuggestionCardDto[]> => {
+    return ApiMethods.get<SuggestionCardDto[]>(ENDPOINTS.REPERTOIRES.SUGGESTIONS_GROUP_PRACTICE(groupId));
+}

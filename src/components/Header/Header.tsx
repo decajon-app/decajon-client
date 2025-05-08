@@ -10,7 +10,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ toggleMenu, toggleCalendar }) => {
   return (
-      <View style={styles.header}>
+    <View style={styles.header}>
       <TouchableOpacity onPress={toggleMenu}>
         <Icon name="account-circle" size={50} color="#4A1900" />
       </TouchableOpacity>

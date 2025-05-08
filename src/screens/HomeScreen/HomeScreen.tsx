@@ -7,30 +7,25 @@ import { getUserData } from '../../storage/UserStorage';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../types/navigation';
 import { SuggestionCardDto } from '../../models/RepertoireDto';
-import { fetchSuggestionsPractice } from '../../api/RepertoireApi'
+import { getSuggestionsByUserId } from '../../api/RepertoireApi'
+import { ColorSpace } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type HomeScreenProps = StackScreenProps<HomeStackParamList, 'Home'>;
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) => {
   const [userName, setUserName] = useState<string>('');
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState<number | null>(null);
   const [loggingOut, setLoggingOut] = useState(false); // estado para mostrar el spinner
   const [suggestedPractices, setSuggestedPractices] = useState<SuggestionCardDto[]>([]);
-  const [loadingPractices, setLoadingPractices] = useState(true);
-  const newEvent = () => navigation.navigate('CreateEvent');
 
   useEffect(() => {
     const getUserName = async () => {
       const userData = await getUserData();
       setUserName(userData.firstName);
+      setUserId(userData.id);
     };
     getUserName();
-
-    // Spinner visible por 3 segundos
-    const timer = setTimeout(() => {
-    }, 3000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -38,21 +33,39 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
       if (userId === null) return;
   
       try {
-        const data = await fetchSuggestionsPractice(userId);
+        const data = await getSuggestionsByUserId(userId);
         setSuggestedPractices(data);
       } catch (error) {
         Alert.alert("Error", "No se pudieron cargar los ensayos sugeridos.");
-      } finally {
-        setLoadingPractices(false);
       }
     };
-  
     loadPractices();
   }, [userId]);
   
   return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.section}>
+        {userName !== '' && <Text style={styles.greeting}>¡Hola, {userName}!</Text>}
+        <Text style={styles.sectionTitle}>Ensayos sugeridos</Text>
+        <FlatList
+          data={suggestedPractices}
+          keyExtractor={(item) => item.repertoireId.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.cardEvent}>
+              <Icon style={styles.iconCard} name="music-note" size={40} color="#4A1900" />
+              <View>
+                <Text style={styles.cardText}>{item.title}</Text>
+                <Text style={styles.cardText}>{item.artist}</Text>
+                <Text style={styles.cardText}>{item.group}</Text>
+                <Text style={styles.cardText}>{item.dueDate}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          contentContainerStyle={{ paddingBottom: 100 }}
+        />
+        <Text style={styles.sectionTitle}>Tus eventos próximos</Text>
+      </View>
 
-    <View style={styles.container}>
       <Modal
         transparent
         visible={loggingOut}
@@ -65,45 +78,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
           </View>
         </View>
       </Modal>
-
-      {/* Contenido */}
-        <Text style={styles.greeting}>¡Hola, {userName}!</Text>
-
-        <TouchableOpacity style={styles.newEventButton} onPress={newEvent}>
-          <Text style={styles.newEventText}>Nuevo Evento</Text>
-        </TouchableOpacity>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Ensayos sugeridos</Text>
-          <FlatList
-            data={suggestedPractices}
-            keyExtractor={(item) => item.repertoireId.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.cardEvent}>
-                <Icon style={styles.iconCard} name="music-note" size={40} color="#4A1900" />
-                <View>
-                  <Text style={styles.cardText}>{item.title}</Text>
-                  <Text style={styles.cardText}>{item.artist}</Text>
-                  <Text style={styles.cardText}>{item.group}</Text>
-                  <Text style={styles.cardText}>{item.dueDate}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Tus eventos próximos</Text>
-          <TouchableOpacity>
-            <View style={styles.cardEvent}>
-              <Icon style={styles.iconCard} name="thumb-up" size={40} color="#4A1900" />
-              <Text style={styles.cardText}>Ahora mismo no tienes eventos próximos</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-
-    </View>
+    </SafeAreaView>
   );
 };
 
