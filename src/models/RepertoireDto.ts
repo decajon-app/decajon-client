@@ -36,7 +36,7 @@ export interface RepertoireReviewSongDto {
     rating: number;
 }
 
-export interface HomeScreenRepertoireSongCardDto {
+export interface SuggestionCardDto {
     groupId: number;
     title: string;
     artist: string;
