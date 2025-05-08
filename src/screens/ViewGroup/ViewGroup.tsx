@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "../ViewGroup/styles";
 import { View, Text, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -9,12 +9,9 @@ import { getRoleByUserIdAndGroupId } from "../../api/UsersGroupsApi";
 import { getSuggestionsByGroupId } from "../../api/RepertoireApi";
 import { SuggestionCardDto } from "../../models/RepertoireDto";
 import { FlatList } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
 
 type ViewGroupScreenProps = StackScreenProps<GroupsStackParamsList, 'ViewGroup'>;
-
-const groupName = 'Nombre del grupo';
-const songName = 'Nombre de la canción';
-const songDetails = 'Compositor/Cantante';
 
 // Componente principal
 const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
@@ -74,7 +71,8 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
     fetchUserPermissions();
   }, []);
 
-  useEffect(() => {
+  useFocusEffect(
+    useCallback(() => {
       const loadPractices = async () => {
         if (group.id === null) return;
     
@@ -86,7 +84,25 @@ const ViewGroup: React.FC<ViewGroupScreenProps> = ({ navigation, route }) => {
         } 
       };
       loadPractices();
-    }, [group.id]);
+      return () => {
+        loadPractices();
+      }
+    }, [])
+  );
+
+  /*useEffect(() => {
+      const loadPractices = async () => {
+        if (group.id === null) return;
+    
+        try {
+          const data = await getSuggestionsByGroupId(group.id!);
+          setSuggestedPractices(data);
+        } catch (error) {
+          Alert.alert("Error", "No se pudieron cargar los ensayos sugeridos.");
+        } 
+      };
+      loadPractices();
+    }, [group.id]);*/
 
   return (            
     <View style={{ flex: 1 }}> 

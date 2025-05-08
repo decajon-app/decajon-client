@@ -1,12 +1,13 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, Modal, Alert, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 import { RepertoireSongCardDto } from "../../models/RepertoireDto";
 import { FlatList } from "react-native-gesture-handler";
 import { getRepertoire } from "../../api/RepertoireApi";
+import { useFocusEffect } from "@react-navigation/native";
 
 type RepertoryScreenProps = StackScreenProps<GroupsStackParamsList, 'RepertoryScreen'>;
 
@@ -20,8 +21,8 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
     const [loading, setLoading] = useState(true);
     const [loadingMessage, setLoadingMessage] = useState<string>('Cargando repertorio...');
 
-    // const [searchQuery, setSearchQuery] = useState<string>(''); // Estado para la búsqueda de canciones
-
+    const [searchQuery, setSearchQuery] = useState<string>(''); // Estado para la búsqueda de canciones
+    
     const handleEditToggle = () => {
         setIsEditMode(!isEditMode); // Alternar entre mostrar y ocultar los botones de editar/borrar
     };
@@ -48,38 +49,48 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
         navigation.navigate('ViewSong', { songId: songId }); // Navegar a la pantalla de vista de canción
     }
 
-    useEffect(() => {
-        const fetchRepertoireByGroup = async () => {
-            try {
-                const fetchedSongs: RepertoireSongCardDto[] = await getRepertoire(groupId);
-                if (fetchedSongs.length === 0) {
-                    setLoadingMessage('Vaya, ¡no hay nada por aquí!');
-                    return;
+
+    useFocusEffect(
+        useCallback(() => {
+            const fetchRepertoireByGroup = async () => {
+                try {
+                    const fetchedSongs: RepertoireSongCardDto[] = await getRepertoire(groupId);
+                    if (fetchedSongs.length === 0) {
+                        setLoadingMessage('Vaya, ¡no hay nada por aquí!');
+                        return;
+                    }
+                    setSongs(fetchedSongs);
+                    setLoading(false);
+                } catch (error) {
+                    Alert.alert("Error","No se ha podido recuperar el repertorio del grupo.");
                 }
-                setSongs(fetchedSongs);
-                setLoading(false);
-            } catch (error) {
-                Alert.alert("Error","No se ha podido recuperar el repertorio del grupo.");
-            }
-        };
-        fetchRepertoireByGroup();
-    }, [songs]);
+            };
+            fetchRepertoireByGroup();
+        }, [])
+    );
+
+    const normalize = (text: string) =>
+        text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    
+    const filteredSongs = songs.filter(song =>
+        normalize(song.song || '').includes(normalize(searchQuery)) ||
+        normalize(song.artist || '').includes(normalize(searchQuery))
+    );
+    
+    
 
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
                 <View style={styles.titleTop}>
                     <Text style={styles.titleText}>Repertorio</Text>
-                    {/* <TouchableOpacity onPress={handleEditToggle}>
-                        <Icon name="edit" size={30} color="black" />
-                    </TouchableOpacity> */}
                     <View style={styles.searchContainer}>
                         <TextInput
                             style={styles.searchInput}
                             placeholder="Buscar canción..."
                             placeholderTextColor="gray"
-                            // value={searchQuery}
-                            // onChangeText={setSearchQuery}
+                            value={searchQuery}
+                            onChangeText={setSearchQuery}
                         ></TextInput>
                         <TouchableOpacity style={styles.search} onPress={handleEditToggle}>
                             <Icon name="search" size={30} color="gray" />
@@ -96,7 +107,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                 :
                     <View style={styles.songList}>
                         <FlatList
-                            data={songs}
+                            data={filteredSongs}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (
                                 <TouchableOpacity style={styles.songItem} onPress={(event) => handleViewSong(item.id)}>

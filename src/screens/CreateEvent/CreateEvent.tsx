@@ -45,20 +45,10 @@ const CreateEventScreen: React.FC<CreateEventScreenProps> = ({ navigation, route
 
   return (
     <View style={styles.container}>
-      <View style={styles.header1}>
-        <TouchableOpacity>
-          <Icon name="account-circle" size={50} color="#4A1900" />
-        </TouchableOpacity>
-        <Image style={styles.logo} source={require('../../assets/logo.png')} />
-        <TouchableOpacity>
-          <Icon name="calendar-month" size={50} color="#4A1900" />
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.header}>
         <Text style={styles.title}>Nuevo Evento</Text>
         <Icon name="event" size={200} color="#4A1900"  style={styles.icon}/>
-        <Text style={styles.subtitle}>Fecha del evento:</Text>
+        <Text style={styles.subtitle}>Titulo del evento:</Text>
       </View>
 
       <View style={styles.datePickerContainer}>
@@ -122,7 +112,7 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    marginTop: 100,
+    marginTop: 10,
     marginLeft: 20,
   },
   title: {

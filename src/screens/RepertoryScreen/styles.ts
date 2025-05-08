@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     },
     songList: {
         marginTop: 15,
+        marginBottom: 35
     },  
     songItem: {
         flexDirection: 'row',

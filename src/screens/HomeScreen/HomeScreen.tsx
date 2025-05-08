@@ -46,7 +46,23 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
     getUserName();
   }, []);
 
-  useEffect(() => {
+  useFocusEffect(
+    useCallback(() => {
+      const loadPractices = async () => {
+        if (userId === null) return;
+    
+        try {
+          const data = await getSuggestionsByUserId(userId);
+          setSuggestedPractices(data);
+        } catch (error) {
+          Alert.alert("Error", "No se pudieron cargar los ensayos sugeridos.");
+        } 
+      };
+      loadPractices();
+    }, [userId])
+  );
+
+  /* useEffect(() => {
     const loadPractices = async () => {
       if (userId === null) return;
   
@@ -58,7 +74,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
       } 
     };
     loadPractices();
-  }, [userId]);  
+  }, [userId]);  */
   
   return (
     <SafeAreaView style={styles.container}>
