@@ -1,12 +1,13 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { GroupsStackParamsList } from '../../types/navigation';
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, Modal, Alert, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
 import { RepertoireSongCardDto } from "../../models/RepertoireDto";
 import { FlatList } from "react-native-gesture-handler";
 import { getRepertoire } from "../../api/RepertoireApi";
+import { useFocusEffect } from "@react-navigation/native";
 
 type RepertoryScreenProps = StackScreenProps<GroupsStackParamsList, 'RepertoryScreen'>;
 
@@ -20,8 +21,8 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
     const [loading, setLoading] = useState(true);
     const [loadingMessage, setLoadingMessage] = useState<string>('Cargando repertorio...');
 
-    // const [searchQuery, setSearchQuery] = useState<string>(''); // Estado para la búsqueda de canciones
-
+    const [searchQuery, setSearchQuery] = useState<string>(''); // Estado para la búsqueda de canciones
+    
     const handleEditToggle = () => {
         setIsEditMode(!isEditMode); // Alternar entre mostrar y ocultar los botones de editar/borrar
     };
@@ -48,48 +49,48 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
         navigation.navigate('ViewSong', { songId: songId }); // Navegar a la pantalla de vista de canción
     }
 
-    useEffect(() => {
-        const fetchRepertoireByGroup = async () => {
-            try {
-                const fetchedSongs: RepertoireSongCardDto[] = await getRepertoire(groupId);
-                if (fetchedSongs.length === 0) {
-                    setLoadingMessage('Vaya, ¡no hay nada por aquí!');
-                    return;
+
+    useFocusEffect(
+        useCallback(() => {
+            const fetchRepertoireByGroup = async () => {
+                try {
+                    const fetchedSongs: RepertoireSongCardDto[] = await getRepertoire(groupId);
+                    if (fetchedSongs.length === 0) {
+                        setLoadingMessage('Vaya, ¡no hay nada por aquí!');
+                        return;
+                    }
+                    setSongs(fetchedSongs);
+                    setLoading(false);
+                } catch (error) {
+                    Alert.alert("Error","No se ha podido recuperar el repertorio del grupo.");
                 }
-                setSongs(fetchedSongs);
-                setLoading(false);
-            } catch (error) {
-                Alert.alert("Error","No se ha podido recuperar el repertorio del grupo.");
-            }
-        };
-        fetchRepertoireByGroup();
-    }, [songs]);
+            };
+            fetchRepertoireByGroup();
+        }, [])
+    );
+
+    const normalize = (text: string) =>
+        text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    
+    const filteredSongs = songs.filter(song =>
+        normalize(song.song || '').includes(normalize(searchQuery)) ||
+        normalize(song.artist || '').includes(normalize(searchQuery))
+    );
+    
+    
 
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
-                <View style={styles.headerLogo}>
-                    <TouchableOpacity>
-                        <Icon name="account-circle" size={50} color="#4A1900" />
-                    </TouchableOpacity>
-                    <Image style={styles.logo} source={require('../../assets/logo.png')} />
-                    <TouchableOpacity>
-                        <Icon name="calendar-month" size={50} color="#4A1900" />
-                    </TouchableOpacity>
-                </View>
-
                 <View style={styles.titleTop}>
                     <Text style={styles.titleText}>Repertorio</Text>
-                    {/* <TouchableOpacity onPress={handleEditToggle}>
-                        <Icon name="edit" size={30} color="black" />
-                    </TouchableOpacity> */}
                     <View style={styles.searchContainer}>
                         <TextInput
                             style={styles.searchInput}
                             placeholder="Buscar canción..."
                             placeholderTextColor="gray"
-                            // value={searchQuery}
-                            // onChangeText={setSearchQuery}
+                            value={searchQuery}
+                            onChangeText={setSearchQuery}
                         ></TextInput>
                         <TouchableOpacity style={styles.search} onPress={handleEditToggle}>
                             <Icon name="search" size={30} color="gray" />
@@ -99,20 +100,6 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                     
                 </View>
                 
-                {/* Prueba con cancion estatica...
-
-                <View>
-                <TouchableOpacity style={styles.songItem} onPress={(event) => handleViewSong(0)}>
-                                    <View style={styles.songImageContainer}>
-                                        <Icon name="multitrack-audio" size={50} color="#FFF7EE" />
-                                    </View>
-                                    <View>
-                                        <Text style={styles.songName}>song</Text>
-                                        <Text style={styles.songDetails}>artist</Text>
-                                    </View>
-                </TouchableOpacity>
-                </View> */}
-
                 {loading ?
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <Text>{loadingMessage}</Text>
@@ -120,7 +107,7 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                 :
                     <View style={styles.songList}>
                         <FlatList
-                            data={songs}
+                            data={filteredSongs}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (
                                 <TouchableOpacity style={styles.songItem} onPress={(event) => handleViewSong(item.id)}>
@@ -131,16 +118,6 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
                                         <Text style={styles.songName}>{item.song}</Text>
                                         <Text style={styles.songDetails}>{item.artist}</Text>
                                     </View>
-                                    {/* {isEditMode && (
-                                        <View style={styles.actionButtons}>
-                                            <TouchableOpacity onPress={handleEditSong}>
-                                                <Icon name="edit" size={35} color="#4A1900" />
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={handleDeleteSong}>
-                                                <Icon name="delete" size={35} color="#4A1900" />
-                                            </TouchableOpacity>
-                                        </View>
-                                    )} */}
                                 </TouchableOpacity>
                             )}
                         >
@@ -154,47 +131,6 @@ const RepertoryScreen: React.FC<RepertoryScreenProps> = ({ navigation, route }) 
             <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('AddSong', { groupId: groupId })}>
                 <Icon name="add" size={30} color="#FFF" />
             </TouchableOpacity>
-            
-            {/* Modal de confirmación para eliminar */}
-            {/* <Modal
-                transparent={true}
-                visible={isDeleteModalVisible}
-                animationType="slide"
-                onRequestClose={() => setIsDeleteModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>
-                            ¿Estás seguro de que deseas eliminar esta canción?
-                        </Text>
-                        <View style={styles.modalButtons}>
-                            <TouchableOpacity onPress={() => setIsDeleteModalVisible(false)} style={styles.modalButtonCancel}>
-                                <Text style={styles.modalButtonText}>Cancelar</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={confirmDelete} style={styles.modalButtonConfirm}>
-                                <Text style={styles.modalButtonText}>Eliminar</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </Modal> */}
-
-            {/* Modal de eliminación exitosa */}
-            {/* <Modal
-                transparent={true}
-                visible={isDeletedModalVisible}
-                animationType="fade"
-                onRequestClose={() => setIsDeletedModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>
-                            La canción se eliminó correctamente
-                        </Text>
-                        <Icon name="check-circle" size={50} color="#4A1900" />
-                    </View>
-                </View>
-            </Modal> */}
         </View>
     );
 };

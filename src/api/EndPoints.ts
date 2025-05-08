@@ -31,7 +31,8 @@ export const ENDPOINTS = {
         GET_REPERTOIRE: `${BASE_URL}/repertoires/group`,
         GET_SONG: (repertoireId: number) => `${BASE_URL}/repertoires/${repertoireId}/song-details`,
         REVIEW_CARD: `${BASE_URL}/repertoires/review-card`,
-        SUGGESTIONS_PRACTICE: (userId: number) => `${BASE_URL}/repertoires/${userId}/suggestions`,
+        SUGGESTIONS_USER_PRACTICE: (userId: number) => `${BASE_URL}/repertoires/user/${userId}/suggestions`,
+        SUGGESTIONS_GROUP_PRACTICE: (groupId: number) => `${BASE_URL}/repertoires/group/${groupId}/suggestions`
     },
 
     SONGS: {

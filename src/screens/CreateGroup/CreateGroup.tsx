@@ -47,17 +47,6 @@ const CreateGroup: React.FC<CreateGroupScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-
-      <View style={styles.header1}>
-        <TouchableOpacity>
-          <Icon name="account-circle" size={50} color="#4A1900" />
-        </TouchableOpacity>
-        <Image style={styles.logo} source={require('../../assets/logo.png')} />
-        <TouchableOpacity>
-          <Icon name="calendar-month" size={50} color="#4A1900" />
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.header}>
         <Text style={styles.title}>Nuevo grupo</Text>
         <Icon name="groups" size={200} color="#4A1900"  style={styles.icon}/>
@@ -107,7 +96,7 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    marginTop: 100,
+    marginTop: 10,
     marginLeft: 20,
   },
   title: {

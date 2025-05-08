@@ -56,8 +56,8 @@ function AuthStackNavigator({ onLoginSuccess }: AuthStackNavigatorProps) {
 function HomeStackNavigator() {
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="Home" component={Screens.HomeScreen} options={{ headerShown: false }}/>
-            <HomeStack.Screen name="CreateEvent" component={Screens.CreateEventScreen} options={{ headerShown: false }} />
+            <HomeStack.Screen name="Home" component={Screens.HomeScreen} />
+            <HomeStack.Screen name="ViewSong" component={Screens.ViewSong} />
         </HomeStack.Navigator>
     );
 }
@@ -66,17 +66,17 @@ function HomeStackNavigator() {
 function GroupsStackNavigator() {
     return (
         <GroupsStack.Navigator>
-            <GroupsStack.Screen name="Groups" component={Screens.GroupsScreen} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="CreateGroup" component={Screens.CreateGroup} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="CreateEvent" component={Screens.CreateEvent} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="GroupInformation" component={Screens.GroupInformation} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="JoinGroup" component={Screens.JoinGroup} options={{ headerShown: false}} />
-            <GroupsStack.Screen name="ViewGroup" component={Screens.ViewGroup} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="RepertoryScreen" component={Screens.RepertoryScreen} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="AddSong" component={Screens.AddSong} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="EditSong" component={Screens.EditSong} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="ViewSong" component={Screens.ViewSong} options={{ headerShown: false }} />
-            <GroupsStack.Screen name="Members" component={Screens.Members} options={{ headerShown: false }} />
+            <GroupsStack.Screen name="Groups" component={Screens.GroupsScreen} />
+            <GroupsStack.Screen name="CreateGroup" component={Screens.CreateGroup} />
+            <GroupsStack.Screen name="CreateEvent" component={Screens.CreateEvent} />
+            <GroupsStack.Screen name="GroupInformation" component={Screens.GroupInformation} />
+            <GroupsStack.Screen name="JoinGroup" component={Screens.JoinGroup} />
+            <GroupsStack.Screen name="ViewGroup" component={Screens.ViewGroup} />
+            <GroupsStack.Screen name="RepertoryScreen" component={Screens.RepertoryScreen} />
+            <GroupsStack.Screen name="AddSong" component={Screens.AddSong} />
+            <GroupsStack.Screen name="EditSong" component={Screens.EditSong} />
+            <GroupsStack.Screen name="ViewSong" component={Screens.ViewSong} />
+            <GroupsStack.Screen name="Members" component={Screens.Members} />
         </GroupsStack.Navigator>
     );
 }

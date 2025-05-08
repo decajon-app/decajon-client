@@ -53,8 +53,8 @@ const CreateAccountScreen: React.FC<CreateAccountScreenProps> = ({ navigation, r
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View>
         <View style={styles.headerImg}>
           <Image style={styles.image} source={require('../../../assets/logo.png')} />
         </View>

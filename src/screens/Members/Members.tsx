@@ -71,16 +71,6 @@ const Members: React.FC<MembersScreenProps> = ({ navigation, route }) => {
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
-                <View style={styles.headerLogo}>
-                    <TouchableOpacity>
-                        <Icon name="account-circle" size={50} color="#4A1900" />
-                    </TouchableOpacity>
-                    <Image style={styles.logo} source={require('../../assets/logo.png')} />
-                    <TouchableOpacity>
-                        <Icon name="calendar-month" size={50} color="#4A1900" />
-                    </TouchableOpacity>
-                </View>
-
                 <View style={styles.titleTop}>
                     <Text style={styles.titleText}>Miembros</Text>
                     {(role === 'OWNER' || role === 'ADMIN') && (

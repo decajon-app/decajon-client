@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { Image } from 'react-native-reanimated/lib/typescript/Animated';
 
 export const styles = StyleSheet.create({
     container: {
@@ -11,33 +10,20 @@ export const styles = StyleSheet.create({
       paddingTop: 70,
     },
     greeting: {
-      fontSize: 24,
+      fontSize: 28,
       marginVertical: 20,
       color: '#4A1900',
-    },
-    newEventButton: {
-      backgroundColor: '#4A1900',
-      padding: 25,
-      borderRadius: 15,
-      alignItems: 'center',
-      marginBottom: 30,
-      elevation: 10,
-      width: '90%',
-      alignSelf: 'center',
-    },
-    newEventText: {
-      color: '#FFF',
-      fontSize: 24,
-      fontWeight: 'bold',
+      fontWeight: 'bold'
     },
     section: {
       marginBottom: 30,
+      padding: 10
     },
     sectionTitle: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      marginBottom: 25,
+      fontSize: 20,
+      marginBottom: 10,
       color: '#4A1900',
+      textAlign: 'center'
     },
     card: {
       padding: 20,
@@ -59,10 +45,12 @@ export const styles = StyleSheet.create({
       marginLeft: 20,
     },
     cardEvent: {
-      paddingVertical: 60,
+      paddingVertical: 15,
+      paddingHorizontal: 10,
       backgroundColor: '#FFF7EE',
       borderColor: '#4A1900',
-      alignItems: 'center', 
+      alignItems: 'flex-start',
+      flexDirection: 'row',
       marginBottom: 10,
       borderRadius: 10,
     },
@@ -71,6 +59,9 @@ export const styles = StyleSheet.create({
       fontSize: 14,
       color: '#4A1900',
       textAlign: 'center',
+    },
+    cardTextContainer: {
+      justifyContent: 'center'
     },
     iconCard: {
       textAlign: 'center',
