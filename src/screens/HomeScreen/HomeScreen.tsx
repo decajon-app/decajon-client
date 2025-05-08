@@ -5,7 +5,7 @@ import { Text, View, TouchableOpacity, ScrollView, Image, Animated, Alert, Modal
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getUserData } from '../../storage/UserStorage';
 import { StackScreenProps } from '@react-navigation/stack';
-import { HomeStackParamList, } from '../../types/navigation';
+import { HomeStackParamList } from '../../types/navigation';
 import { SuggestionCardDto } from '../../models/RepertoireDto';
 import { fetchSuggestionsPractice } from '../../api/RepertoireApi'
 
