@@ -13,6 +13,7 @@ type HomeScreenProps = StackScreenProps<HomeStackParamList, 'Home'>;
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) => {
   const [userName, setUserName] = useState<string>('');
+  const [userId, setUserId] = useState(null)
   const [loggingOut, setLoggingOut] = useState(false); // estado para mostrar el spinner
   const [suggestedPractices, setSuggestedPractices] = useState<RepertoireSongCardDto[]>([]);
   const [loadingPractices, setLoadingPractices] = useState(true);
@@ -35,8 +36,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
   useEffect(() => {
     const loadPractices = async () => {
       try {
-        const data = await fetchSuggestionsPractice('');
-        setSuggestedPractices(data);
+        if (userId !== null) {
+          const data = await fetchSuggestionsPractice(userId); // ya puedes usarlo
+          setSuggestedPractices(data);
+        }
       } catch (error) {
         Alert.alert("Error", "No se pudieron cargar los ensayos sugeridos.");
       } finally {
@@ -45,7 +48,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }: HomeScreenProps) 
     };
   
     loadPractices();
-  }, []);
+  }, [userId]);
+  
   return (
 
     <View style={styles.container}>
