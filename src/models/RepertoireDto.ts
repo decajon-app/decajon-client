@@ -42,5 +42,5 @@ export interface SuggestionCardDto {
     title: string;
     artist: string;
     performance?: number;
-    duedate: string;
+    dueDate: string;
 }
